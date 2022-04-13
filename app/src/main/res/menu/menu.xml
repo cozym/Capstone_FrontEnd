@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item android:id="@+id/pencil"
+    android:icon="@drawable/pencil"
+    android:title="작성글"
+    app:showAsAction="always"/>
+<!--    withText는 작성글과 같이 뜨게 할 것 인가이다.-->
+</menu>
