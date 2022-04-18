@@ -18,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        //화면전환 ON
+        <activity
+            android:name=".user_info"
+            android:exported="true" />
     </application>
 
 </manifest>
