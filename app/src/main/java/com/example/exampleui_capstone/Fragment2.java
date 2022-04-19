@@ -6,22 +6,43 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 public class Fragment2 extends Fragment {
 
-    @Nullable
+    ListView listview;
+    private static ListViewAdapter adapter;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment2, container, false);
+        listview = (ListView) view.findViewById(R.id.List_crew_Book);
 
-        return inflater.inflate(R.layout.fragment2,container,false);
-        //레이아웃을 인플레이트(inflate)하는 곳이다.
-        //onCreateView의 매개변수로 전달되는 container가 Activity의 ViewGroup이며, 여기에 Fragment가 위치하게 된다.
-        //또 다른 매개변수인 savedInstanceState는 Bundle 객체로 Fragment가 재개되는 경우 이전 상태에 대한 데이터를 제공한다.
+        //adapter에 넣을 리스트뷰를 받는 배열
+        ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
 
+        items.add(new ListViewItem(R.drawable.note, "android Studio", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source2, "OS", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "MongoDB", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "캡스톤", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "컴퓨터 구조", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "네트워크", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "머신러닝", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "파이썬", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "자바", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1, "코틀린", "#캡스톤"));
+
+        adapter = new ListViewAdapter(items, view.getContext());
+
+        listview.setAdapter(adapter);
+
+        return view;
     }
 }

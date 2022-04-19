@@ -1,68 +1,55 @@
 package com.example.exampleui_capstone;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
-    private Button btn_crew;
-    private Button btn_book;
+
+    ListView listview;
+    private ListViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         getSupportActionBar().setDisplayUseLogoEnabled(true);//
         getSupportActionBar().setDisplayShowHomeEnabled(true);//홈으로 돌아가는 버튼을 만든다
         //Appbar에 이렇게 뜬다. <-title
 
-        btn_crew = (Button)findViewById(R.id.btn_crew);
-        btn_book = (Button)findViewById(R.id.btn_book);
+        listview = (ListView)findViewById(R.id.List_crew);
 
-        btn_crew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btn_book.setBackgroundResource(R.drawable.btn_source1);
-                btn_crew.setBackgroundResource(R.drawable.btn_source2);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                //transaction은 화면을 변환할 때 사용하는 객체이다.
-                Fragment1 fragment1 = new Fragment1();
-                transaction.replace(R.id.frame,fragment1);
-                // transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+        //adapter에 넣을 리스트뷰를 받는 배열
+        ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
 
-        btn_book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btn_crew.setBackgroundResource(R.drawable.btn_source1);
-                btn_book.setBackgroundResource(R.drawable.btn_source2);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                //transaction은 화면을 변환할 때 사용하는 객체이다.
-                Fragment2 fragment2 = new Fragment2();
-                transaction.replace(R.id.frame,fragment2);
-                // transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-    }
+        items.add(new ListViewItem(R.drawable.note,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source2,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.btn_source1,"그룹 이름", "#캡스톤"));
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        //MenuItem item를 인자로 받은 item 즉, 내가 클릭한 버튼의 id를 받아오는 것이다.
+        adapter = new ListViewAdapter(items, getApplicationContext());
 
-        if(id == R.id.pencil){
-            Toast.makeText(getApplicationContext(),"작성 아이콘",Toast.LENGTH_SHORT).show();
-        }
-
-        return super.onOptionsItemSelected(item);
+        listview.setAdapter(adapter);
     }
 }

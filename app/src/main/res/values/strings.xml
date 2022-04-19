@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">exampleUI_Capstone</string>
     <string name="title">관리자</string>
+    <string name="group">모임</string>
 </resources>
