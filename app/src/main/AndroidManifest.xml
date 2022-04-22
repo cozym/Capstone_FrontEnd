@@ -21,12 +21,23 @@
         //화면전환 ON
         <activity
             android:name=".user_info"
+            android:parentActivityName=".list_main_activity"
             android:exported="true" />
         <activity
             android:name=".book_info"
+            android:parentActivityName=".list_main_activity"
             android:exported="true" />
         <activity
             android:name=".group_info"
+            android:parentActivityName=".list_main_activity"
+            android:exported="true" />
+        <activity
+            android:name=".list_activity"
+            android:parentActivityName=".list_main_activity"
+            android:exported="true" />
+        <activity
+            android:name=".list_main_activity"
+            android:parentActivityName=".list_main_activity"
             android:exported="true" />
     </application>
 
