@@ -26,8 +26,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         ImageView ICon;
         TextView text_Group_Name;
         TextView text_Hash_Tag;
-        Button Button_Info;
-        Button Button_Del;
     }
 
     public ListViewAdapter(ArrayList<ListViewItem> list, Context context){
@@ -55,8 +53,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
             viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.hash_tag);
-            viewHolder.Button_Info = (Button)convertView.findViewById(R.id.btn_info);
-            viewHolder.Button_Del = (Button)convertView.findViewById(R.id.btn_del);
 
             convertView.setTag(viewHolder);
         }
@@ -70,27 +66,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
         viewHolder.text_Hash_Tag.setText(listViewItem.getHashTag());
 
-        //btn 클릭시 발생하는 부분 작성
-        //view.findViewById를 하면 내가 만들부분인 view로 btn을 가져오겠다는 뜻이다.
-
-        viewHolder.Button_Info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"정보입니다.",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(view.getContext(),list_activity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                view.getContext().startActivity(intent);
-
-
-            }
-        });
-
-        viewHolder.Button_Del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"삭제합니다.",Toast.LENGTH_SHORT).show();
-            }
-        });
 
         return convertView;
     }

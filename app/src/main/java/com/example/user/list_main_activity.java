@@ -1,10 +1,16 @@
 package com.example.user;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,10 +21,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-public class list_main_activity extends AppCompatActivity {
+public class list_main_activity extends AppCompatActivity implements View.OnClickListener{
 
     Fragment fragment0, fragment1;
     private Button btn_crew;
@@ -26,6 +33,11 @@ public class list_main_activity extends AppCompatActivity {
     private Button btn_crew2;
     DrawerLayout drawLayout;
     NavigationView navigationView;
+
+    //추가 버튼 관련
+    private Animation fab_open, fab_close;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab, fab1, fab2;
 
 
     @Override
@@ -71,10 +83,25 @@ public class list_main_activity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
+
+
         });
 
+        //추가 버튼관련 애니메이션
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
+        fab2.setOnClickListener(this);
 
     }
+
+
     ////우측 상단 검색 메뉴 추가
     public boolean onCreateOptionsMenu(Menu menu) {   
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
@@ -82,7 +109,7 @@ public class list_main_activity extends AppCompatActivity {
     }
 
 
-
+    //슬라이드 메뉴
     public void InitializeLayout()
     {
         //toolBar를 통해 App Bar 생성
@@ -148,6 +175,49 @@ public class list_main_activity extends AppCompatActivity {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    //클릭 이벤트
+    @Override
+    public void onClick(View view) {
+        //추가 버튼 이벤트
+        int id = view.getId();
+        switch (id) {
+            case R.id.fab:
+                anim();
+                break;
+            case R.id.fab1:
+                anim();
+                Intent intent1 = new Intent(getApplicationContext(), add_group.class);
+                startActivity(intent1);
+                break;
+            case R.id.fab2:
+                anim();
+                Intent intent2 = new Intent(getApplicationContext(), add_book.class);
+                startActivity(intent2);
+                break;
+            default:
+                anim();
+                break;
+        }
+    }
+    
+    //추가 버튼 애니메이션
+    public void anim() {
+        if (isFabOpen) {
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            isFabOpen = false;
+
+        } else {
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = true;
         }
     }
 }

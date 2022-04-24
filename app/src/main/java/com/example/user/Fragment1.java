@@ -28,14 +28,14 @@ public class Fragment1 extends Fragment {
         //adapter에 넣을 리스트뷰를 받는 배열
         ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
 
-        items.add(new ListViewItem(R.drawable.profile, "박우현", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.profile, "안영민", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.profile, "김경민", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.profile, "이대현", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.profile, "이원우", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.profile, "임성환", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.profile, "윤교수님", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.profile, "캡스톤 수 123", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "5학년 다니면 그만이야", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "영통구 책방", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "경기대 도서관", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "컴공책 동아리", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "논문만 판다", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "공대생 모여라", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "경기도 모여라", "#캡스톤"));
+        items.add(new ListViewItem(R.drawable.profile, "서울도 모여라", "#캡스톤"));
 
         adapter = new ListViewAdapter(items, view.getContext());
 

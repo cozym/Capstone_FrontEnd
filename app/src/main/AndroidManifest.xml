@@ -39,6 +39,14 @@
             android:name=".list_main_activity"
             android:parentActivityName=".list_main_activity"
             android:exported="true" />
+        <activity
+            android:name=".add_group"
+            android:parentActivityName=".list_main_activity"
+            android:exported="true" />
+        <activity
+            android:name=".add_book"
+            android:parentActivityName=".list_main_activity"
+            android:exported="true" />
     </application>
 
 </manifest>
