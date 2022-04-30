@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/user/AndroidStudioProjects/BookSharing/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BookSharing/app/src/main/res/layout/add_book.xml" value="0.15555555555555556" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BookSharing/app/src/main/res/layout/add_group.xml" value="0.15555555555555556" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ISBN_Scan/app/src/main/res/layout/activity_isbn_scanner.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ISBN_Scan/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ISBN_Scan/app/src/main/res/layout/add_book.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ISBN_Scan/app/src/main/res/layout/add_group.xml" value="0.2" />
       </map>
     </option>
   </component>

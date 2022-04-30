@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "BookSharing"
 include ':app'
+include ':isbn'
