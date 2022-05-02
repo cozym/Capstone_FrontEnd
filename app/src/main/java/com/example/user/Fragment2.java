@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -16,14 +17,14 @@ import java.util.ArrayList;
 
 public class Fragment2 extends Fragment {
 
-    ListView listview;
-    private static ListViewAdapter adapter;
+    GridView listview;
+    private static GridViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.frag_book, container, false);
-        listview = (ListView) view.findViewById(R.id.List_book_Info);
+        listview = (GridView) view.findViewById(R.id.List_book_Info);
 
         //adapter에 넣을 리스트뷰를 받는 배열
         ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
@@ -39,7 +40,7 @@ public class Fragment2 extends Fragment {
         items.add(new ListViewItem(R.drawable.menu_book, "자바", "#캡스톤"));
         items.add(new ListViewItem(R.drawable.menu_book, "코틀린", "#캡스톤"));
 
-        adapter = new ListViewAdapter(items, view.getContext());
+        adapter = new GridViewAdapter(items, view.getContext());
 
         listview.setAdapter(adapter);
 
