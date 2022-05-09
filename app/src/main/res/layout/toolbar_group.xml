@@ -10,20 +10,12 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     >
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_main"
-        android:layout_gravity="center"
-
-        ></ImageView>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/sungsil"
-        android:text="아뭐읽지"
+        android:layout_gravity="left"
+        android:fontFamily="@font/nanumgothicbold"
+        android:text="그룹이름"
         android:textSize="30sp"
         android:textColor="#ffffff"></TextView>
 
