@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:weightSum="7"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:id="@+id/group_click">
 
     <ImageView
         android:id="@+id/group_icon"

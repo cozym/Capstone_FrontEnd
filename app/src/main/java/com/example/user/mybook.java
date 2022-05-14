@@ -1,17 +1,8 @@
 package com.example.user;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,35 +12,26 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-public class list_main_activity extends AppCompatActivity implements View.OnClickListener{
+public class mybook extends AppCompatActivity{
 
-    Fragment fragment0, fragment1;
-    private Button btn_crew;
-    private Button btn_book;
-    private Button btn_crew2;
-    DrawerLayout drawLayout;
-    NavigationView navigationView;
-
-    //추가 버튼 관련
-    private Animation fab_open, fab_close;
-    private Boolean isFabOpen = false;
-    private FloatingActionButton fab, fab1, fab2;
-
+    Fragment fragment0,fragment1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_list);
+        setContentView(R.layout.mybook);
 
 
         this.InitializeLayout();
 
 
-        fragment0 = new Fragment1();
+
+
+
+        fragment0 = new Fragment2();
         fragment1 = new Fragment2();
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
@@ -86,26 +68,6 @@ public class list_main_activity extends AppCompatActivity implements View.OnClic
 
 
         });
-
-        //추가 버튼관련 애니메이션
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
-        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-
-        fab.setOnClickListener(this);
-        fab1.setOnClickListener(this);
-        fab2.setOnClickListener(this);
-
-    }
-
-
-    ////우측 상단 검색 메뉴 추가
-    public boolean onCreateOptionsMenu(Menu menu) {   
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
     }
 
 
@@ -142,7 +104,7 @@ public class list_main_activity extends AppCompatActivity implements View.OnClic
                 switch (menuItem.getItemId())
                 {
                     case R.id.menu_home:
-                        Intent intent1 = new Intent(getApplicationContext(), list_main_activity.class);
+                        Intent intent1 = new Intent(getApplicationContext(), main.class);
                         startActivity(intent1);
                         break;
                     case R.id.menu_group:
@@ -154,7 +116,7 @@ public class list_main_activity extends AppCompatActivity implements View.OnClic
                         startActivity(intent3);
                         break;
                     case R.id.mypage:
-                        Intent intent4 = new Intent(getApplicationContext(), user_info.class);
+                        Intent intent4 = new Intent(getApplicationContext(), mypage.class);
                         startActivity(intent4);
                         break;
                 }
@@ -178,46 +140,4 @@ public class list_main_activity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    //클릭 이벤트
-    @Override
-    public void onClick(View view) {
-        //추가 버튼 이벤트
-        int id = view.getId();
-        switch (id) {
-            case R.id.fab:
-                anim();
-                break;
-            case R.id.fab1:
-                anim();
-                Intent intent1 = new Intent(getApplicationContext(), add_group.class);
-                startActivity(intent1);
-                break;
-            case R.id.fab2:
-                anim();
-                Intent intent2 = new Intent(getApplicationContext(), add_book.class);
-                startActivity(intent2);
-                break;
-            default:
-                anim();
-                break;
-        }
-    }
-    
-    //추가 버튼 애니메이션
-    public void anim() {
-        if (isFabOpen) {
-            fab1.startAnimation(fab_close);
-            fab2.startAnimation(fab_close);
-            fab1.setClickable(false);
-            fab2.setClickable(false);
-            isFabOpen = false;
-
-        } else {
-            fab1.startAnimation(fab_open);
-            fab2.startAnimation(fab_open);
-            fab1.setClickable(true);
-            fab2.setClickable(true);
-            isFabOpen = true;
-        }
-    }
 }

@@ -1,11 +1,13 @@
 package com.example.user;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class GridViewAdapter extends ArrayAdapter<ListViewItem>{
 //(LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 //LayoutInflater inflater = Activity.getLayoutInflater();
 //LayoutInflater inflater = LayoutInflater.from(Context context);
-            convertView = inflater.inflate(R.layout.gridview_crew_item,parent,false);//resourceId는 R.id.listView_crew_item이다.
+            convertView = inflater.inflate(R.layout.grid_crew_item,parent,false);//resourceId는 R.id.listView_crew_item이다.
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
             viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.hash_tag);
@@ -64,6 +66,10 @@ public class GridViewAdapter extends ArrayAdapter<ListViewItem>{
         viewHolder.text_Hash_Tag.setText(listViewItem.getHashTag());
 
 
+        //클릭이벤트
+        LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.book_clcik);
+        Intent intent = new Intent(getContext(), book_info.class);
+        cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
         return convertView;
     }
 }

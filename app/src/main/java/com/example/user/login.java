@@ -1,24 +1,21 @@
 package com.example.user;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.android.gms.common.SignInButton;
 
-public class MainActivity extends AppCompatActivity {
+public class login extends AppCompatActivity {
 
     private SignInButton btn_google;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); //처음 로그인 화면
+        setContentView(R.layout.login); //처음 로그인 화면
 
 
         //로그인 버튼 클릭시 로그인 후 화면 전환 이벤트
@@ -27,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         btn_google.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), list_main_activity.class);
+                Intent intent = new Intent(getApplicationContext(), main.class);
                 startActivity(intent);
             }
         });

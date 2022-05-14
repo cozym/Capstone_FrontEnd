@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +66,11 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         viewHolder.ICon.setImageResource(listViewItem.getIcon());
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
         viewHolder.text_Hash_Tag.setText(listViewItem.getHashTag());
-
+        
+        //클릭이벤트
+        LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);
+        Intent intent = new Intent(getContext(), group_enter.class);
+        cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
 
         return convertView;
     }

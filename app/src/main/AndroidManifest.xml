@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.User">
         <activity
-            android:name=".MainActivity"
+            android:name=".login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,31 +21,55 @@
         //화면전환 ON
         <activity
             android:name=".user_info"
-            android:parentActivityName=".list_main_activity"
+            android:parentActivityName=".mainList_activity"
             android:exported="true" />
         <activity
             android:name=".book_info"
-            android:parentActivityName=".list_main_activity"
+            android:parentActivityName=".mainList_activity"
             android:exported="true" />
         <activity
             android:name=".group_info"
-            android:parentActivityName=".list_main_activity"
+            android:parentActivityName=".mainList_activity"
             android:exported="true" />
         <activity
-            android:name=".list_activity"
-            android:parentActivityName=".list_main_activity"
+            android:name=".mypage"
+            android:parentActivityName=".mainList_activity"
             android:exported="true" />
         <activity
-            android:name=".list_main_activity"
-            android:parentActivityName=".list_main_activity"
+            android:name=".mainList_activity"
+            android:parentActivityName=".mainList_activity"
             android:exported="true" />
         <activity
             android:name=".add_group"
-            android:parentActivityName=".list_main_activity"
+            android:parentActivityName=".mainList_activity"
             android:exported="true" />
         <activity
             android:name=".add_book"
-            android:parentActivityName=".list_main_activity"
+            android:parentActivityName=".mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".main"
+            android:parentActivityName=".mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".search"
+            android:parentActivityName=".mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".mygroup"
+            android:parentActivityName=".mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".mybook"
+            android:parentActivityName=".mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".group_main"
+            android:parentActivityName=".mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".group_enter"
+            android:parentActivityName=".mainList_activity"
             android:exported="true" />
     </application>
 

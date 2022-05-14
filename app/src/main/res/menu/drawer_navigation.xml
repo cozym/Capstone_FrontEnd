@@ -7,11 +7,11 @@
         />
     <item android:id = "@+id/menu_group"
         android:icon = "@drawable/menu_group"
-        android:title = "내모임"
+        android:title = "내 모임"
         />
     <item android:id = "@+id/menu_book"
         android:icon = "@drawable/menu_book"
-        android:title = "도서"
+        android:title = "내 도서"
         />
     <item android:id = "@+id/mypage"
         android:icon = "@drawable/menu_mypage"

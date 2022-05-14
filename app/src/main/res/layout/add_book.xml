@@ -114,13 +114,21 @@
                 android:layout_marginBottom="20dp">
                 <EditText
                     android:layout_width="0dp"
-                    android:layout_weight="0.9"
+                    android:layout_weight="0.8"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button4"
                     android:padding="8dp"
-                    android:hint="직접 입력하거나 바코드를 찍어주세요."
+                    android:hint="입력하거나 바코드를 찍어주세요."
                     android:fontFamily="@font/nanumgothic"
                     ></EditText>
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="0.1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button4"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_black"></ImageButton>
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_weight="0.1"
