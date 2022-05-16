@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        ></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity ="center"
+        android:fillViewport="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/scrollView"
+        android:layout_weight="1">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="썸네일"
+                android:textSize="20sp"
+                android:paddingTop="30dp"
+                android:textColor="@color/black"
+                />
+
+            <ImageView
+                android:id="@+id/group_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@drawable/button4"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_book" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="제목"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button4"
+                android:padding="8dp"
+                android:hint="제목을 입력해주세요."
+                android:fontFamily="@font/nanumgothic"
+                ></EditText>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="설명"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button4"
+                android:padding="8dp"
+                android:hint="설명을 입력해주세요."
+                android:minHeight="80dp"
+                android:fontFamily="@font/nanumgothic"
+                ></EditText>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="해시태그"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button4"
+                android:padding="8dp"
+                android:hint="해시태그를 입력해주세요."
+                android:fontFamily="@font/nanumgothic"
+                ></EditText>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="ISBN"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:layout_marginBottom="20dp">
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button4"
+                    android:padding="8dp"
+                    android:hint="입력하거나 바코드를 찍어주세요."
+                    android:fontFamily="@font/nanumgothic"
+                    ></EditText>
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="0.1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button4"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_black"></ImageButton>
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="0.1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button4"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/camera"></ImageButton>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EFEFEF"
+        android:orientation="horizontal"
+        >
+        <LinearLayout android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button5"
+                android:text="등록하기"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/nanumgothic"
+                android:layout_gravity="center"/>
+
+
+
+
+        </LinearLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</LinearLayout>
+
+
+
+
