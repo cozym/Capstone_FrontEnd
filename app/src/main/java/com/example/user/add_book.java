@@ -91,7 +91,9 @@ public class add_book extends AppCompatActivity {
                         }).setNegativeButton("finish", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
+                                ISBNInput = (EditText)findViewById(R.id.ISBNInput);
+                                ISBNInput.setText(result.getContents());
+                                //finish();
                             }
                         });
                 AlertDialog dialog = builder.create();
