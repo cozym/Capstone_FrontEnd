@@ -28,7 +28,7 @@ public class add_group extends AppCompatActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        imageview = (ImageView)findViewById(R.id.thumbnailButton);
+        imageview = (ImageView)findViewById(R.id.group_thumbnail);
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
