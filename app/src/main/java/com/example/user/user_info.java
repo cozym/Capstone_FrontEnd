@@ -18,5 +18,6 @@ public class user_info extends AppCompatActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
     }
 }

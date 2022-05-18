@@ -24,6 +24,7 @@ public class login extends AppCompatActivity {
         btn_google.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View view){
+                //웹뷰 이동, 로그인처리 이벤트 추가
                 Intent intent = new Intent(getApplicationContext(), main.class);
                 startActivity(intent);
             }
