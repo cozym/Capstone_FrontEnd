@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/sungsil"
-            android:text="아뭐읽지"
+            android:text="공책"
             android:textSize="40sp"
             android:textColor="#ffffff"></TextView>
     </LinearLayout>

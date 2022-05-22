@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/user/AndroidStudioProjects/BookApplication/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BookApplication/app/src/main/res/layout/add_book.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BookApplication/app/src/main/res/layout/login.xml" value="0.11354166666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GongCheck/app/src/main/res/layout/activity_main.xml" value="0.15425531914893617" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GongCheck/app/src/main/res/layout/add_book.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GongCheck/app/src/main/res/layout/book_info.xml" value="0.29891304347826086" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GongCheck/app/src/main/res/layout/login.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GongCheck/app/src/main/res/layout/toolbar.xml" value="0.29891304347826086" />
       </map>
     </option>
   </component>
