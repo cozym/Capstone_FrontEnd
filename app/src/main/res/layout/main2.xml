@@ -54,7 +54,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:text="메인리스트"
+                    android:background="@drawable/main_mainlist"
                     android:id="@+id/to_mainList"></Button>
 
                 <LinearLayout
@@ -67,21 +67,21 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="150dp"
-                        android:text="내 그룹"
+                        android:background="@drawable/main_mygroup"
                         android:layout_marginRight="5dp"
                         android:id="@+id/to_myGroup"></Button>
                     <Button
                         android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="150dp"
-                        android:text="내 도서"
+                        android:background="@drawable/main_mybook"
                         android:layout_marginLeft="5dp"
                         android:id="@+id/to_myBook"></Button>
                 </LinearLayout>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:text="GPS"
+                    android:background="@drawable/main_gps"
                     android:layout_marginTop="10dp"
                     android:id="@+id/to_GPS"></Button>
                 <Button

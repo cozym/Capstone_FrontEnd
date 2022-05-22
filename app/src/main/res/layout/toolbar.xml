@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/sungsil"
-        android:text="아뭐읽지"
+        android:text="공\t책"
         android:textSize="30sp"
         android:textColor="#ffffff"></TextView>
 
