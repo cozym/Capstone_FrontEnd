@@ -1,12 +1,10 @@
 package com.example.practicespace;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -15,16 +13,9 @@ import android.webkit.WebViewClient;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.toolbox.HttpResponse;
+import com.google.gson.Gson;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Headers;
@@ -58,7 +49,9 @@ public class WebViewActivity extends AppCompatActivity {
         //webView.getSettings().setSupportZoom(false);
         //webView.getSettings().setBuiltInZoomControls(false);
 
-        //webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptEnabled(true);   // 자바스크립트 사용
+        webView.getSettings().setAllowFileAccessFromFileURLs(true); // url통한 파일 접속 허용
+        webView.getSettings().setAllowContentAccess(true);  // 컨텐츠 접근 허용
         //webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         //webView.getSettings().setSupportMultipleWindows(true);
 
@@ -71,19 +64,58 @@ public class WebViewActivity extends AppCompatActivity {
         Log.d("tttttttttttttest", TAG);
 
 
-        webView.loadUrl("http://5gradekgucapstone.xyz:8080/oauth2/authorization/google");  //test url
+        webView.addJavascriptInterface(new MyJavascriptInterface(), "Android");
+        //webView.loadUrl("https://www.google.com/");  //test url
+        webView.loadUrl("http://5gradekgucapstone.xyz:8080/oauth2/authorization/google");
 
     }
 
     private class YourWebClient extends WebViewClient {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    boolean loadingFinished = true;
+    boolean redirect = false;
+
+    @Override
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        loadingFinished = false;
+        //SHOW LOADING IF IT ISNT ALREADY VISIBLE
+    }
+
+    @Override
+    public void onPageFinished(WebView view, String url) {
+        Log.d("kkkkkkkk",url);
+        view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('pre')[0].innerHTML);");
+
+        //handleIntercept(url);
+        if (!redirect) {
+            loadingFinished = true;
+            //HIDE LOADING IT HAS FINISHED
+        } else {
+            redirect = false;
+        }
+    }
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String urlNewString) {
+        if (!loadingFinished) {
+            redirect = true;
+        }
+
+        loadingFinished = false;
+        Log.d("cccccc",urlNewString);
+        webView.loadUrl(urlNewString);
+        return true;
+    }
+
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
         //Log.d("bbbbbbbbb",request.getRequestHeaders("content-type","text/plain").toString());
-        if (request.getUrl().toString().contains("aafwfw")) {// condition to intercept webview's request
+        if (request.getUrl().toString().contains("adsasd")) {// condition to intercept webview's request
+            Log.d("wwwwwww","withwithwith");
             return handleIntercept(request);
         } else {
-            Log.d("eeeeeeeeelse", TAG);
+            Log.d("qqqqqqq","withwithwith");
+            //Log.d("eeeeeeeeelse", request.getUrl().toString());
             return super.shouldInterceptRequest(view, request);
             //return handleIntercept(request);
         }
@@ -100,7 +132,8 @@ public class WebViewActivity extends AppCompatActivity {
         try {
             final Response response = call.execute();
             response.headers();// get response header here
-            Log.d("aaaaaaaaaaaaaaaaaa", response.header("Authorization","text/plain").toString());
+            //Log.d("wwwwwww",response.code());
+            Log.d("aaaaaaaaaaaaaaaaaa", response.header("Authorization","text/plain"));
             return new WebResourceResponse(
                     response.header("content-type", "text/plain"), // You can set something other as default content-type
                     response.header("content-encoding", "utf-8"),  //you can set another encoding as default
@@ -113,18 +146,18 @@ public class WebViewActivity extends AppCompatActivity {
     }
     }
 
+}
 
-    private Map<String, String> getCustomHeaders()
-    {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("YOURHEADER", "VALUE");
-        return headers;
+class MyJavascriptInterfaced {
+    @JavascriptInterface
+    public void getHtml(String html) {
+        GetUserInfo(html);
+        Log.d("oooooooo", html);
     }
 
-
-    /* public void GetUserInfo(String response) {
+    public void GetUserInfo(String response) {
         Gson gson = new Gson();
-        UserList userList = gson.fromJson(response, UserList.class);
-    } */
-
+        LoginInfo info = gson.fromJson(response, LoginInfo.class);
+        Log.d("iiiiiii", info.data.token);
+    }
 }

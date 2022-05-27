@@ -1,12 +1,12 @@
 package com.example.practicespace;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -60,8 +60,7 @@ public class HttpActivity extends AppCompatActivity {
                     }
                     public void StoreData(String response) {
                         Gson gson = new Gson();
-                        UserList userList = gson.fromJson(response, UserList.class);
-                        println("test : " + userList.userinfo.user_infos.size());
+
                     }
                 },
                 new Response.ErrorListener() {

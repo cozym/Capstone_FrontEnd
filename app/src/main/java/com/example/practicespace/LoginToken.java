@@ -1,6 +1,5 @@
 package com.example.practicespace;
 
-public class User {
-    String id;
+public class LoginToken {
     String token;
 }
