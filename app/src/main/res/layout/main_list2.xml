@@ -62,7 +62,8 @@
             android:layout_marginRight="15sp"
             android:elevation="6dp"
             android:src="@drawable/menu_group"
-            android:backgroundTint="#40B6C5"
+            android:backgroundTint="@color/mainColor"
+            app:borderWidth="0dp"
             android:visibility="invisible"/>
         // 추가 버튼
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -71,8 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:src="@drawable/plus"
-            android:backgroundTint="#40B6C5"
-            android:layout_margin="15sp" />
+            android:backgroundTint="@color/mainColor"
+            android:layout_margin="15sp"
+            app:borderWidth="0dp"
+            />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
