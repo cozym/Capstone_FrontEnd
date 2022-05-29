@@ -1,2 +1,22 @@
-package com.example.capstone_frontend.book_controller;public class bookGet {
+package com.example.capstone_frontend.book_controller;
+
+import com.example.capstone_frontend.vo.Book;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+public class bookGet{
+    @SerializedName("httpStatus")
+    @Expose
+    public String httpStatus;
+
+    @SerializedName("message")
+    @Expose
+    public String message;
+
+    @SerializedName("data")
+    @Expose
+    public Data data;
+    public class Data{
+        @SerializedName("seq")
+        @Expose
+        public Book book = new Book();
 }

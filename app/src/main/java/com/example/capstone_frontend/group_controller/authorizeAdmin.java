@@ -1,2 +1,4 @@
-package com.example.capstone_frontend.group_controller;public class authorizeAdmin {
+package com.example.capstone_frontend.group_controller;
+
+public class authorizeAdmin {
 }

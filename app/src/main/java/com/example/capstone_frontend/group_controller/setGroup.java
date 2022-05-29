@@ -1,9 +1,9 @@
-package com.example.capstone_frontend.book_controller;
+package com.example.capstone_frontend.group_controller;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class bookList extends setBook {
+public class setGroup {
     @SerializedName("httpStatus")
     @Expose
     public String httpStatus;
@@ -12,3 +12,4 @@ public class bookList extends setBook {
     @Expose
     public String message;
 }
+
