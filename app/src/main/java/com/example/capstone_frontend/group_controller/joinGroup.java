@@ -1,10 +1,10 @@
-package com.example.capstone_frontend.book_controller;
+package com.example.capstone_frontend.group_controller;
 
-import com.example.capstone_frontend.vo.Book;
+import com.example.capstone_frontend.vo.Group;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class searchByIsbn {
+public class joinGroup {
     @SerializedName("httpStatus")
     @Expose
     public String httpStatus;
@@ -18,8 +18,8 @@ public class searchByIsbn {
     public Data data;
 
     public class Data {
-        @SerializedName("book")
+        @SerializedName("group")
         @Expose
-        public Book book = new Book();
+        public Group group = new Group();
     }
 }

@@ -10,6 +10,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -29,14 +30,15 @@ public interface APIInterface {
             @Field("groupSeq") int groupSeq);
 
     @GET("book/{seq}")
-    Call<bookGet> getBookSeq( @Field("seq") int seq );
+    Call<getBook> getBookSeq( @Field("seq") int seq );
 
     @DELETE("book/{seq}")
-    Call<bookDelete> deleteBookSeq( @Field("seq") int seq);
+    Call<deleteBook> deleteBookSeq( @Field("seq") int seq);
 
     @FormUrlEncoded
     @PATCH("book/borrow")
-    Call<borrowBook> borrow( @Field("bookSeq") int bookSeq);
+    Call<borrowBook> borrow(
+            @Field("bookSeq") int bookSeq);
 
     @GET("book/isbn/{seq}")
     Call<searchByIsbn> getIsbnSeq( @Field("isbn") String isbn);
@@ -58,7 +60,7 @@ public interface APIInterface {
 
     @FormUrlEncoded
     @PUT("book/update")
-    Call<bookUpdate> bookUpdate(
+    Call<updateBook> bookUpdate(
             @Field("seq") int seq,
             @Field("title") String title,
             @Field("author") String author,
@@ -79,11 +81,11 @@ public interface APIInterface {
             @Field("latitude") double latitude);
 
     @GET("group/{seq}")
-    Call<groupGet> getGroupSeq( @Field("seq") int seq );
+    Call<getGroup> getGroupSeq( @Field("seq") int seq );
 
 
     @DELETE("group/{seq}")
-    Call<groupDelete> deleteGroupSeq( @Field("seq") int seq);
+    Call<deleteGroup> deleteGroupSeq( @Field("seq") int seq);
 
     @FormUrlEncoded
     @PATCH("group/authorize")
@@ -93,7 +95,7 @@ public interface APIInterface {
 
     @FormUrlEncoded
     @POST("group/join")
-    Call<groupJoin> join(
+    Call<joinGroup> join(
             @Field("groupSeq") int groupSeq,
             @Field("authenticationCode") String authenticationCode);
 
@@ -101,5 +103,5 @@ public interface APIInterface {
     Call<openGroupList> getGroupList();
 
     @DELETE("group/resign")
-    Call<groupResign> Resign( @Field("groupSeq") int groupSeq);
+    Call<resignGroup> Resign( @Field("groupSeq") int groupSeq);
 }

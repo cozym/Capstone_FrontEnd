@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Book {
     @SerializedName("seq")
-    private int groupSeq;
+    private int seq;
 
     @SerializedName("title")
     private String title;
@@ -54,7 +54,7 @@ public class Book {
 
     public String getCategory() {return category;}
 
-    public int getGroupSeq() {return groupSeq;}
+    public int getGroupSeq() {return seq;}
 
     public String getCode() {return code;}
 

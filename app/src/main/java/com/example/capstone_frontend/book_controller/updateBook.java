@@ -4,7 +4,7 @@ import com.example.capstone_frontend.vo.Book;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class searchByIsbn {
+public class updateBook {
     @SerializedName("httpStatus")
     @Expose
     public String httpStatus;

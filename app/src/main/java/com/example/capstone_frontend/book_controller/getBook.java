@@ -1,9 +1,11 @@
 package com.example.capstone_frontend.book_controller;
 
+import com.example.capstone_frontend.vo.Book;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class bookDelete{
+public class getBook {
+
     @SerializedName("httpStatus")
     @Expose
     public String httpStatus;
@@ -16,7 +18,8 @@ public class bookDelete{
     @Expose
     public Data data;
     public class Data{
-        @SerializedName("seq")
+        @SerializedName("book")
         @Expose
-        public int seq;
+        public Book book = new Book();
+    }
 }
