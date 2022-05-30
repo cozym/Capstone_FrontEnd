@@ -38,27 +38,71 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/gps_drawer">
+
         <TextView
-            android:id="@+id/tv_slideText1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
-            android:text="slideOffset"
+            android:id="@+id/textView2"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="6dp"
+            android:text="그룹 이름"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="69dp"
+            android:background="#595959"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/to_groupinfo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_slideOffset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="40dp"
+            android:text="그룹 설명"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_slideText1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <TextView
+            android:id="@+id/tv_slideText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:text="해시태그들(추후 변경 가능)"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_slideOffset"
+            app:layout_constraintTop_toBottomOf="@+id/tv_slideOffset" />
+
+        <Button
+            android:id="@+id/to_groupinfo"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginBottom="0dp"
+            android:background="#776a5f"
+            android:text="바로가기"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_slideText1" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"></Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
