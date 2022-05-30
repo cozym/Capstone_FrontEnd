@@ -36,9 +36,6 @@
             android:name=".LocationActivity"
             android:exported="true" />
         <activity
-            android:name=".HttpActivity"
-            android:exported="true" />
-        <activity
             android:name=".WebViewActivity"
             android:exported="true">
         </activity>

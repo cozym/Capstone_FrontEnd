@@ -1,20 +1,22 @@
 package com.example.practicespace;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class LocationActivity extends AppCompatActivity {
     TextView text_location;
@@ -36,10 +38,24 @@ public class LocationActivity extends AppCompatActivity {
         check_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startLocationService();
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Intent intent = new Intent(getApplicationContext(), Map.class);
+        startActivity(intent);
+        Log.d("uuuuuuuuuuu", "111111111111");
     }
 
     public void startLocationService() {
