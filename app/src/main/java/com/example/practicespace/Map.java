@@ -1,8 +1,11 @@
 package com.example.practicespace;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.Context;
@@ -14,8 +17,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,19 +28,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class Map extends AppCompatActivity {
 
     SupportMapFragment mapFragment;
     GoogleMap map;
+    private UiSettings uiSettings;
+    SlidingUpPanelLayout slidingUpPanelLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.main_frame);
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
@@ -43,6 +55,9 @@ public class Map extends AppCompatActivity {
             //위치 권한 요청
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
+
+
+
 
         // 구글 맵 비동기 처리
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -52,6 +67,18 @@ public class Map extends AppCompatActivity {
                 Log.d("Map", "지도 준비완료");
                 map = googleMap;
                 map.setMyLocationEnabled(true);
+
+                //ui 세팅 추가
+                uiSettings = map.getUiSettings();
+                uiSettings.setMapToolbarEnabled(false);
+
+                map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(@NonNull LatLng latLng) {  //외부 클릭시 정보창 닫기
+                        slidingUpPanelLayout.setTouchEnabled(true);
+                        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED); 
+                    }
+                });
             }
         });
 
@@ -68,6 +95,8 @@ public class Map extends AppCompatActivity {
                 startLocationService();
             }
         });
+
+
     }
 
     // 내 위치 가져오기
@@ -121,6 +150,7 @@ public class Map extends AppCompatActivity {
                 myLocationMarker.snippet("GPS로 확인한 위치");
                 //myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
                 map.addMarker(myLocationMarker);
+                map.setOnMarkerClickListener(markerClickListener);
             } else {
                 myLocationMarker.position(curPoint);
             }
@@ -131,7 +161,40 @@ public class Map extends AppCompatActivity {
         public void onProviderEnabled(String provider) { }
 
         public void onStatusChanged(String provider, int status, Bundle extras) { }
+
     }
+
+    //마커 클릭 이벤트
+    GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            String markerId = marker.getId();
+            LatLng location = marker.getPosition();
+
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            slidingUpPanelLayout.setTouchEnabled(false);
+            //외부 영역 클릭 시, 닫기
+            return false;
+        }
+    };
+
+    //뒤로가기 누르면 레이아웃 집어넣기
+    @Override
+    public void onBackPressed()
+    {
+        SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.main_frame);
+
+        if(slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)
+        {
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
+
+
 
     public void onResume() {
         super.onResume();
