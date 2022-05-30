@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.practicespace.ui.main;
+
 public class LocationActivity extends AppCompatActivity {
     TextView text_location;
 
@@ -53,7 +55,7 @@ public class LocationActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Intent intent = new Intent(getApplicationContext(), Map.class);
+        Intent intent = new Intent(getApplicationContext(), main.class);
         startActivity(intent);
         Log.d("uuuuuuuuuuu", "111111111111");
     }

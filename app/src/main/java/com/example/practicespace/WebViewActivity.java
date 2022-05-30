@@ -13,6 +13,8 @@ import android.webkit.WebViewClient;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.practicespace.ui.LoginInfo;
+import com.example.practicespace.ui.MyJavascriptInterface;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -158,6 +160,6 @@ class MyJavascriptInterfaced {
     public void GetUserInfo(String response) {
         Gson gson = new Gson();
         LoginInfo info = gson.fromJson(response, LoginInfo.class);
-        Log.d("iiiiiii", info.data.token);
+        //Log.d("iiiiiii", info.data.token);
     }
 }

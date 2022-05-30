@@ -12,25 +12,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PracticeSpace"
+        android:theme="@style/Theme.User"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".Login"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAb3EkyBWU9cJ1yjNVdBE4tTxv97Nw_-Kw" />
 
         <activity
-            android:name=".Map"
+            android:name=".ui.login"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.LoginWebview"
+            android:exported="true" >
+        </activity>
+        <activity
+            android:name=".ui.Map"
             android:exported="true" />
         <activity
             android:name=".LocationActivity"
@@ -41,6 +44,58 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.user_info"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.book_info"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.group_info"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.mypage"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.mainList_activity"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.add_group"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.add_book"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.main"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.search"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.mygroup"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.mybook"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.group_main"
+            android:parentActivityName=".ui.mainList_activity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.group_enter"
+            android:parentActivityName=".ui.mainList_activity"
             android:exported="true" />
     </application>
 
