@@ -21,7 +21,7 @@ public class openGroupList {
     public Data data;
 
     public class Data {
-        @SerializedName("group")
+        @SerializedName("groupList")
         @Expose
         public List<Group> groups = new ArrayList<Group>();
     }
