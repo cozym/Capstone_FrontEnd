@@ -13,13 +13,4 @@ public class joinGroup {
     @Expose
     public String message;
 
-    @SerializedName("data")
-    @Expose
-    public Data data;
-
-    public class Data {
-        @SerializedName("group")
-        @Expose
-        public Group group = new Group();
-    }
 }

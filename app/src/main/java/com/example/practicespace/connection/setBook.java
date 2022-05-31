@@ -13,7 +13,7 @@ public class setBook {
         @Expose
         public String message;
 
-        @SerializedName("data")
+        /*@SerializedName("data")
         @Expose
         public Data data;
         public class Data{
@@ -21,5 +21,5 @@ public class setBook {
                 @Expose
                 public Book book = new Book();
 
-        }
+        }*/
 }
