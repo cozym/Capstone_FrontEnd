@@ -129,6 +129,7 @@ public interface APIInterface {
     @FormUrlEncoded
     @PATCH("user/nickname")
     Call<modNickname> modifyNickname(
-            @Header("Authorization") String token);
+            @Header("Authorization") String token,
+            @Field("nickname") String nickname);
 
 }
