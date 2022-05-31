@@ -9,6 +9,7 @@ import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface APIInterface {
     @FormUrlEncoded
@@ -28,12 +29,12 @@ public interface APIInterface {
     @GET("book/{seq}")
     Call<getBook> getBookSeq(
             @Header("Authorization") String token,
-            @Field("seq") int seq );
+            @Path("seq") int seq );
 
     @DELETE("book/{seq}")
     Call<deleteBook> deleteBookSeq(
             @Header("Authorization") String token,
-            @Field("seq") int seq);
+            @Path("seq") int seq);
 
     @FormUrlEncoded
     @PATCH("book/borrow")
@@ -44,7 +45,7 @@ public interface APIInterface {
     @GET("book/isbn/{seq}")
     Call<searchByIsbn> getIsbnSeq(
             @Header("Authorization") String token,
-            @Field("isbn") String isbn);
+            @Path("isbn") String isbn);
 
     @GET("book/list")
     Call<bookList> getBookList(
@@ -92,13 +93,13 @@ public interface APIInterface {
     @GET("group/{seq}")
     Call<getGroup> getGroupSeq(
             @Header("Authorization") String token,
-            @Field("seq") int seq );
+            @Path("seq") int seq );
 
 
     @DELETE("group/{seq}")
     Call<deleteGroup> deleteGroupSeq(
             @Header("Authorization") String token,
-            @Field("seq") int seq);
+            @Path("seq") int seq);
 
     @FormUrlEncoded
     @PATCH("group/authorize")
@@ -121,13 +122,4 @@ public interface APIInterface {
     Call<resignGroup> Resign(
             @Header("Authorization") String token,
             @Field("groupSeq") int groupSeq);
-
-    @GET("user/info")
-    Call<getUser> getUserInfo(
-            @Header("Authorization") String token);
-    @FormUrlEncoded
-    @PATCH("user/nickname")
-    Call<modNickname> modifyNickname(
-            @Header("Authorization") String token);
-
 }
