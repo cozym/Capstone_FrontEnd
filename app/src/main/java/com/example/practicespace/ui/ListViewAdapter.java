@@ -3,6 +3,7 @@ package com.example.practicespace.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,16 +67,18 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         //위젯에 내가 만들어 놓은 부분 적용
         viewHolder.ICon.setImageResource(listViewItem.getIcon());
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
-        viewHolder.text_Hash_Tag.setText(listViewItem.getHashTag());
-
+        String group_date = listViewItem.getCreatedDate().substring(0,10);
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);
         Intent intent = new Intent(getContext(), group_enter.class);
         intent.putExtra("그룹이름",viewHolder.text_Group_Name.getText());
+        intent.putExtra("그룹설명",listViewItem.getGroupDes());
+        intent.putExtra("그룹공개",listViewItem.getIsOpen());
+//        intent.putExtra("관리자", listViewItem.getAdmin().getNickname());
         intent.putExtra("그룹시퀀스",listViewItem.getGroupSeq());
+        intent.putExtra("그룹생성일" ,group_date);
         cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
 
         return convertView;
     }
 }
-
