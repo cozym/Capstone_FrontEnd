@@ -51,8 +51,9 @@ public interface APIInterface {
     Call<bookList> getBookList(
             @Header("Authorization") String token,
             @Field("groupSeq") int groupSeq,
-            @Field("start") int start,
-            @Field("display") int display);
+//             @Field("start") int start,
+//             @Field("display") int display
+    );
 
     @GET("book/mybook")
     Call<myBookList> getMyBookList(
@@ -87,6 +88,7 @@ public interface APIInterface {
             @Field("name") String name,
             @Field("isOpen") boolean isOpen,
             @Field("thumbnail") String thumbnail,
+            @Field("description") String description,
             @Field("longtitude") double longtitude,
             @Field("latitude") double latitude);
 
