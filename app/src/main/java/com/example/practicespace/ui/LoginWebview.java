@@ -51,11 +51,6 @@ public class LoginWebview extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             Log.d("ttaagg", url);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             if(url.contains("google?state=")) {
                 Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
                 startActivity(intent);

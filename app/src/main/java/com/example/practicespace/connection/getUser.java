@@ -1,8 +1,5 @@
 package com.example.practicespace.connection;
 
-import com.example.practicespace.vo.Emails;
-import com.example.practicespace.vo.Group;
-import com.example.practicespace.vo.Nickname;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,10 +21,10 @@ public class getUser {
     public class Data {
         @SerializedName("emails")
         @Expose
-        public Emails emails = new Emails();
+        public List<String> emails;
 
         @SerializedName("nickname")
         @Expose
-        public Nickname nickname = new Nickname();
+        public String nickname;
     }
 }

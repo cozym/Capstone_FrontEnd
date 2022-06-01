@@ -2,9 +2,11 @@ package com.example.practicespace.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +19,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.getUser;
 import com.google.android.material.navigation.NavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class main extends AppCompatActivity{
 
@@ -27,39 +34,38 @@ public class main extends AppCompatActivity{
 
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main1);
-        //Log.d("###########", LoginInfo.getInstance().data.token);
+        NavigationView navigationView = (NavigationView)findViewById(R.id.main_navigationView);
+        View nav_header_view = navigationView.getHeaderView(0);
+        TextView nickname = (TextView)nav_header_view.findViewById(R.id.main_nickname);
+        TextView email = (TextView)nav_header_view.findViewById(R.id.main_email);
 
-        /*
-        Call<setGroup> call = apiInterface.saveGroup(
-                LoginInfo.getInstance().data.token,
-                "testgroup",
-                true,
-                "file",
-                127.035,
-                37.299
-        );
-        call.enqueue(new Callback<setGroup>() {
-            @Override
-            public void onResponse(Call<setGroup> call, Response<setGroup> response) {
-                setGroup result = response.body();
-                if(response.code() == 200) {
-                    Log.d("연결 테스트","성공");
-                } else {
-                    Log.d("연결 테스트","실패");
+        Log.d("nicknametest","성공");
+
+        if(LoginInfo.getInstance().data.token != null){
+            Call<getUser> user = apiInterface.getUserInfo(LoginInfo.getInstance().data.token);
+            user.enqueue(new Callback<getUser>() {
+                @Override
+                public void onResponse(Call<getUser> call, Response<getUser> response) {
+                    getUser result = response.body();
+                    nickname.setText(result.data.nickname);
+                    email.setText(result.data.emails.get(0));
                 }
-            }
 
-            @Override
-            public void onFailure(Call<setGroup> call, Throwable t) {
-                Log.d("연결 테스트","통신 실패");
+                @Override
+                public void onFailure(Call<getUser> call, Throwable t) {
 
-            }
-        });*/
+                }
+            });
+        }else
+            Log.d("연결 테스트","실패");
 
+        Log.d("nicknametest","성공");
 
         this.InitializeLayout();
 
@@ -109,6 +115,34 @@ public class main extends AppCompatActivity{
             }
         });
 
+
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        NavigationView navigationView = (NavigationView)findViewById(R.id.main_navigationView);
+        View nav_header_view = navigationView.getHeaderView(0);
+        TextView nickname = (TextView)nav_header_view.findViewById(R.id.main_nickname);
+        TextView email = (TextView)nav_header_view.findViewById(R.id.main_email);
+
+        if(LoginInfo.getInstance().data.token != null){
+            Call<getUser> user = apiInterface.getUserInfo(LoginInfo.getInstance().data.token);
+            user.enqueue(new Callback<getUser>() {
+                @Override
+                public void onResponse(Call<getUser> call, Response<getUser> response) {
+                    getUser result = response.body();
+                    nickname.setText(result.data.nickname);
+                    email.setText(result.data.emails.get(0));
+                }
+
+                @Override
+                public void onFailure(Call<getUser> call, Throwable t) {
+
+                }
+            });
+        }else
+            Log.d("연결 테스트","실패");
 
     }
 

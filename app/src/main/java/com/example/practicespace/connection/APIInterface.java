@@ -126,6 +126,7 @@ public interface APIInterface {
     @GET("user/info")
     Call<getUser> getUserInfo(
             @Header("Authorization") String token);
+
     @FormUrlEncoded
     @PATCH("user/nickname")
     Call<modNickname> modifyNickname(

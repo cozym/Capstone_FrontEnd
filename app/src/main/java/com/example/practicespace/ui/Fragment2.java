@@ -29,16 +29,16 @@ public class Fragment2 extends Fragment {
         //adapter에 넣을 리스트뷰를 받는 배열
         ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
 
-        items.add(new ListViewItem(R.drawable.menu_book, "android Studio", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "OS", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "MongoDB", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "캡스톤", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "컴퓨터 구조", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "네트워크", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "머신러닝", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "파이썬", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "자바", "#캡스톤"));
-        items.add(new ListViewItem(R.drawable.menu_book, "코틀린", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "android Studio", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "OS", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "MongoDB", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "캡스톤", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "컴퓨터 구조", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "네트워크", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "머신러닝", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "파이썬", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "자바", "#캡스톤"));
+        //items.add(new ListViewItem(R.drawable.menu_book, "코틀린", "#캡스톤"));
 
         adapter = new GridViewAdapter(items, view.getContext());
 

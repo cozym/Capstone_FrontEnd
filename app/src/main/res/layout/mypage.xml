@@ -44,7 +44,7 @@
                     android:src="@drawable/profile" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -123,6 +123,7 @@
                             android:padding="3dp">
                         </TextView>
                         <TextView
+                            android:id="@+id/name"
                             android:layout_width="match_parent"
                             android:layout_weight="7"
                             android:layout_height="30dp"
@@ -157,6 +158,7 @@
                             android:padding="3dp">
                         </TextView>
                         <TextView
+                            android:id="@+id/email"
                             android:layout_width="match_parent"
                             android:layout_weight="7"
                             android:layout_height="30dp"

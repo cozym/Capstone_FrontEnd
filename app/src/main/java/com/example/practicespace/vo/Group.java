@@ -17,7 +17,7 @@ public class Group {
     private String authenticationCode;
 
     @SerializedName("admin")
-    private Admin admin;
+    private Admin admin = new Admin();
 
     @SerializedName("open")
     private boolean open;
