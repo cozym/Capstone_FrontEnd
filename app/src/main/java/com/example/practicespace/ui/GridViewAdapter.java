@@ -64,7 +64,6 @@ public class GridViewAdapter extends ArrayAdapter<ListViewItem>{
         //위젯에 내가 만들어 놓은 부분 적용
         viewHolder.ICon.setImageResource(listViewItem.getIcon());
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
-        viewHolder.text_Hash_Tag.setText(listViewItem.getHashTag());
 
 
         //클릭이벤트
