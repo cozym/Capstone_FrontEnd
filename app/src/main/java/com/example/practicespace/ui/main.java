@@ -2,7 +2,6 @@ package com.example.practicespace.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
-import com.example.practicespace.connection.setGroup;
 import com.google.android.material.navigation.NavigationView;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class main extends AppCompatActivity{
 
@@ -37,8 +31,9 @@ public class main extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main1);
-        Log.d("###########", LoginInfo.getInstance().data.token);
+        //Log.d("###########", LoginInfo.getInstance().data.token);
 
+        /*
         Call<setGroup> call = apiInterface.saveGroup(
                 LoginInfo.getInstance().data.token,
                 "testgroup",
@@ -63,7 +58,7 @@ public class main extends AppCompatActivity{
                 Log.d("연결 테스트","통신 실패");
 
             }
-        });
+        });*/
 
 
         this.InitializeLayout();

@@ -1,8 +1,9 @@
 package com.example.practicespace.ui;
 
 
-
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,14 @@ public class Fragment1 extends Fragment {
 
     ListView listview;
     private static ListViewAdapter adapter;
+
+    @Override
+    public void onAttach(Context context) {
+        Log.d("123123","123123");
+
+        super.onAttach(context);
+        Log.d("321321","3212321");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
