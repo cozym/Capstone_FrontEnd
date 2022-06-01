@@ -1,13 +1,14 @@
 package com.example.practicespace.connection;
 
+import com.example.practicespace.vo.Emails;
 import com.example.practicespace.vo.Group;
+import com.example.practicespace.vo.Nickname;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class openGroupList {
+public class getUser {
     @SerializedName("httpStatus")
     @Expose
     public String httpStatus;
@@ -21,8 +22,12 @@ public class openGroupList {
     public Data data;
 
     public class Data {
-        @SerializedName("groupList")
+        @SerializedName("emails")
         @Expose
-        public List<Group> groups = new ArrayList<Group>();
+        public Emails emails = new Emails();
+
+        @SerializedName("nickname")
+        @Expose
+        public Nickname nickname = new Nickname();
     }
 }

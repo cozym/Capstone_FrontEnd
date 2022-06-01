@@ -122,4 +122,14 @@ public interface APIInterface {
     Call<resignGroup> Resign(
             @Header("Authorization") String token,
             @Field("groupSeq") int groupSeq);
+
+    @GET("user/info")
+    Call<getUser> getUserInfo(
+            @Header("Authorization") String token);
+    @FormUrlEncoded
+    @PATCH("user/nickname")
+    Call<modNickname> modifyNickname(
+            @Header("Authorization") String token,
+            @Field("nickname") String nickname);
+
 }

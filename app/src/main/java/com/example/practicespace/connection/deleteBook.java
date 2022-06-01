@@ -12,14 +12,4 @@ public class deleteBook {
     @SerializedName("message")
     @Expose
     public String message;
-
-    @SerializedName("data")
-    @Expose
-    public Data data;
-
-    public class Data {
-        @SerializedName("book")
-        @Expose
-        public Book book = new Book();
-    }
 }

@@ -1,10 +1,10 @@
 package com.example.practicespace.connection;
 
-import com.example.practicespace.vo.Group;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class authorizeAdmin {
+public class modNickname {
+
     @SerializedName("httpStatus")
     @Expose
     public String httpStatus;
@@ -12,5 +12,4 @@ public class authorizeAdmin {
     @SerializedName("message")
     @Expose
     public String message;
-
 }
