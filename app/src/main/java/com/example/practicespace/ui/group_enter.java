@@ -32,7 +32,8 @@ import retrofit2.Response;
 
 public class group_enter extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-    private TextView grouptitle, groupdes,group_isOpen,group_admin,group_mem_num,group_book_num,group_date;
+
+    private TextView grouptitle, groupdes, group_isOpen, group_admin, group_mem_num,group_book_num,group_date;
     private int groupseq;
     private Group group;
     private Admin admin;
@@ -61,8 +62,6 @@ public class group_enter extends AppCompatActivity {
             group_date.setText(secondIntent.getStringExtra("그룹생성일"));
 
 //
-
-
 
         }
         protected void call(){
@@ -109,6 +108,7 @@ public class group_enter extends AppCompatActivity {
 //            });
 
         }
+
         public synchronized void syncRun(int num){
             if(num==1){
                 call();
@@ -117,6 +117,7 @@ public class group_enter extends AppCompatActivity {
             }
         }
     }
+
     class MyThread extends Thread{
         private Sync sync;
         int num;
@@ -128,6 +129,7 @@ public class group_enter extends AppCompatActivity {
             sync.syncRun(num);
         }
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,11 +142,13 @@ public class group_enter extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         secondIntent = getIntent();
+
         groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
 
 
         //멀티스레드 처리
         Sync sync = new Sync();
+
         MyThread thread1 = new MyThread(sync,1);
         MyThread thread2 = new MyThread(sync,2);
 
@@ -163,6 +167,5 @@ public class group_enter extends AppCompatActivity {
         });
 
     }
-   
-    
+
 }

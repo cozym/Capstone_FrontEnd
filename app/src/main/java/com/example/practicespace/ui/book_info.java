@@ -22,6 +22,12 @@ import retrofit2.Response;
 public class book_info extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
+    class Sync{
+        protected void call(){
+
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +40,8 @@ public class book_info extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if(LoginInfo.getInstance().data.token != null){
-            Call<getBook> book = apiInterface.getBookSeq(LoginInfo.getInstance().data.token,3);
+            Call<getBook> book = apiInterface.getBookSeq(LoginInfo.getInstance().data.token,4);
+
             book.enqueue(new Callback<getBook>() {
                 @Override
                 public void onResponse(Call<getBook> call, Response<getBook> response) {
@@ -50,6 +57,8 @@ public class book_info extends AppCompatActivity {
             });
         }else
             Log.d("연결 테스트","실패");
+
+        TextView title = (TextView)findViewById(R.id.booktitle);
 
 
     }

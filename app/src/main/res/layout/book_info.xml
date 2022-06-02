@@ -56,29 +56,42 @@
                     android:textColor="@color/black"
                     />
                 <TextView
+                    android:id="@+id/bookauthor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:text="글쓴이 : 이름"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/book_rental"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:text="대여가능"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rental_o"
+                    android:layout_marginTop="10dp"></TextView>
+                <TextView
                     android:id="@+id/bookinfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/nanumgothic"
-                    android:text="책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 "
+                    android:text="책 설명 책 설명  "
                     android:paddingHorizontal="20dp"
                     android:textSize="20sp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/booktags"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/nanumgothic"
-                    android:text="#태그, #태그, #태그, #태그 "
-                    android:paddingHorizontal="20dp"
-                    android:textSize="20sp"
-                    android:paddingTop="10dp"
-                    android:textColor="#2196F3"
                     />
                 <TextView
                     android:id="@+id/bookbarcode"
@@ -148,7 +161,8 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="모임"
+                            android:text="소유 그룹"
+
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -182,7 +196,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="조회수"
+                            android:text="주인"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -196,7 +210,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="1111"
+                            android:text="nickname"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
@@ -216,7 +230,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="좋아요"
+                            android:text="ISBN"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -230,7 +244,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="1111"
+                            android:text="isbncode"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
@@ -250,7 +264,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="생성 일자"
+                            android:text="카테고리"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -264,7 +278,75 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="2021-11-22 13:22:22"
+                            android:text="category"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#ffffff"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                            >
+                        </TextView>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="3"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="출판사"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#F1F1F1"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="publisher"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#ffffff"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                            >
+                        </TextView>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="3"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="등록일"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#F1F1F1"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="2021-11-22"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
@@ -293,33 +375,20 @@
         <LinearLayout android:layout_height="match_parent"
              android:layout_width="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="right">
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="50dp"
-                android:background="@drawable/button2"
-                android:layout_gravity="center"
-                android:drawableTop="@drawable/resize_recommend"
-                android:paddingTop="5dp"
-                android:layout_marginHorizontal="10dp"
-                ></Button>
+            android:layout_gravity="center">
+
             <Button
                 android:id="@+id/button"
-                android:layout_width="310dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
-                android:text="빌리기"
+                android:text="대여하기"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:paddingLeft="8dp"
                 android:layout_marginRight="10dp"
                 android:fontFamily="@font/nanumgothic"
                 android:layout_gravity="center"/>
-            <View
-                android:layout_width="20dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center"></View>
 
 
 
