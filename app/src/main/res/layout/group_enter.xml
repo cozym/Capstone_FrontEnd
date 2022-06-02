@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        ></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity ="center"
+        android:fillViewport="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/scrollView"
+        android:layout_weight="1">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C8C8C8">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                >
+                <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:paddingTop="80dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/profile" />
+
+                <TextView
+                    android:id="@+id/grouptitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="그룹 이름"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:paddingTop="30dp"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/groupdes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/nanumgothic"
+                    android:text="그룹 설명 그룹 설명 그룹 설명 그룹 설명 그룹 설명 그룹 설명  "
+                    android:paddingHorizontal="20dp"
+                    android:textSize="20sp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="30dp"
+                    android:textColor="@color/black"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                android:layout_marginTop="10dp"
+                android:paddingBottom="20dp"
+                >
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="그룹 정보"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_marginHorizontal="10dp"
+                    />
+                <View
+                    android:background="#C8C8C8"
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="#c8c8c8"
+                    >
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="3"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="가입 형식"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#F1F1F1"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="group"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#ffffff"
+                            android:layout_margin="1px"
+                            android:padding="3dp"
+                            android:id="@+id/group_isOpen">
+                            >
+                        </TextView>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="3"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="관리자"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#F1F1F1"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="UPLOADER"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#ffffff"
+                            android:layout_margin="1px"
+                            android:padding="3dp"
+                            android:id="@+id/group_admin">
+                            >
+                        </TextView>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="3"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="도서 수"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#F1F1F1"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="1111"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#ffffff"
+                            android:layout_margin="1px"
+                            android:padding="3dp"
+                            android:id="@+id/group_book_num">
+                            >
+                        </TextView>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="3"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="회원 수"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#F1F1F1"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="1111"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#ffffff"
+                            android:layout_margin="1px"
+                            android:padding="3dp"
+                            android:id="@+id/group_mem_num">
+                            >
+                        </TextView>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="3"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="생성일자"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#F1F1F1"
+                            android:layout_margin="1px"
+                            android:padding="3dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_height="30dp"
+                            android:textSize="18sp"
+                            android:gravity="center|left"
+                            android:paddingLeft="10dp"
+                            android:text="2021-11-22 13:22:22"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/nanumgothic"
+                            android:background="#ffffff"
+                            android:layout_margin="1px"
+                            android:padding="3dp"
+                            android:id="@+id/group_date">
+                            >
+                        </TextView>
+                    </TableRow>
+                </TableLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EFEFEF"
+        android:orientation="horizontal"
+        >
+        <LinearLayout android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button2"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/resize_recommend"
+                android:paddingTop="5dp"
+                android:layout_marginHorizontal="10dp"
+                ></Button>
+            <Button
+                android:id="@+id/enter"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:text="접속하기"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingLeft="8dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/nanumgothic"
+                android:layout_gravity="center"/>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button2"
+                android:text="탈퇴"
+                android:textSize="20sp"
+                android:textColor="#E12727"
+                android:textStyle="bold"
+                android:paddingLeft="8dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/nanumgothic"
+                android:layout_gravity="center"/>
+            <View
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"></View>
+
+
+
+        </LinearLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</LinearLayout>
+
+
+
+
