@@ -46,9 +46,18 @@ public class Fragment1 extends Fragment {
                     if(response.code() == 200){
                         groups = result.data.groups;
                         Log.d("test","getgroup전");
+                        ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
+                        for(int i = 0; i <groups.size(); i++){
+                            items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), groups.get(i).getDescription()
+                                    ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate(),groups.get(i).getAdmin()));
+                        }
+
+                        adapter = new ListViewAdapter(items, view.getContext());
+                        listview.setAdapter(adapter);
                     } else{
                         Log.d("연결 테스트", "실패");
                     }
+
                 }
 
                 @Override
@@ -57,23 +66,9 @@ public class Fragment1 extends Fragment {
                 }
             });
         }
-        public void display(){
-            Log.d("test","display");
-            ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
-            for(int i = 0; i <groups.size(); i++){
-                items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), groups.get(i).getDescription()
-                        ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate(),groups.get(i).getAdmin()));
-            }
-
-            adapter = new ListViewAdapter(items, view.getContext());
-            listview.setAdapter(adapter);
-        }
-
         public synchronized void syncRun(int num){
             if(num==1){
                 getGroupList();
-            } else if(num==2){
-                display();
             }
         }
 
