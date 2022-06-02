@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/nanumgothic"
-                    android:text="책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 "
+                    android:text="책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 책 설명 "
                     android:paddingHorizontal="20dp"
                     android:textSize="20sp"
                     android:paddingTop="10dp"

@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1375" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/drawable/button.xml" value="0.132" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/drawable/button3.xml" value="0.132" />
@@ -20,7 +19,10 @@
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/drawable/resize_recommend.xml" value="0.132" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/drawable/searchbar.xml" value="0.132" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/drawable/selector_radio.xml" value="0.132" />
+        <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/layout/activity_http.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/layout/activity_main.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/layout/book_info.xml" value="0.25" />
+        <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/layout/listview_crew_item.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/layout/login.xml" value="0.151268115942029" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/layout/main1.xml" value="0.2078125" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/layout/main2.xml" value="0.2078125" />
@@ -29,8 +31,6 @@
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/mipmap-anydpi-v26/ic_app_icon_round.xml" value="0.1375" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1375" />
         <entry key="..\:/Users/homin/AndroidStudioProjects/integration/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1375" />
-=======
->>>>>>> 9805e31a4f3b10277aba3a8fb53265734b2f31ed
         <entry key="..\:/Users/user/AndroidStudioProjects/practicespace/app/src/main/res/layout/activity_main.xml" value="0.12335359675785208" />
         <entry key="..\:/Users/user/AndroidStudioProjects/practicespace/app/src/main/res/layout/add_book.xml" value="0.264" />
         <entry key="..\:/Users/user/AndroidStudioProjects/practicespace/app/src/main/res/layout/frag_group.xml" value="0.2368659420289855" />
