@@ -4,15 +4,7 @@ import com.example.practicespace.vo.Book;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class searchByIsbn {
-    @SerializedName("httpStatus")
-    @Expose
-    public String httpStatus;
-
-    @SerializedName("message")
-    @Expose
-    public String message;
-
+public class searchByIsbn extends setGroup{
     @SerializedName("data")
     @Expose
     public Data data;

@@ -40,31 +40,6 @@ public class add_group extends AppCompatActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Call<setGroup> call = apiInterface.saveGroup(
-                LoginInfo.getInstance().data.token,
-                "testgroup",
-                true,
-                "file",
-                127.035,
-                37.299
-        );
-        call.enqueue(new Callback<setGroup>() {
-            @Override
-            public void onResponse(Call<setGroup> call, Response<setGroup> response) {
-                setGroup result = response.body();
-                if(response.code() == 200) {
-                    Log.d("연결 테스트","성공");
-                } else {
-                    Log.d("연결 테스트","실패");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<setGroup> call, Throwable t) {
-                Log.d("연결 테스트","통신 실패");
-                
-            }
-        });
 
         imageview = (ImageView)findViewById(R.id.group_thumbnail);
         imageview.setOnClickListener(new View.OnClickListener() {

@@ -56,7 +56,7 @@
                     android:textColor="@color/black"
                     />
                 <TextView
-                    android:id="@+id/groupinfo"
+                    android:id="@+id/groupdes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -65,22 +65,10 @@
                     android:paddingHorizontal="20dp"
                     android:textSize="20sp"
                     android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="30dp"
                     android:textColor="@color/black"
                     />
-                <TextView
-                    android:id="@+id/grouptags"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/nanumgothic"
-                    android:text="#태그, #태그, #태그, #태그 "
-                    android:paddingHorizontal="20dp"
-                    android:textSize="20sp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="30dp"
-                    android:textColor="#2196F3"
-                    />
+
             </LinearLayout>
 
 
@@ -132,7 +120,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="모임"
+                            android:text="가입 형식"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -151,7 +139,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/group_isOpen">
                             >
                         </TextView>
                     </TableRow>
@@ -185,7 +174,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/group_admin">
                             >
                         </TextView>
                     </TableRow>
@@ -200,7 +190,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="조회수"
+                            android:text="도서 수"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -219,7 +209,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/group_book_num">
                             >
                         </TextView>
                     </TableRow>
@@ -234,7 +225,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="좋아요"
+                            android:text="회원 수"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -253,7 +244,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/group_mem_num">
                             >
                         </TextView>
                     </TableRow>
@@ -287,7 +279,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/group_date">
                             >
                         </TextView>
                     </TableRow>

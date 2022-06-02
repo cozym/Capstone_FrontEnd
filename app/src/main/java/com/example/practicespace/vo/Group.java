@@ -16,11 +16,17 @@ public class Group {
     @SerializedName("authenticationCode")
     private String authenticationCode;
 
+    @SerializedName("description")
+    private String description;
+
     @SerializedName("admin")
-    private Admin admin = new Admin();
+    private Admin admin;
 
     @SerializedName("open")
     private boolean open;
+
+    @SerializedName("createdDate")
+    private String createdDate;
 
     public Group() {}
 
@@ -34,4 +40,8 @@ public class Group {
     public Admin getAdmin() {return admin;}
 
     public boolean getOpen() {return open;}
+
+    public String getDescription(){return description;}
+
+    public String getCreatedDate(){return createdDate;}
 }

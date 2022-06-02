@@ -1,7 +1,7 @@
 package com.example.practicespace.ui;
 
 
-import android.content.Context;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,23 +34,15 @@ public class Fragment1 extends Fragment {
     List<Group> groups = new ArrayList<Group>();
 
     @Override
-    public void onAttach(Context context) {
-        Log.d("123123","123123");
-
-        super.onAttach(context);
-        Log.d("321321","3212321");
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getGroupList();
-
+        Log.d("test","getgroup후");
         //adapter에 넣을 리스트뷰를 받는 배열
+
         ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
-
         for(int i = 0; i <groups.size(); i++){
-            items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), "#캡스톤", groups.get(i).getSeq()));
-
+            items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), groups.get(i).getDescription()
+                    ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate(),groups.get(i).getAdmin()));
         }
 
 //        items.add(new ListViewItem(R.drawable.profile, "5학년 다니면 그만이야", "#캡스톤"));
@@ -68,20 +60,19 @@ public class Fragment1 extends Fragment {
         adapter = new ListViewAdapter(items, view.getContext());
 
         listview.setAdapter(adapter);
-
+        Log.d("test","종료");
         return view;
     }
 
     public void getGroupList(){
         Call<openGroupList> call = apiInterface.getGroupList();
-
         call.enqueue(new Callback<openGroupList>() {
             @Override
             public void onResponse(Call<openGroupList> call, Response<openGroupList> response) {
                 openGroupList result = response.body();
                 if(response.code() == 200){
                     groups = result.data.groups;
-
+                    Log.d("test","getgroup전");
                 } else{
                     Log.d("연결 테스트", "실패");
                 }
@@ -93,4 +84,5 @@ public class Fragment1 extends Fragment {
             }
         });
     }
+
 }
