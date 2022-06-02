@@ -38,6 +38,7 @@ public class mypage extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView nickname = (TextView)findViewById(R.id.nickname);
         final TextView email = (TextView)findViewById(R.id.email);
         TextView name = (TextView)findViewById(R.id.name);
