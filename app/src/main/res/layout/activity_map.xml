@@ -1,22 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.Map">
+    android:gravity="bottom"
+    app:umanoPanelHeight="0dp"
+    app:umanoDragView="@id/slide_layout"
+    app:umanoShadowHeight="0dp"
+    app:umanoFadeColor="#00FFFFFF"
+    tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/MyLoc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="내 위치 요청" />
 
-    <fragment
-        android:id="@+id/map"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        android:orientation="vertical"
+        tools:context=".Map">
 
-</LinearLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="#776a5f"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/searchbar"
+                    android:drawableStart="@drawable/drawable_resize3"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/nanumgothic"
+                    android:padding="8dp"
+                    android:text="검색어를 입력해주세요."
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray_thick"
+                    android:textSize="20dp"></EditText>
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="0dp" />
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/slide_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="6dp"
+            android:text="경기대"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="69dp"
+            android:background="#595959"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/to_groupinfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_slideOffset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="40dp"
+            android:text="경기대 학생들 들어오세요"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+        <Button
+            android:id="@+id/to_groupinfo"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginBottom="0dp"
+            android:background="#776A5F"
+            android:text="그룹 바로가기"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"></Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

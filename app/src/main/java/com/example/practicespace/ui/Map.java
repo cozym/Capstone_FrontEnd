@@ -3,16 +3,21 @@ package com.example.practicespace.ui;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -22,20 +27,35 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Map extends AppCompatActivity {
 
     SupportMapFragment mapFragment;
     GoogleMap map;
+    private UiSettings uiSettings;
+    SlidingUpPanelLayout slidingUpPanelLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.main_frame);
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
@@ -44,14 +64,31 @@ public class Map extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
 
+
+
+
         // 구글 맵 비동기 처리
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback(){
             @Override
             public void onMapReady(GoogleMap googleMap) {
+
                 Log.d("Map", "지도 준비완료");
                 map = googleMap;
                 map.setMyLocationEnabled(true);
+
+                //ui 세팅 추가
+                uiSettings = map.getUiSettings();
+                uiSettings.setMapToolbarEnabled(false);
+
+                map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(@NonNull LatLng latLng) {  //외부 클릭시 정보창 닫기
+                        slidingUpPanelLayout.setTouchEnabled(true);
+                        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                    }
+                });
+                startLocationService();
             }
         });
 
@@ -61,13 +98,7 @@ public class Map extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Button button = findViewById(R.id.MyLoc);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startLocationService();
-            }
-        });
+
     }
 
     // 내 위치 가져오기
@@ -109,21 +140,24 @@ public class Map extends AppCompatActivity {
             LatLng curPoint = new LatLng(latitude, longitude);
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 15));
 
-            showMyLocationMarker(curPoint);
+            //showMyLocationMarker(curPoint);
+            showMyLocationMarker(new LatLng(37.2970,127.0312));
+            showMyLocationMarker(new LatLng(37.3012,127.0388));
+            showMyLocationMarker(new LatLng(37.3033,127.0346));
         }
-    
+
         //마커 설정
         private void showMyLocationMarker(LatLng curPoint) {
-            if (myLocationMarker == null) {
-                myLocationMarker = new MarkerOptions();
-                myLocationMarker.position(curPoint);
-                myLocationMarker.title("내 위치\n");
-                myLocationMarker.snippet("GPS로 확인한 위치");
-                //myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
-                map.addMarker(myLocationMarker);
-            } else {
-                myLocationMarker.position(curPoint);
-            }
+            //if (myLocationMarker == null) {
+            myLocationMarker = new MarkerOptions();
+            myLocationMarker.position(curPoint);
+            myLocationMarker.title("Seleted");
+            //myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
+            map.addMarker(myLocationMarker);
+            map.setOnMarkerClickListener(markerClickListener);
+            //} else {
+            //    myLocationMarker.position(curPoint);
+            //}
         }
 
         public void onProviderDisabled(String provider) { }
@@ -131,11 +165,44 @@ public class Map extends AppCompatActivity {
         public void onProviderEnabled(String provider) { }
 
         public void onStatusChanged(String provider, int status, Bundle extras) { }
+
     }
+
+    //마커 클릭 이벤트
+    GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            String markerId = marker.getId();
+            LatLng location = marker.getPosition();
+
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            slidingUpPanelLayout.setTouchEnabled(false);
+            //외부 영역 클릭 시, 닫기
+            return false;
+        }
+    };
+
+    //뒤로가기 누르면 레이아웃 집어넣기
+    @Override
+    public void onBackPressed()
+    {
+        SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.main_frame);
+
+        if(slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)
+        {
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
+
+
 
     public void onResume() {
         super.onResume();
-        Log.d("@@@@@@@@", LoginInfo.getInstance().data.token);
+
         if (map != null) {
             map.setMyLocationEnabled(true);
         }

@@ -2,12 +2,14 @@ package com.example.practicespace.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,10 +19,17 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.practicespace.R;
+import com.example.practicespace.connection.APIClient;
+import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.getUser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.example.practicespace.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class mainList_activity extends AppCompatActivity implements View.OnClickListener{
 
@@ -36,12 +45,35 @@ public class mainList_activity extends AppCompatActivity implements View.OnClick
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1;
+    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_list1);
+        NavigationView navigationView = (NavigationView)findViewById(R.id.main_navigationView);
+        View nav_header_view = navigationView.getHeaderView(0);
+        TextView nickname = (TextView)nav_header_view.findViewById(R.id.main_nickname);
+        TextView email = (TextView)nav_header_view.findViewById(R.id.main_email);
+
+        if(LoginInfo.getInstance().data.token != null){
+            Call<getUser> user = apiInterface.getUserInfo(LoginInfo.getInstance().data.token);
+            user.enqueue(new Callback<getUser>() {
+                @Override
+                public void onResponse(Call<getUser> call, Response<getUser> response) {
+                    getUser result = response.body();
+                    nickname.setText(result.data.nickname);
+                    email.setText(result.data.emails.get(0));
+                }
+
+                @Override
+                public void onFailure(Call<getUser> call, Throwable t) {
+
+                }
+            });
+        }else
+            Log.d("연결 테스트","실패");
 
 
         this.InitializeLayout();
