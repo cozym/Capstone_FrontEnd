@@ -64,6 +64,7 @@ public class Map extends AppCompatActivity {
         mapFragment.getMapAsync(new OnMapReadyCallback(){
             @Override
             public void onMapReady(GoogleMap googleMap) {
+
                 Log.d("Map", "지도 준비완료");
                 map = googleMap;
                 map.setMyLocationEnabled(true);
@@ -79,6 +80,7 @@ public class Map extends AppCompatActivity {
                         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED); 
                     }
                 });
+                startLocationService();
             }
         });
 
@@ -87,14 +89,6 @@ public class Map extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        Button button = findViewById(R.id.MyLoc);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startLocationService();
-            }
-        });
 
 
     }
@@ -138,22 +132,24 @@ public class Map extends AppCompatActivity {
             LatLng curPoint = new LatLng(latitude, longitude);
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 15));
 
-            showMyLocationMarker(curPoint);
+            //showMyLocationMarker(curPoint);
+            showMyLocationMarker(new LatLng(37.2970,127.0312));
+            showMyLocationMarker(new LatLng(37.3012,127.0388));
+            showMyLocationMarker(new LatLng(37.3033,127.0346));
         }
     
         //마커 설정
         private void showMyLocationMarker(LatLng curPoint) {
-            if (myLocationMarker == null) {
+            //if (myLocationMarker == null) {
                 myLocationMarker = new MarkerOptions();
                 myLocationMarker.position(curPoint);
-                myLocationMarker.title("내 위치\n");
-                myLocationMarker.snippet("GPS로 확인한 위치");
+                myLocationMarker.title("Seleted");
                 //myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
                 map.addMarker(myLocationMarker);
                 map.setOnMarkerClickListener(markerClickListener);
-            } else {
-                myLocationMarker.position(curPoint);
-            }
+            //} else {
+            //    myLocationMarker.position(curPoint);
+            //}
         }
 
         public void onProviderDisabled(String provider) { }

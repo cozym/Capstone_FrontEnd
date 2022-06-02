@@ -20,12 +20,6 @@
         android:orientation="vertical"
         tools:context=".Map">
 
-        <Button
-            android:id="@+id/MyLoc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="내 위치 요청" />
-
         <fragment
             android:id="@+id/map"
             class="com.google.android.gms.maps.SupportMapFragment"
@@ -46,7 +40,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="6dp"
-            android:text="그룹 이름"
+            android:text="경기대"
             android:textSize="25dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,22 +66,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="40dp"
-            android:text="그룹 설명"
+            android:text="경기대 학생들 들어오세요"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_slideText1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <TextView
-            android:id="@+id/tv_slideText1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
-            android:text="해시태그들(추후 변경 가능)"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tv_slideOffset"
-            app:layout_constraintTop_toBottomOf="@+id/tv_slideOffset" />
 
         <Button
             android:id="@+id/to_groupinfo"
@@ -96,7 +80,7 @@
             android:layout_marginStart="55dp"
             android:layout_marginEnd="55dp"
             android:layout_marginBottom="0dp"
-            android:background="#776a5f"
+            android:background="#776A5F"
             android:text="바로가기"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
