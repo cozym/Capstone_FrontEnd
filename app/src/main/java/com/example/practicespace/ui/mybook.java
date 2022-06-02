@@ -82,6 +82,7 @@ public class mybook extends AppCompatActivity{
         //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Incon 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);

@@ -18,6 +18,7 @@ public class group_info extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     }
 }

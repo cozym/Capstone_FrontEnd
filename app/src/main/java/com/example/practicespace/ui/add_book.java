@@ -40,6 +40,7 @@ public class add_book extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         imageview = (ImageView)findViewById(R.id.group_thumbnail);
         imageview.setOnClickListener(new View.OnClickListener() {
