@@ -4,12 +4,6 @@ import com.example.practicespace.vo.Book;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class deleteBook {
-    @SerializedName("httpStatus")
-    @Expose
-    public String httpStatus;
+public class deleteBook extends setGroup{
 
-    @SerializedName("message")
-    @Expose
-    public String message;
 }

@@ -45,6 +45,7 @@ public class add_group extends AppCompatActivity {
                 "testgroup",
                 true,
                 "file",
+                "my name is",
                 127.035,
                 37.299
         );
@@ -62,7 +63,7 @@ public class add_group extends AppCompatActivity {
             @Override
             public void onFailure(Call<setGroup> call, Throwable t) {
                 Log.d("연결 테스트","통신 실패");
-                
+
             }
         });
 
