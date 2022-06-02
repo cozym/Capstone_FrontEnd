@@ -7,14 +7,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class bookList{
-    @SerializedName("httpStatus")
-    @Expose
-    public String httpStatus;
 
-    @SerializedName("message")
-    @Expose
-    public String message;
+public class bookList extends setGroup{
 
     @SerializedName("data")
     @Expose

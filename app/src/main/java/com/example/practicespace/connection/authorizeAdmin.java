@@ -4,13 +4,6 @@ import com.example.practicespace.vo.Group;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class authorizeAdmin {
-    @SerializedName("httpStatus")
-    @Expose
-    public String httpStatus;
-
-    @SerializedName("message")
-    @Expose
-    public String message;
+public class authorizeAdmin extends setGroup{
 
 }
