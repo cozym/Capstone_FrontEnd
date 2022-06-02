@@ -30,6 +30,7 @@ public class search extends AppCompatActivity{
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //콤보박스1
         final String[] category = {"전체", "과학", "역사"};
