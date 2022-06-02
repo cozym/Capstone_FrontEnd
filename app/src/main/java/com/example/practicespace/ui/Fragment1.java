@@ -32,57 +32,93 @@ public class Fragment1 extends Fragment {
 
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     List<Group> groups = new ArrayList<Group>();
+    private View view;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getGroupList();
-        Log.d("test","getgroup후");
-        //adapter에 넣을 리스트뷰를 받는 배열
+    //멀티스레드 작성시작
+    class Sync{
+        public void getGroupList(){
+            Log.d("test","getgroup");
+            Call<openGroupList> call = apiInterface.getGroupList();
+            call.enqueue(new Callback<openGroupList>() {
+                @Override
+                public void onResponse(Call<openGroupList> call, Response<openGroupList> response) {
+                    openGroupList result = response.body();
+                    if(response.code() == 200){
+                        groups = result.data.groups;
+                        Log.d("test","getgroup전");
+                    } else{
+                        Log.d("연결 테스트", "실패");
+                    }
+                }
 
-        ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
-        for(int i = 0; i <groups.size(); i++){
-            items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), groups.get(i).getDescription()
-                    ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate(),groups.get(i).getAdmin()));
+                @Override
+                public void onFailure(Call<openGroupList> call, Throwable t) {
+                    call.cancel();
+                }
+            });
+        }
+        public void display(){
+            Log.d("test","display");
+            ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
+            for(int i = 0; i <groups.size(); i++){
+                items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), groups.get(i).getDescription()
+                        ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate(),groups.get(i).getAdmin()));
+            }
+
+            adapter = new ListViewAdapter(items, view.getContext());
+            listview.setAdapter(adapter);
         }
 
-//        items.add(new ListViewItem(R.drawable.profile, "5학년 다니면 그만이야", "#캡스톤"));
-//        items.add(new ListViewItem(R.drawable.profile, "영통구 책방", "#캡스톤"));
-//        items.add(new ListViewItem(R.drawable.profile, "경기대 도서관", "#캡스톤"));
-//        items.add(new ListViewItem(R.drawable.profile, "컴공책 동아리", "#캡스톤"));
-//        items.add(new ListViewItem(R.drawable.profile, "논문만 판다", "#캡스톤"));
-//        items.add(new ListViewItem(R.drawable.profile, "공대생 모여라", "#캡스톤"));
-//        items.add(new ListViewItem(R.drawable.profile, "경기도 모여라", "#캡스톤"));
-//        items.add(new ListViewItem(R.drawable.profile, "서울도 모여라", "#캡스톤"));
+        public synchronized void syncRun(int num){
+            if(num==1){
+                getGroupList();
+            } else if(num==2){
+                display();
+            }
+        }
 
-        View view = inflater.inflate(R.layout.frag_group, container, false);
+    }
+    class MyThread extends Thread{
+        private Sync sync;
+        int num;
+
+        public MyThread(Sync sync, int num){
+            this.sync = sync;
+            this.num = num;
+        }
+        public void run(){
+            sync.syncRun(num);
+        }
+    }
+    //멀티스레드 작성끝
+
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.frag_group, container, false);
         listview = (ListView) view.findViewById(R.id.List_group_Info);
 
-        adapter = new ListViewAdapter(items, view.getContext());
+        Sync sync = new Sync();
+        MyThread thread1 = new MyThread(sync,1);
+        MyThread thread2 = new MyThread(sync,2);
 
-        listview.setAdapter(adapter);
-        Log.d("test","종료");
+        try{
+            thread1.start();
+            thread1.join();
+            Log.d("스레드테스트", "2");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        try{
+            thread2.start();
+            thread2.join();
+            Log.d("스레드테스트", "3");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        Log.d("스레드테스트", "5");
         return view;
+
     }
 
-    public void getGroupList(){
-        Call<openGroupList> call = apiInterface.getGroupList();
-        call.enqueue(new Callback<openGroupList>() {
-            @Override
-            public void onResponse(Call<openGroupList> call, Response<openGroupList> response) {
-                openGroupList result = response.body();
-                if(response.code() == 200){
-                    groups = result.data.groups;
-                    Log.d("test","getgroup전");
-                } else{
-                    Log.d("연결 테스트", "실패");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<openGroupList> call, Throwable t) {
-                call.cancel();
-            }
-        });
-    }
 
 }
