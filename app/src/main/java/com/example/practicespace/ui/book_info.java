@@ -31,6 +31,7 @@ public class book_info extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if(LoginInfo.getInstance().data.token != null){
             Call<getBook> book = apiInterface.getBookSeq(LoginInfo.getInstance().data.token,3);
