@@ -84,16 +84,6 @@
                     android:background="@drawable/main_gps"
                     android:layout_marginTop="10dp"
                     android:id="@+id/to_GPS"></Button>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:text="기타등등"
-                    android:layout_marginTop="10dp"></Button>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:text="기타등등"
-                    android:layout_marginTop="10dp"></Button>
 
             </LinearLayout>
 
