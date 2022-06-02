@@ -137,6 +137,7 @@ public class group_enter extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         secondIntent = getIntent();
         groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
