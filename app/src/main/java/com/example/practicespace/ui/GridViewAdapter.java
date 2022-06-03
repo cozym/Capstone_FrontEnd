@@ -73,7 +73,7 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
             viewHolder.rental.setText("대여가능");
             viewHolder.rental.setBackgroundResource(R.drawable.rental_o);
         }else{
-            viewHolder.rental.setText("대여불가");
+            viewHolder.rental.setText("대여중");
             viewHolder.rental.setBackgroundResource(R.drawable.rental_x);
         }
 

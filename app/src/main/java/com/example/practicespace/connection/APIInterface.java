@@ -49,8 +49,8 @@ public interface APIInterface {
 
     @GET("book/list")
     Call<bookList> getBookList(
-            @Header("Authorization") String token,
-            @Field("groupSeq") int groupSeq
+            @Header("Authorization") String token
+//            @Field("groupSeq") int groupSeq
 //             @Field("start") int start,
 //             @Field("display") int display
     );

@@ -38,6 +38,8 @@ public class Book {
 
     public Book() {}
 
+    public int getSeq(){return seq;}
+
     public String getTitle(){return title;}
 
     public String getAuthor() {return author;}
@@ -53,8 +55,6 @@ public class Book {
     public String getDescription() {return description;}
 
     public String getCategory() {return category;}
-
-    public int getGroupSeq() {return seq;}
 
     public String getCode() {return code;}
 

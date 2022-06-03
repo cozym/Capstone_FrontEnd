@@ -61,7 +61,7 @@ public class Fragment1_myGroup extends Fragment {
                                    if(response.code() == 200){
                                        group = result2.data.group;
                                        items.add(new ListViewItem(R.drawable.profile,group.getName(), group.getDescription()
-                                               ,group.getSeq(),group.getOpen(),group.getCreatedDate(),group.getAdmin()));
+                                               ,group.getSeq(),group.getOpen(),group.getCreatedDate()));
                                    }
                                    else{
                                        Log.d("연결 테스트2", "실패");
