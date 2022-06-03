@@ -45,8 +45,6 @@ public class main extends AppCompatActivity{
         TextView nickname = (TextView)nav_header_view.findViewById(R.id.main_nickname);
         TextView email = (TextView)nav_header_view.findViewById(R.id.main_email);
 
-        Log.d("nicknametest","성공");
-
         if(LoginInfo.getInstance().data.token != null){
             Call<getUser> user = apiInterface.getUserInfo(LoginInfo.getInstance().data.token);
             user.enqueue(new Callback<getUser>() {
@@ -64,8 +62,6 @@ public class main extends AppCompatActivity{
             });
         }else
             Log.d("연결 테스트","실패");
-
-        Log.d("nicknametest","성공");
 
         this.InitializeLayout();
 
@@ -110,11 +106,10 @@ public class main extends AppCompatActivity{
         btn_toGPS.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), book_info.class);
+                Intent intent = new Intent(getApplicationContext(), Map.class);
                 startActivity(intent);
             }
         });
-
 
     }
 
