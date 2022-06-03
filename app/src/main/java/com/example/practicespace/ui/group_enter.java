@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -34,30 +35,37 @@ public class group_enter extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
     private TextView grouptitle, groupdes, group_isOpen, group_admin, group_mem_num,group_book_num,group_date;
-    private int groupseq;
+    private int groupseq, groupicon;
     private Group group;
     private Admin admin;
     private Intent secondIntent;
+    private ImageView groupimage;
     List<Book> books = new ArrayList<Book>();
 
     class Sync{
         protected void init(){
             Log.d("테스트","init");
+            groupimage=(ImageView) findViewById(R.id.group_image);
+            groupimage.setImageResource(secondIntent.getIntExtra("그룹사진",0));
             grouptitle = (TextView)findViewById(R.id.grouptitle);
             grouptitle.setText(secondIntent.getStringExtra("그룹이름"));
             group_isOpen = (TextView) findViewById(R.id.group_isOpen);
             boolean isopen = secondIntent.getBooleanExtra("그룹공개",true);
             if(isopen == true){
                 group_isOpen.setText("공개");
+                group_isOpen.setBackgroundResource(R.drawable.public_o);
             }else{
                 group_isOpen.setText("비공개");
+                group_isOpen.setBackgroundResource(R.drawable.public_x);
             }
             groupdes = (TextView)findViewById(R.id.groupdes);
             groupdes.setText(secondIntent.getStringExtra("그룹설명"));
-////        group_mem_num = (TextView)findViewById(R.id.group_mem_num);
-////        group_mem_num.setText();
-////        group_book_num = (TextView)findViewById(R.id.group_book_num);
-////        group_book_num.setText(secondIntent.getIntExtra("그룹"));
+
+            group_mem_num = (TextView)findViewById(R.id.group_mem_num);
+            group_mem_num.setText(String.valueOf(secondIntent.getIntExtra("회원수",0)));
+            group_book_num = (TextView)findViewById(R.id.group_book_num);
+            group_book_num.setText(String.valueOf(secondIntent.getIntExtra("도서수",0)));
+            
             group_date = (TextView) findViewById(R.id.group_date);
             group_date.setText(secondIntent.getStringExtra("그룹생성일"));
 

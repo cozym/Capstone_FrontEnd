@@ -29,6 +29,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         ImageView ICon;
         TextView text_Group_Name;
         TextView text_Hash_Tag;
+        TextView peonum;
+        TextView booknum;
     }
 
     public ListViewAdapter(ArrayList<ListViewItem> list, Context context){
@@ -55,8 +57,9 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
             convertView = inflater.inflate(R.layout.listview_crew_item,parent,false);//resourceId는 R.id.listView_crew_item이다.
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
-            viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.hash_tag);
-
+            viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.group_des);
+            viewHolder.peonum = (TextView)convertView.findViewById(R.id.gorup_list_mem);
+            viewHolder.booknum = (TextView)convertView.findViewById(R.id.group_list_book);
             convertView.setTag(viewHolder);
         }
         else{
@@ -67,13 +70,18 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         //위젯에 내가 만들어 놓은 부분 적용
         viewHolder.ICon.setImageResource(listViewItem.getIcon());
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
+        viewHolder.peonum.setText("회원 수: "+listViewItem.getPeonum());
+        viewHolder.booknum.setText("도서 수: "+listViewItem.getBooknum());
         String group_date = listViewItem.getCreatedDate().substring(0,10);
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);
         Intent intent = new Intent(getContext(), group_enter.class);
+        intent.putExtra("그룹사진",listViewItem.getIcon());
         intent.putExtra("그룹이름",viewHolder.text_Group_Name.getText());
         intent.putExtra("그룹설명",listViewItem.getGroupDes());
         intent.putExtra("그룹공개",listViewItem.getIsOpen());
+        intent.putExtra("회원수",listViewItem.getPeonum());
+        intent.putExtra("도서수",listViewItem.getBooknum());
 //        intent.putExtra("관리자", listViewItem.getAdmin().getNickname());
         intent.putExtra("그룹시퀀스",listViewItem.getGroupSeq());
         intent.putExtra("그룹생성일" ,group_date);

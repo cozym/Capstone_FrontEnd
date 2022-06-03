@@ -13,9 +13,9 @@ import com.example.practicespace.R;
 
 import java.util.ArrayList;
 
-public class GridViewAdapter extends ArrayAdapter<ListViewItem>{
+public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
     //각 리스트에 들어갈 아이템들을 가지고 있는 리스트 배열
-    private ArrayList<ListViewItem> listViewItemList;
+    private ArrayList<GridViewItem> gridViewItemList;
     Context mContext;
     //position에 위치한 데이터를 화면에 출력하는데 사용될 view를 리턴, : 필수 구현
     //view는 넣을 곳 즉, viewgroup에 들어가 view 생성
@@ -25,18 +25,20 @@ public class GridViewAdapter extends ArrayAdapter<ListViewItem>{
     private static class ViewHolder{
         ImageView ICon;
         TextView text_Group_Name;
-        TextView text_Hash_Tag;
+        TextView text_author;
+        TextView category;
+        TextView rental;
     }
 
-    public GridViewAdapter(ArrayList<ListViewItem> list, Context context){
+    public GridViewAdapter(ArrayList<GridViewItem> list, Context context){
         super(context, R.layout.listview_crew_item, list);
-        this.listViewItemList = list;
+        this.gridViewItemList = list;
         this.mContext = context;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //position에 위치시키기 위해 listViewItem 하나 생성
-        ListViewItem listViewItem = getItem(position);
+        GridViewItem gridViewItem = getItem(position);
         //cache 사용
         ViewHolder viewHolder;
 
@@ -52,8 +54,9 @@ public class GridViewAdapter extends ArrayAdapter<ListViewItem>{
             convertView = inflater.inflate(R.layout.grid_crew_item,parent,false);//resourceId는 R.id.listView_crew_item이다.
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
-            viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.hash_tag);
-
+            viewHolder.text_author = (TextView)convertView.findViewById(R.id.list_author);
+            viewHolder.category = (TextView)convertView.findViewById(R.id.list_category);
+            viewHolder.rental = (TextView)convertView.findViewById(R.id.list_rental);
             convertView.setTag(viewHolder);
         }
         else{
@@ -62,13 +65,33 @@ public class GridViewAdapter extends ArrayAdapter<ListViewItem>{
 
         //아이템 내 각 위젯에 대한 데이터 반영
         //위젯에 내가 만들어 놓은 부분 적용
-        viewHolder.ICon.setImageResource(listViewItem.getIcon());
-        viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
+        viewHolder.ICon.setImageResource(gridViewItem.getIcon());
+        viewHolder.text_Group_Name.setText(gridViewItem.getTitle());
+        viewHolder.text_author.setText("저자: "+gridViewItem.getAuthor());
+        viewHolder.category.setText("카테고리: "+gridViewItem.getCategory());
+        if(gridViewItem.getRental()==true){
+            viewHolder.rental.setText("대여가능");
+            viewHolder.rental.setBackgroundResource(R.drawable.rental_o);
+        }else{
+            viewHolder.rental.setText("대여불가");
+            viewHolder.rental.setBackgroundResource(R.drawable.rental_x);
+        }
 
 
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.book_clcik);
         Intent intent = new Intent(getContext(), book_info.class);
+        intent.putExtra("책사진",gridViewItem.getIcon());
+        intent.putExtra("책이름",gridViewItem.getTitle());
+        intent.putExtra("글쓴이",gridViewItem.getAuthor());
+        intent.putExtra("대여여부",gridViewItem.getRental());
+        intent.putExtra("책설명",gridViewItem.getDescription());
+        intent.putExtra("소유그룹","공대 전공도서");
+        intent.putExtra("책주인","narak");
+        intent.putExtra("ISBN",gridViewItem.getIsbn());
+        intent.putExtra("카테고리",gridViewItem.getCategory());
+        intent.putExtra("출판사",gridViewItem.getPublisher());
+        intent.putExtra("등록일",gridViewItem.getPublishDate());
         cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
         return convertView;
     }
