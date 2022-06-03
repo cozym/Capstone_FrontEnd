@@ -64,7 +64,7 @@ public class mygroup extends AppCompatActivity{
 
 
 
-        fragment0 = new Fragment1();
+        fragment0 = new Fragment1_myGroup();
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
 
