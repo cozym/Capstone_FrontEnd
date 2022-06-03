@@ -17,7 +17,8 @@
         android:fontFamily="@font/nanumgothicbold"
         android:text="그룹이름"
         android:textSize="30sp"
-        android:textColor="#ffffff"></TextView>
+        android:textColor="#ffffff"
+        android:id="@+id/group_toolbar_name"></TextView>
 
 
 </androidx.appcompat.widget.Toolbar>

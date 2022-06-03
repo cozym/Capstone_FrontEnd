@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,6 +29,8 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1;
+    private Intent secondIntent;
+    private int groupseq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,13 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
 
         this.InitializeLayout();
 
+        secondIntent = getIntent();
+        groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
 
 
+
+        TextView toolbar_name = (TextView)findViewById(R.id.group_toolbar_name);
+        toolbar_name.setText("공대 전공도서");
 
 
         fragment0 = new Fragment2();

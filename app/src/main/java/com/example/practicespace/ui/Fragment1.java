@@ -48,8 +48,8 @@ public class Fragment1 extends Fragment {
                         Log.d("test","getgroup전");
                         ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
                         for(int i = 0; i <groups.size(); i++){
-                            items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), groups.get(i).getDescription()
-                                    ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate(),groups.get(i).getAdmin()));
+//                            items.add(new ListViewItem(R.drawable.profile,groups.get(i).getName(), groups.get(i).getDescription()
+//                                    ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate()));
                         }
 
                         adapter = new ListViewAdapter(items, view.getContext());
@@ -92,24 +92,43 @@ public class Fragment1 extends Fragment {
         view = inflater.inflate(R.layout.frag_group, container, false);
         listview = (ListView) view.findViewById(R.id.List_group_Info);
 
-        Sync sync = new Sync();
-        MyThread thread1 = new MyThread(sync,1);
-        MyThread thread2 = new MyThread(sync,2);
+//        Sync sync = new Sync();
+//        MyThread thread1 = new MyThread(sync,1);
+//        MyThread thread2 = new MyThread(sync,2);
+//
+//        try{
+//            thread1.start();
+//            thread1.join();
+//            Log.d("스레드테스트", "2");
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        try{
+//            thread2.start();
+//            thread2.join();
+//            Log.d("스레드테스트", "3");
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
 
-        try{
-            thread1.start();
-            thread1.join();
-            Log.d("스레드테스트", "2");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        try{
-            thread2.start();
-            thread2.join();
-            Log.d("스레드테스트", "3");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        ///////
+        ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
+        items.add(new ListViewItem(R.drawable.test_1, "경기대", "경기대 학생들 들어오세요.", 4,
+                false,"2022-04-11TT11:11:11",1,1));
+        items.add(new ListViewItem(R.drawable.test_2, "졸업만 모여요", "졸업반 분들 같이 책 읽어요!",5
+        ,true,"2022-05-05TT11:11:11",4,1));
+        items.add(new ListViewItem(R.drawable.test_3, "서울 책방", "서울 사람들 모여라",6
+                ,true,"2022-05-11TT11:11:11",3,3));
+        items.add(new ListViewItem(R.drawable.test_4, "영통구 책방", "영통구 사람들을 위한 모임",7
+                ,true,"2022-05-23TT11:11:11",3,2));
+        items.add(new ListViewItem(R.drawable.test_5, "공대 전공도서", "전공도서 서로 공유하실분!",8
+                ,false,"2022-06-01TT11:11:11",5,1));
+        items.add(new ListViewItem(R.drawable.test_1, "대학생", "대학생 분들 오세요!",9
+                ,false,"2022-06-02TT11:11:11",5,1));
+        adapter = new ListViewAdapter(items, view.getContext());
+        listview.setAdapter(adapter);
+
+        /////
         Log.d("스레드테스트", "5");
         return view;
 

@@ -36,11 +36,11 @@
             android:ellipsize="end"/>
 
         <TextView
-            android:id="@+id/hash_tag"
+            android:id="@+id/group_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="#도서 #캡스톤"
+            android:text="설명"
             android:fontFamily="@font/nanumgothic"
             android:textSize="15dp"
             android:maxLines="1"
@@ -56,7 +56,7 @@
         android:weightSum="2">
 
         <TextView
-            android:id="@+id/views"
+            android:id="@+id/gorup_list_mem"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             android:text="회원 수:"
             android:textSize="18dp" />
         <TextView
-            android:id="@+id/likes"
+            android:id="@+id/group_list_book"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
