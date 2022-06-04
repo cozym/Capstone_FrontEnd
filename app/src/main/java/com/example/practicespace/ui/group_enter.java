@@ -69,7 +69,7 @@ public class group_enter extends AppCompatActivity {
             });
 
             Call<bookList> call2 = apiInterface.getBookList(
-                    LoginInfo.getInstance().data.token,5, 0,10
+                    LoginInfo.getInstance().data.token,5, 0
             );
             call2.enqueue(new Callback<bookList>() {
                 @Override
