@@ -1,20 +1,20 @@
 package com.example.practicespace.connection;
 
-import com.example.practicespace.vo.Book;
+import com.example.practicespace.vo.Group;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class myBookList extends setGroup{
+public class setImage extends setGroup{
     @SerializedName("data")
     @Expose
     public Data data;
 
     public class Data {
-        @SerializedName("bookList")
+        @SerializedName("")
         @Expose
-        public List<Book> books = new ArrayList<Book>();
+        public String ImageURL;
     }
 }

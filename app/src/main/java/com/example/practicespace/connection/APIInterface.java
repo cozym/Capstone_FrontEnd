@@ -10,6 +10,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIInterface {
     @FormUrlEncoded
@@ -40,7 +41,9 @@ public interface APIInterface {
     @PATCH("book/borrow")
     Call<borrowBook> borrow(
             @Header("Authorization") String token,
-            @Field("bookSeq") int bookSeq);
+            @Field("userSeq") int userSeq,
+            @Field("bookSeq") int bookSeq
+            );
 
     @GET("book/isbn/{seq}")
     Call<searchByIsbn> getIsbnSeq(
@@ -49,23 +52,30 @@ public interface APIInterface {
 
     @GET("book/list")
     Call<bookList> getBookList(
-//            @Header("Authorization") String token,
-//           @Field("groupSeq") int groupSeq
-//             ,@Field("start") int start,
-//             @Field("display") int display
+            @Header("Authorization") String token,
+            @Query("groupSeq") int groupSeq
+             ,@Query("start") int start
+//           ,@Query("display") int display
     );
 
     @GET("book/mybook")
     Call<myBookList> getMyBookList(
             @Header("Authorization") String token,
-            @Field("start") int start,
-            @Field("display") int display);
+            @Query("start") int start,
+            @Query("display") int display);
 
     @FormUrlEncoded
     @PATCH("book/return")
     Call<returnBook> bookReturn(
             @Header("Authorization") String token,
+            @Field("userSeq") int userSeq,
             @Field("bookSeq") int bookSeq);
+
+    @GET("book/search")
+    Call<SearchBook> searchBook(
+            @Header("Authorization") String token,
+            @Query("keyword") String keyword,
+            @Query("category") String category);
 
     @FormUrlEncoded
     @PUT("book/update")
@@ -80,6 +90,11 @@ public interface APIInterface {
             @Field("publishDate") String publishDate,
             @Field("description") String description,
             @Field("category") String category);
+
+    @FormUrlEncoded
+    @POST("image/upload")
+    Call<setImage> saveImage(
+            @Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("group")
@@ -123,7 +138,27 @@ public interface APIInterface {
     @DELETE("group/resign")
     Call<resignGroup> Resign(
             @Header("Authorization") String token,
-            @Field("groupSeq") int groupSeq);
+            @Query("groupSeq") int groupSeq);
+
+    @GET("group/search")
+    Call<SearchGroup> searchGroup(
+            @Header("Authorization") String token,
+            @Query("keyword") String keyword
+    );
+
+    @GET("group/search/location")
+    Call<SearchGroupByLocation> searchGroupByKeywordAndLocation(
+            @Header("Authorization") String token,
+            @Query("keyword") String keyword,
+            @Query("longtitude") double longtitude,
+            @Query("latitude") double latitude,
+            @Query("distance") int distance);
+
+    @GET("group/userlist")
+    Call<getUserList> getUserList(
+            @Header("Authorization") String token,
+            @Path("groupSeq") int groupSeq );
+
 
     @GET("user/info")
     Call<getUser> getUserInfo(
