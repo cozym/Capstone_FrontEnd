@@ -5,14 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class getUser {
-    @SerializedName("httpStatus")
-    @Expose
-    public String httpStatus;
-
-    @SerializedName("message")
-    @Expose
-    public String message;
+public class getUser extends setGroup{
 
     @SerializedName("data")
     @Expose

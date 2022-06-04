@@ -65,7 +65,8 @@ public class mybook extends AppCompatActivity{
 
 
 
-        fragment0 = new Fragment2();
+//        fragment0 = new Fragment2_myBook();
+       fragment0 = new Fragment2();
         fragment1 = new Fragment2();
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
