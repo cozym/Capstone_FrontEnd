@@ -71,7 +71,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         viewHolder.ICon.setImageResource(listViewItem.getIcon());
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
 //        viewHolder.peonum.setText("회원 수: "+listViewItem.getPeonum());
-//        viewHolder.booknum.setText("도서 수: "+listViewItem.getBooknum());
+        viewHolder.booknum.setText("도서 수: "+listViewItem.getBooknum());
         String group_date = listViewItem.getCreatedDate().substring(0,10);
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);

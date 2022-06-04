@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.bookList;
 import com.example.practicespace.connection.openGroupList;
 import com.example.practicespace.vo.Group;
 
@@ -33,6 +35,7 @@ public class Fragment1 extends Fragment {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     List<Group> groups = new ArrayList<Group>();
     private View view;
+    int booknum;
 
     //멀티스레드 작성시작
     class Sync{
@@ -49,8 +52,33 @@ public class Fragment1 extends Fragment {
                         Log.d("test","getgroup전");
                         ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
                         for(int i = 0; i <groups.size(); i++){
+                            Call<bookList> call2 = apiInterface.getBookList(
+                                    LoginInfo.getInstance().data.token,groups.get(i).getSeq(), 0
+                            );
+                            call2.enqueue(new Callback<bookList>() {
+                                @Override
+                                public void onResponse(Call<bookList> call, Response<bookList> response) {
+                                    bookList result = response.body();
+                                    if(response.code()==200){
+                                        Log.d("연결 테스트", "코드까지는 성공");
+                                        booknum = result.data.books.size();
+                                    }
+                                    else{
+                                        Log.d("연결 테스트", "실패");
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<bookList> call, Throwable t) {
+                                    Log.d("연결 테스트", "실패22");
+                                }
+                            });
+
+
                             items.add(new ListViewItem(R.drawable.test_1,groups.get(i).getName(), groups.get(i).getDescription()
-                                    ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate()));
+                                    ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate(),booknum));
+
+                            ///도서수 계산
                         }
                         adapter = new ListViewAdapter(items, view.getContext());
                         listview.setAdapter(adapter);
