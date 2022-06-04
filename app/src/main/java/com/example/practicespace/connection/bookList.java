@@ -15,7 +15,7 @@ public class bookList extends setGroup{
     public Data data;
 
     public class Data {
-        @SerializedName("book")
+        @SerializedName("bookList")
         @Expose
         public List<Book> books = new ArrayList<Book>();
     }

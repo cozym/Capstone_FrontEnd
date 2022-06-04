@@ -31,7 +31,7 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
     }
 
     public GridViewAdapter(ArrayList<GridViewItem> list, Context context){
-        super(context, R.layout.listview_crew_item, list);
+        super(context, R.layout.grid_crew_item, list);
         this.gridViewItemList = list;
         this.mContext = context;
     }

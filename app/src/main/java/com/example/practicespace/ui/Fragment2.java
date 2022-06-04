@@ -35,22 +35,28 @@ public class Fragment2 extends Fragment {
 
     class Sync{
         public void getBookList(){
-            Call<bookList> call = apiInterface.getBookList(LoginInfo.getInstance().data.token);
+            Log.d("연결 테스트", "코드까지는 성공1111111");
+            Call<bookList> call = apiInterface.getBookList(
+//                    LoginInfo.getInstance().data.token,5, 0,10
+            );
             call.enqueue(new Callback<bookList>() {
                 @Override
                 public void onResponse(Call<bookList> call, Response<bookList> response) {
                     bookList result = response.body();
                     if(response.code()==200){
+                        Log.d("연결 테스트", "코드까지는 성공");
                         books = result.data.books;
                         ArrayList<GridViewItem> items = new ArrayList<GridViewItem>();
                         for(int i = 0; i<books.size();i++){
                             items.add(new GridViewItem((R.drawable.test_jsp), books.get(i).getSeq(),
                                     books.get(i).getTitle(),books.get(i).getAuthor(),books.get(i).getPublisher()
-                            ,books.get(i).getIsbn(),books.get(i).getPublishDate(),books.get(i).getDescription()
-                            ,books.get(i).getCategory(),books.get(i).getRental()));
+                                    ,books.get(i).getIsbn(),books.get(i).getPublishDate(),books.get(i).getDescription()
+                                    ,books.get(i).getCategory(),books.get(i).getRental()));
                         }
                         adapter = new GridViewAdapter(items, view.getContext());
-                        }
+                        gridView.setAdapter(adapter);
+
+                    }
                     else{
                         Log.d("연결 테스트", "실패");
                     }
@@ -58,7 +64,7 @@ public class Fragment2 extends Fragment {
 
                 @Override
                 public void onFailure(Call<bookList> call, Throwable t) {
-
+                    Log.d("연결 테스트", "실패22");
                 }
             });
         }
@@ -84,13 +90,14 @@ public class Fragment2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.frag_book, container, false);
+        view = inflater.inflate(R.layout.frag_book, container, false);
         gridView = (GridView) view.findViewById(R.id.List_book_Info);
 
         Sync sync = new Sync();
         MyThread thread1 = new MyThread(sync,1);
-        MyThread thread2 = new MyThread(sync,2);
-
+//        MyThread thread2 = new MyThread(sync,2);
+//
+        Log.d("연결 테스트", "쓰레드 전까지 성공 까지는 성공");
         try{
             thread1.start();
             thread1.join();
@@ -98,16 +105,16 @@ public class Fragment2 extends Fragment {
         }catch(Exception e){
             e.printStackTrace();
         }
-        try{
-            thread2.start();
-            thread2.join();
-            Log.d("스레드테스트", "3");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+//        try{
+//            thread2.start();
+//            thread2.join();
+//            Log.d("스레드테스트", "3");
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
 
         //adapter에 넣을 리스트뷰를 받는 배열
-
+        ArrayList<GridViewItem> items = new ArrayList<GridViewItem>();
 //          items.add(new GridViewItem(R.drawable.test_jsp, 4,"쉽게 배우는 JSP 웹 프로그래밍", "송미영",
 //                  "한빛아카데미", "979-11-5664-338-8","2022-04-08","JSP입문자를 위한 도서",
 //                  "컴퓨터과학",true));
@@ -123,11 +130,10 @@ public class Fragment2 extends Fragment {
 //        items.add(new GridViewItem(R.drawable.test_clang, 8,"누구나 쉽게 즐기는 C언어 콘서트", "천인국",
 //                "생능출판", " 978-89-7050-493-3","2022-05-23","C언어 쉽게 배워보자",
 //                "컴퓨터과학",true));
-        ArrayList<GridViewItem> items = new ArrayList<GridViewItem>();
+
         adapter = new GridViewAdapter(items, view.getContext());
-
         gridView.setAdapter(adapter);
-
+        Log.d("연결 테스트", "코드까지는 성공");
         return view;
     }
 }

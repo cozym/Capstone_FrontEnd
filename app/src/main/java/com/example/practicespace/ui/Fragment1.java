@@ -52,7 +52,6 @@ public class Fragment1 extends Fragment {
                             items.add(new ListViewItem(R.drawable.test_1,groups.get(i).getName(), groups.get(i).getDescription()
                                     ,groups.get(i).getSeq(),groups.get(i).getOpen(),groups.get(i).getCreatedDate()));
                         }
-
                         adapter = new ListViewAdapter(items, view.getContext());
                         listview.setAdapter(adapter);
                     } else{
@@ -124,9 +123,9 @@ public class Fragment1 extends Fragment {
 //        items.add(new ListViewItem(R.drawable.test_1, "대학생", "대학생 분들 오세요!",9
 //                ,false,"2022-06-02TT11:11:11",5,1));
         /////
-        ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
-        adapter = new ListViewAdapter(items, view.getContext());
-        listview.setAdapter(adapter);
+//        ArrayList<ListViewItem> items = new ArrayList<ListViewItem>();
+//        adapter = new ListViewAdapter(items, view.getContext());
+//        listview.setAdapter(adapter);
 
         /////
         Log.d("스레드테스트", "5");

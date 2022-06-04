@@ -22,13 +22,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 public class add_group extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
     private final int GET_GALLERY_IMAGE=200;
     private ImageView imageview;
+    private EditText group_Name;
+    private EditText group_Description;
+    private EditText group_HashTag;
+    private boolean is_open;
+    private Button submit_group;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +51,15 @@ public class add_group extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
         imageview = (ImageView)findViewById(R.id.group_thumbnail);
+        group_Name =(EditText)findViewById(R.id.group_Name);
+        group_Description = (EditText)findViewById(R.id.group_Description);
+        group_HashTag = (EditText)findViewById(R.id.group_HashTag);
+        submit_group = (Button)findViewById(R.id.submit_group);
+
+
+
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
@@ -49,6 +67,38 @@ public class add_group extends AppCompatActivity {
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
+        submit_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<setGroup> call= apiInterface.saveGroup(
+                        LoginInfo.getInstance().data.token,
+                        group_Name.getText().toString(),
+                        is_open,
+                        imageview.toString(),
+                        group_Description.getText().toString(),
+                        10.15,
+                        9.12
+                );
+                call.enqueue(new Callback<setGroup>() {
+                    @Override
+                    public void onResponse(Call<setGroup> call, Response<setGroup> response) {
+                    setGroup result = response.body();
+                    if(response.code() == 200){
+                        Log.d("test","setgroup성공");
+                    }
+                    else {
+                        Log.d("test","setgroupt실패");
+                    }
+                    }
+
+                    @Override
+                    public void onFailure(Call<setGroup> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+            }
+        });
+
     }
 
     @Override
@@ -57,6 +107,21 @@ public class add_group extends AppCompatActivity {
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
             imageview.setImageURI(selectedImageUri);
+        }
+    }
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.group_isOpen:
+                is_open = true;
+                break;
+            case R.id.group_isClose:
+                if (checked)
+                    is_open = false;
+                break;
         }
     }
 }
