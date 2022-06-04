@@ -38,7 +38,7 @@
                 />
 
             <ImageView
-                android:id="@+id/group_thumbnail"
+                android:id="@+id/addbook_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
@@ -56,11 +56,48 @@
                 android:textColor="@color/black"
                 />
             <EditText
+                android:id="@+id/addbook_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button4"
                 android:padding="8dp"
                 android:hint="제목을 입력해주세요."
+                android:fontFamily="@font/nanumgothic"
+                ></EditText>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="글쓴이"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/addbook_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button4"
+                android:padding="8dp"
+                android:hint="글쓴이를 입력해주세요."
+                android:fontFamily="@font/nanumgothic"
+                ></EditText>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="출판사"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/addbook_publisher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button4"
+                android:padding="8dp"
+                android:hint="출판사를 입력해주세요."
                 android:fontFamily="@font/nanumgothic"
                 ></EditText>
             <TextView
@@ -73,6 +110,7 @@
                 android:textColor="@color/black"
                 />
             <EditText
+                android:id="@+id/addbook_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button4"
@@ -85,19 +123,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicextrabold"
-                android:text="해시태그"
+                android:text="장르"
                 android:textSize="20sp"
                 android:paddingTop="10dp"
                 android:textColor="@color/black"
                 />
-            <EditText
+            <Button
+                android:id="@+id/addbook_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button4"
                 android:padding="8dp"
-                android:hint="해시태그를 입력해주세요."
+                android:text="클릭하여 장르를 선택해주세요."
+                android:textAlignment="textStart"
+                android:textSize="16dp"
                 android:fontFamily="@font/nanumgothic"
-                ></EditText>
+                android:onClick="DialogClick"
+                android:drawableEnd="@drawable/drawable_resize5"
+                ></Button>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,7 +156,7 @@
                 android:weightSum="1"
                 android:layout_marginBottom="20dp">
                 <EditText
-                    android:id="@+id/ISBNInput"
+                    android:id="@+id/addbook_ISBN"
                     android:layout_width="0dp"
                     android:layout_weight="0.8"
                     android:layout_height="wrap_content"
@@ -123,6 +166,7 @@
                     android:fontFamily="@font/nanumgothic"
                     ></EditText>
                 <ImageButton
+                    android:id="@+id/ISBNsearch"
                     android:layout_width="0dp"
                     android:layout_weight="0.1"
                     android:layout_height="match_parent"
@@ -160,7 +204,7 @@
             android:layout_gravity="center">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/addbook_button"
                 android:layout_width="310dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button5"

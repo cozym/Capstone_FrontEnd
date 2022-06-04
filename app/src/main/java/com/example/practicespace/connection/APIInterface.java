@@ -10,6 +10,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIInterface {
     @FormUrlEncoded
@@ -49,17 +50,17 @@ public interface APIInterface {
 
     @GET("book/list")
     Call<bookList> getBookList(
-//            @Header("Authorization") String token,
-//           @Field("groupSeq") int groupSeq
-//             ,@Field("start") int start,
-//             @Field("display") int display
+            @Header("Authorization") String token,
+           @Query("groupSeq") int groupSeq
+             ,@Query("start") int start,
+             @Query("display") int display
     );
 
     @GET("book/mybook")
     Call<myBookList> getMyBookList(
             @Header("Authorization") String token,
-            @Field("start") int start,
-            @Field("display") int display);
+            @Query("start") int start,
+            @Query("display") int display);
 
     @FormUrlEncoded
     @PATCH("book/return")

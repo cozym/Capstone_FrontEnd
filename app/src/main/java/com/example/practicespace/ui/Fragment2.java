@@ -37,7 +37,7 @@ public class Fragment2 extends Fragment {
         public void getBookList(){
             Log.d("연결 테스트", "코드까지는 성공1111111");
             Call<bookList> call = apiInterface.getBookList(
-//                    LoginInfo.getInstance().data.token,5, 0,10
+                    LoginInfo.getInstance().data.token,4, 0,10
             );
             call.enqueue(new Callback<bookList>() {
                 @Override
