@@ -56,14 +56,16 @@
         android:weightSum="2">
 
         <TextView
-            android:id="@+id/gorup_list_mem"
+            android:id="@+id/gorup_list_isopen"
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothic"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:maxLines="1"
-            android:text="회원 수:"
+            android:text="공개/직위"
+            android:textAlignment="center"
+            android:textColor="@color/white"
             android:textSize="18dp" />
         <TextView
             android:id="@+id/group_list_book"
