@@ -68,7 +68,6 @@ public class add_group extends AppCompatActivity {
         imageview = (ImageView)findViewById(R.id.group_thumbnail);
         group_Name =(EditText)findViewById(R.id.group_Name);
         group_Description = (EditText)findViewById(R.id.group_Description);
-        group_HashTag = (EditText)findViewById(R.id.group_HashTag);
         submit_group = (Button)findViewById(R.id.submit_group);
 
 

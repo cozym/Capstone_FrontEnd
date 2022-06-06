@@ -87,24 +87,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicextrabold"
-                android:text="해시태그"
-                android:textSize="20sp"
-                android:paddingTop="10dp"
-                android:textColor="@color/black"
-                />
-            <EditText
-                android:id="@+id/group_HashTag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button4"
-                android:padding="8dp"
-                android:hint="해시태그를 입력해주세요."
-                android:fontFamily="@font/nanumgothic"
-                ></EditText>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nanumgothicextrabold"
                 android:text="그룹 공개 여부"
                 android:textSize="20sp"
                 android:paddingTop="10dp"

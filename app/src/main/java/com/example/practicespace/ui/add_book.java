@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ public class add_book extends AppCompatActivity {
     private EditText ISBNInput;
     final String[] category = new String[] {"컴퓨터 과학", "철학", "종교", "사회과학", "언어", "과학", "기술", "예술", "문학", "역사"};
     int categorynum ;
+    private Intent secondIntent;
+    private int groupseq;
     
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     
@@ -44,6 +47,9 @@ public class add_book extends AppCompatActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        secondIntent = getIntent();
+        groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
 
         imageview = (ImageView)findViewById(R.id.addbook_thumbnail);
         imageview.setOnClickListener(new View.OnClickListener() {
