@@ -120,7 +120,7 @@ public class add_group extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
-            Log.d("테스트",getPath(selectedImageUri));
+
             imageview.setImageURI(selectedImageUri);
         }
     }
