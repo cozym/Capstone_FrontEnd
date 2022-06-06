@@ -37,6 +37,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/MapSearch"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginHorizontal="15dp"
@@ -101,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="40dp"
-            android:text="경기대 학생들 들어오세요"
+            android:text="경기대 학생 분들 중 가입을 원하시는 분은 아래로\n연락 주세요\n010-1111-2222"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"

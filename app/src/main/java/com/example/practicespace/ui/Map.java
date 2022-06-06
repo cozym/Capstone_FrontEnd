@@ -1,6 +1,7 @@
 package com.example.practicespace.ui;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -9,11 +10,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,9 +32,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Map extends AppCompatActivity {
 
@@ -56,6 +53,7 @@ public class Map extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.main_frame);
+        EditText eText2 = (EditText) findViewById(R.id.MapSearch);
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
@@ -64,7 +62,18 @@ public class Map extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
 
-
+        eText2.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v,int keyCode, KeyEvent event) {
+                if((event.getAction()==KeyEvent.ACTION_DOWN)&&(keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow( eText2.getWindowToken(), 0);
+                    startLocationService();
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
         // 구글 맵 비동기 처리
@@ -88,7 +97,7 @@ public class Map extends AppCompatActivity {
                         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                     }
                 });
-                startLocationService();
+                //startLocationService();
             }
         });
 
@@ -118,7 +127,7 @@ public class Map extends AppCompatActivity {
             float minDistance = 0;
 
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
-            Toast.makeText(getApplicationContext(), "나의 위치 요청", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "나의 위치 요청", Toast.LENGTH_SHORT).show();
 
         } catch (SecurityException e) {
             e.printStackTrace();
