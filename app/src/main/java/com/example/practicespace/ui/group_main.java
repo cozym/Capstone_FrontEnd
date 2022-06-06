@@ -187,6 +187,7 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
             case R.id.fab1:
                 anim();
                 Intent intent1 = new Intent(getApplicationContext(), add_book.class);
+                intent1.putExtra("그룹시퀀스",groupseq);
                 startActivity(intent1);
                 break;
             default:
