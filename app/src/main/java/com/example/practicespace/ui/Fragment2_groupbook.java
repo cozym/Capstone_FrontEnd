@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment2 extends Fragment {
+public class Fragment2_groupbook extends Fragment {
 
     GridView gridView;
     private static GridViewAdapter adapter;
@@ -35,9 +35,10 @@ public class Fragment2 extends Fragment {
 
     class Sync{
         public void getBookList(){
+            int groupseq = getSeq();
             Log.d("연결 테스트", "코드까지는 성공1111111");
             Call<bookList> call = apiInterface.getBookList(
-                    LoginInfo.getInstance().data.token,null,0
+                    LoginInfo.getInstance().data.token,groupseq,0
             );
             call.enqueue(new Callback<bookList>() {
                 @Override
@@ -88,7 +89,10 @@ public class Fragment2 extends Fragment {
             sync.syncRun(num);
         }
     }
-    
+    public int getSeq(){
+        return getArguments().getInt("groupseq");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 

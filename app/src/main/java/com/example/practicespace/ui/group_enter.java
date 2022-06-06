@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,11 +16,14 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.bookList;
 import com.example.practicespace.connection.getGroup;
+import com.example.practicespace.connection.openGroupList;
 import com.example.practicespace.vo.Admin;
 import com.example.practicespace.vo.Book;
 import com.example.practicespace.vo.Group;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,39 +35,16 @@ public class group_enter extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
     private TextView grouptitle, groupdes, group_isOpen, group_admin, group_mem_num,group_book_num,group_date;
-    private int groupseq;
+    private int groupseq, groupicon;
     private Group group;
     private Admin admin;
     private Intent secondIntent;
+    private ImageView groupimage;
     List<Book> books = new ArrayList<Book>();
-    String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
+    private int booknum;
 
     class Sync{
-        protected void init(){
-            Log.d("테스트","init");
-            grouptitle = (TextView)findViewById(R.id.grouptitle);
-            grouptitle.setText(secondIntent.getStringExtra("그룹이름"));
-            group_isOpen = (TextView) findViewById(R.id.group_isOpen);
-            boolean isopen = secondIntent.getBooleanExtra("그룹공개",true);
-            if(isopen == true){
-                group_isOpen.setText("공개");
-            }else{
-                group_isOpen.setText("비공개");
-            }
-            groupdes = (TextView)findViewById(R.id.groupdes);
-            groupdes.setText(secondIntent.getStringExtra("그룹설명"));
-////        group_mem_num = (TextView)findViewById(R.id.group_mem_num);
-////        group_mem_num.setText();
-////        group_book_num = (TextView)findViewById(R.id.group_book_num);
-////        group_book_num.setText(secondIntent.getIntExtra("그룹"));
-            group_date = (TextView) findViewById(R.id.group_date);
-            group_date.setText(secondIntent.getStringExtra("그룹생성일"));
-
-//
-
-        }
         protected void call(){
-            Log.d("토큰조각",new String(android.util.Base64.decode(TokenPart, 0)));
             Log.d("테스트","call");
             //그룹정보 받아오기
             Call<getGroup> call = apiInterface.getGroupSeq(LoginInfo.getInstance().data.token,groupseq);
@@ -75,7 +56,6 @@ public class group_enter extends AppCompatActivity {
                             if(response.code() == 200){
                                 group = result.data.group;
                                 Log.d("test","그룹받아오기"+group.getName());
-                                System.out.println(group.getAdmin().getNickname());
                             } else{
                                 Log.d("연결 테스트", "실패");
                             }
@@ -88,27 +68,61 @@ public class group_enter extends AppCompatActivity {
                 }
             });
 
-            //북리스트 가져오기
-//            Call<bookList> call2 = apiInterface.getBookList(LoginInfo.getInstance().data.token,groupseq);
-//            call2.enqueue(new Callback<bookList>() {
-//                @Override
-//                public void onResponse(Call<bookList> call2, Response<bookList> response) {
-//                    bookList result = response.body();
-//                    if(response.code() == 200){
-//                        books = result.data.books;
-//
-//                    } else{
-//                        Log.d("연결 테스트", "실패");
-//                    }
-//                }
-//                @Override
-//                public void onFailure(Call<bookList> call2, Throwable t) {
-//                    call2.cancel();
-//                }
-//            });
+            Call<bookList> call2 = apiInterface.getBookList(
+                    LoginInfo.getInstance().data.token,groupseq, 0
+            );
+            call2.enqueue(new Callback<bookList>() {
+                @Override
+                public void onResponse(Call<bookList> call, Response<bookList> response) {
+                    bookList result = response.body();
+                    if(response.code()==200){
+                        Log.d("연결 테스트", "코드까지는 성공");
+                        books = result.data.books;
+                        booknum = books.size();
+                        group_book_num = (TextView)findViewById(R.id.group_book_num);
+                        group_book_num.setText(String.valueOf(booknum));
+                        //유저수추가
+
+
+                    }
+                    else{
+                        Log.d("연결 테스트", "실패");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<bookList> call, Throwable t) {
+                    Log.d("연결 테스트", "실패22");
+                }
+            });
 
         }
+        protected void init(){
+            Log.d("테스트","init");
+            groupimage=(ImageView) findViewById(R.id.group_image);
+            groupimage.setImageResource(secondIntent.getIntExtra("그룹사진",0));
+            grouptitle = (TextView)findViewById(R.id.grouptitle);
+            grouptitle.setText(secondIntent.getStringExtra("그룹이름"));
+            group_isOpen = (TextView) findViewById(R.id.group_isOpen);
+            boolean isopen = secondIntent.getBooleanExtra("그룹공개",true);
+            if(isopen == true){
+                group_isOpen.setText("공개");
+                group_isOpen.setBackgroundResource(R.drawable.public_o);
+            }else{
+                group_isOpen.setText("비공개");
+                group_isOpen.setBackgroundResource(R.drawable.public_x);
+            }
+            groupdes = (TextView)findViewById(R.id.groupdes);
+            groupdes.setText(secondIntent.getStringExtra("그룹설명"));
 
+            group_mem_num = (TextView)findViewById(R.id.group_mem_num);
+            group_mem_num.setText(String.valueOf(secondIntent.getIntExtra("회원수",0)));
+            group_date = (TextView) findViewById(R.id.group_date);
+            group_date.setText(secondIntent.getStringExtra("그룹생성일"));
+
+//
+
+        }
         public synchronized void syncRun(int num){
             if(num==1){
                 call();

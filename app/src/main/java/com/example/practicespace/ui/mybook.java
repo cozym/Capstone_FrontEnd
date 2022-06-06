@@ -65,7 +65,8 @@ public class mybook extends AppCompatActivity{
 
 
 
-        fragment0 = new Fragment2();
+//        fragment0 = new Fragment2_myBook();
+       fragment0 = new Fragment2();
         fragment1 = new Fragment2();
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
@@ -143,12 +144,10 @@ public class mybook extends AppCompatActivity{
                         startActivity(intent1);
                         break;
                     case R.id.menu_group:
-                        Intent intent2 = new Intent(getApplicationContext(), group_info.class);
+                        Intent intent2 = new Intent(getApplicationContext(), mygroup.class);
                         startActivity(intent2);
                         break;
                     case R.id.menu_book:
-                        Intent intent3 = new Intent(getApplicationContext(), book_info.class);
-                        startActivity(intent3);
                         break;
                     case R.id.mypage:
                         Intent intent4 = new Intent(getApplicationContext(), mypage.class);

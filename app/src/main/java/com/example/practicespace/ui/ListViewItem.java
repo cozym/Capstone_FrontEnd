@@ -1,7 +1,5 @@
 package com.example.practicespace.ui;
 
-import com.example.practicespace.vo.Admin;
-
 public class ListViewItem {
 
     private int group_icon;
@@ -10,17 +8,18 @@ public class ListViewItem {
     private int groupSeq;
     private boolean isOpen;
     private String createdDate;
-    private Admin admin;
+    private int peonum;
+    private int booknum;
 
 
-    public ListViewItem(int icon, String name, String description, int seq, boolean isOepn, String createdDate, Admin admin){
+    public ListViewItem(int icon, String name, String description, int seq, boolean isOepn, String createdDate, int booknum){
         this.group_icon = icon;
         this.group_name = name;
         this.description = description;
         this.groupSeq = seq;
         this.isOpen = isOepn;
         this.createdDate = createdDate;
-        this.admin = admin;
+        this.booknum = booknum;
     }
 
 
@@ -32,5 +31,5 @@ public class ListViewItem {
     public boolean getIsOpen(){return this.isOpen;}
     public String getGroupDes(){return this.description;}
     public String getCreatedDate(){return this.createdDate;}
-    public Admin getAdmin(){return  this.admin;}
+    public int getBooknum(){return this.booknum;}
 }

@@ -34,7 +34,7 @@
                 android:background="#ffffff"
                 >
                 <ImageView
-                    android:id="@+id/imageview"
+                    android:id="@+id/book_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -44,7 +44,7 @@
                     android:src="@drawable/profile" />
 
                 <TextView
-                    android:id="@+id/booktitle"
+                    android:id="@+id/book_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -56,7 +56,7 @@
                     android:textColor="@color/black"
                     />
                 <TextView
-                    android:id="@+id/bookauthor"
+                    android:id="@+id/book_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -81,33 +81,17 @@
                     android:background="@drawable/rental_o"
                     android:layout_marginTop="10dp"></TextView>
                 <TextView
-                    android:id="@+id/bookinfo"
+                    android:id="@+id/book_des"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/nanumgothic"
-                    android:text="책 설명 책 설명  "
+                    android:text="책 설명 "
                     android:paddingHorizontal="20dp"
                     android:textSize="20sp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/bookbarcode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/nanumgothic"
-                    android:background="@drawable/button3"
-                    android:text="바코드 / QR "
-                    android:layout_marginHorizontal="20dp"
-                    android:paddingHorizontal="20dp"
-                    android:textSize="20sp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginBottom="20dp"
                     android:textColor="@color/black"
                     />
             </LinearLayout>
@@ -181,7 +165,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/book_owngroup">
                             >
                         </TextView>
                     </TableRow>
@@ -215,7 +200,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/ownner">
                             >
                         </TextView>
                     </TableRow>
@@ -249,7 +235,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/book_ISBN">
                             >
                         </TextView>
                     </TableRow>
@@ -283,7 +270,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/book_category">
                             >
                         </TextView>
                     </TableRow>
@@ -317,7 +305,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/book_publisher">
                             >
                         </TextView>
                     </TableRow>
@@ -351,7 +340,8 @@
                             android:fontFamily="@font/nanumgothic"
                             android:background="#ffffff"
                             android:layout_margin="1px"
-                            android:padding="3dp">
+                            android:padding="3dp"
+                            android:id="@+id/book_date">
                             >
                         </TextView>
                     </TableRow>
@@ -371,14 +361,14 @@
         android:layout_height="wrap_content"
         android:background="#EFEFEF"
         android:orientation="horizontal"
-    >
+        >
         <LinearLayout android:layout_height="match_parent"
-             android:layout_width="wrap_content"
+            android:layout_width="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/rent_button"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"

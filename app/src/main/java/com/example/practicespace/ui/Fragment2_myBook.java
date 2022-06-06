@@ -16,6 +16,8 @@ import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.bookList;
+import com.example.practicespace.connection.getBook;
+import com.example.practicespace.connection.myBookList;
 import com.example.practicespace.vo.Book;
 
 import java.util.ArrayList;
@@ -24,8 +26,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-public class Fragment2 extends Fragment {
+//내도서에서 이용
+public class Fragment2_myBook extends Fragment {
 
     GridView gridView;
     private static GridViewAdapter adapter;
@@ -36,15 +38,13 @@ public class Fragment2 extends Fragment {
     class Sync{
         public void getBookList(){
             Log.d("연결 테스트", "코드까지는 성공1111111");
-            Call<bookList> call = apiInterface.getBookList(
-                    LoginInfo.getInstance().data.token,null,0
+            Call<myBookList> call = apiInterface.getMyBookList(
+                    LoginInfo.getInstance().data.token,0,10
             );
-            call.enqueue(new Callback<bookList>() {
+            call.enqueue(new Callback<myBookList>() {
                 @Override
-                public void onResponse(Call<bookList> call, Response<bookList> response) {
-                    bookList result = response.body();
-
-
+                public void onResponse(Call<myBookList> call, Response<myBookList> response) {
+                    myBookList result = response.body();
                     if(response.code()==200){
                         Log.d("연결 테스트", "코드까지는 성공");
                         books = result.data.books;
@@ -65,8 +65,8 @@ public class Fragment2 extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<bookList> call, Throwable t) {t.printStackTrace();
-                    /*Log.d("연결 테스트", "실패22")*/;
+                public void onFailure(Call<myBookList> call, Throwable t) {
+                    Log.d("연결 테스트", "실패22");
                 }
             });
         }
@@ -88,7 +88,7 @@ public class Fragment2 extends Fragment {
             sync.syncRun(num);
         }
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 

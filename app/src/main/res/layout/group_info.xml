@@ -319,7 +319,7 @@
                 android:layout_marginHorizontal="10dp"
                 ></Button>
             <Button
-                android:id="@+id/button"
+                android:id="@+id/button_join_group"
                 android:layout_width="310dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"

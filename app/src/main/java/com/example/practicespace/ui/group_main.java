@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,6 +29,8 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1;
+    private Intent secondIntent;
+    private int groupseq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +40,25 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
 
         this.InitializeLayout();
 
+        secondIntent = getIntent();
+        groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
 
 
 
+        TextView toolbar_name = (TextView)findViewById(R.id.group_toolbar_name);
+        toolbar_name.setText("공대 전공도서");
 
-        fragment0 = new Fragment2();
-        fragment1 = new Fragment1();
+
+        fragment0 = new Fragment2_groupbook();
+        fragment1 = new Fragment3();
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+
+        //프래그먼트에 그룹시퀀스 전달
+        Bundle bundle = new Bundle();
+        bundle.putInt("groupseq", groupseq);
+        fragment0.setArguments(bundle);
+        fragment1.setArguments(bundle);
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -130,11 +144,11 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
                         startActivity(intent1);
                         break;
                     case R.id.menu_group:
-                        Intent intent2 = new Intent(getApplicationContext(), group_info.class);
+                        Intent intent2 = new Intent(getApplicationContext(), mygroup.class);
                         startActivity(intent2);
                         break;
                     case R.id.menu_book:
-                        Intent intent3 = new Intent(getApplicationContext(), book_info.class);
+                        Intent intent3 = new Intent(getApplicationContext(), mybook.class);
                         startActivity(intent3);
                         break;
                     case R.id.mypage:
@@ -173,6 +187,7 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
             case R.id.fab1:
                 anim();
                 Intent intent1 = new Intent(getApplicationContext(), add_book.class);
+                intent1.putExtra("그룹시퀀스",groupseq);
                 startActivity(intent1);
                 break;
             default:

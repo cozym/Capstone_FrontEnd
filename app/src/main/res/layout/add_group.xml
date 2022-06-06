@@ -56,6 +56,7 @@
                 android:textColor="@color/black"
                 />
             <EditText
+                android:id="@+id/group_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button4"
@@ -73,29 +74,13 @@
                 android:textColor="@color/black"
                 />
             <EditText
+                android:id="@+id/group_Description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button4"
                 android:padding="8dp"
                 android:hint="그룹 설명을 입력해주세요."
                 android:minHeight="80dp"
-                android:fontFamily="@font/nanumgothic"
-                ></EditText>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nanumgothicextrabold"
-                android:text="해시태그"
-                android:textSize="20sp"
-                android:paddingTop="10dp"
-                android:textColor="@color/black"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button4"
-                android:padding="8dp"
-                android:hint="해시태그를 입력해주세요."
                 android:fontFamily="@font/nanumgothic"
                 ></EditText>
             <TextView
@@ -115,6 +100,7 @@
                 android:weightSum="2"
                 android:layout_marginBottom="20dp">
                 <RadioButton
+                    android:id="@+id/group_isOpen"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="30dp"
@@ -126,6 +112,7 @@
                     android:textAlignment="center"
                     ></RadioButton>
                 <RadioButton
+                    android:id="@+id/group_isClose"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="30dp"
@@ -155,7 +142,7 @@
             android:layout_gravity="center">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/submit_group"
                 android:layout_width="310dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button5"
