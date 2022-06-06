@@ -10,8 +10,8 @@ public class Group {
     @SerializedName("name")
     private String name;
 
-    //@SerializedName("thumbnail")
-    //private String thumbnail;
+    @SerializedName("thumbnail")
+    private String thumbnail;
 
     @SerializedName("authenticationCode")
     private String authenticationCode;
@@ -33,7 +33,7 @@ public class Group {
     public int getSeq() {return seq;}
     public String getName(){return name;}
 
-    //public String getThumbnail() {return thumbnail;}
+    public String getThumbnail() {return thumbnail;}
 
     public String getAuthenticationCode(){return authenticationCode;}
 

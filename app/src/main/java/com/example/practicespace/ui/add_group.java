@@ -78,7 +78,7 @@ public class add_group extends AppCompatActivity {
         imageview = (ImageView) findViewById(R.id.group_thumbnail);
         group_Name = (EditText) findViewById(R.id.group_Name);
         group_Description = (EditText) findViewById(R.id.group_Description);
-        group_HashTag = (EditText) findViewById(R.id.group_HashTag);
+//        group_HashTag = (EditText) findViewById(R.id.group_HashTag);
         submit_group = (Button) findViewById(R.id.submit_group);
 
 
@@ -131,7 +131,7 @@ public class add_group extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        OkHttpClient client = new OkHttpClient();
+
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
             Log.d("테스트",getPath(selectedImageUri));
@@ -139,8 +139,8 @@ public class add_group extends AppCompatActivity {
 
 //            MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 //            File file = new File(getPath(selectedImageUri));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), getPath(selectedImageUri));
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file","THUMBNAIL",requestBody);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), getPath(selectedImageUri));
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file","jpg",requestBody);
             Log.d("image test","말좀 들어라32211");
             Call<SomeResponse> call = apiInterface.saveImage(
                     LoginInfo.getInstance().data.token,
