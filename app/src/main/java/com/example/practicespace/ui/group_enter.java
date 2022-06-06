@@ -15,14 +15,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
-import com.example.practicespace.connection.bookList;
 import com.example.practicespace.connection.getGroup;
-import com.example.practicespace.connection.openGroupList;
 import com.example.practicespace.vo.Admin;
 import com.example.practicespace.vo.Book;
 import com.example.practicespace.vo.Group;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +36,7 @@ public class group_enter extends AppCompatActivity {
     private Admin admin;
     private Intent secondIntent;
     List<Book> books = new ArrayList<Book>();
+    String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
 
     class Sync{
         protected void init(){
@@ -65,6 +63,7 @@ public class group_enter extends AppCompatActivity {
 
         }
         protected void call(){
+            Log.d("토큰조각",new String(android.util.Base64.decode(TokenPart, 0)));
             Log.d("테스트","call");
             //그룹정보 받아오기
             Call<getGroup> call = apiInterface.getGroupSeq(LoginInfo.getInstance().data.token,groupseq);
@@ -76,6 +75,7 @@ public class group_enter extends AppCompatActivity {
                             if(response.code() == 200){
                                 group = result.data.group;
                                 Log.d("test","그룹받아오기"+group.getName());
+                                System.out.println(group.getAdmin().getNickname());
                             } else{
                                 Log.d("연결 테스트", "실패");
                             }
