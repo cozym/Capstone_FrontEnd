@@ -21,8 +21,8 @@ public class Book {
     @SerializedName("code")
     private String code;
 
-    @SerializedName("thumbnail")
-    private String thumbnail;
+//    @SerializedName("thumbnail")
+//    private String thumbnail;
 
     @SerializedName("publishDate")
     private String publishDate;
@@ -48,7 +48,7 @@ public class Book {
 
     public String getIsbn() {return isbn;}
 
-    public String getThumbnail() {return thumbnail;}
+//    public String getThumbnail() {return thumbnail;}
 
     public String getPublishDate() {return publishDate;}
 

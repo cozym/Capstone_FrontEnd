@@ -29,7 +29,7 @@ public class book_info extends AppCompatActivity {
     ImageView bookImage;
     private Intent secondIntent;
     class Sync{
-        protected void call(){
+        protected void call(){  //seq 변수로 수정해야함
             if(LoginInfo.getInstance().data.token != null){
                 Call<getBook> book = apiInterface.getBookSeq(LoginInfo.getInstance().data.token,4);
 
@@ -111,8 +111,10 @@ public class book_info extends AppCompatActivity {
         description.setText(secondIntent.getStringExtra("책설명"));
         owngroup =(TextView) findViewById(R.id.book_owngroup);
         owngroup.setText(secondIntent.getStringExtra("소유그룹"));
+        //주인 임시
         ownner =(TextView) findViewById(R.id.ownner);
         ownner.setText(secondIntent.getStringExtra("글쓴이"));
+        //
         ISBN =(TextView) findViewById(R.id.book_ISBN);
         ISBN.setText(secondIntent.getStringExtra("ISBN"));
         category =(TextView) findViewById(R.id.book_category);

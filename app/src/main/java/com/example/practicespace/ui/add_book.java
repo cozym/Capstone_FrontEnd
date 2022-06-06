@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,9 +29,11 @@ public class add_book extends AppCompatActivity {
     private ImageView imageview;
     private ImageButton ISBNCamera;
     private EditText ISBNInput;
-
+    final String[] category = new String[] {"컴퓨터 과학", "철학", "종교", "사회과학", "언어", "과학", "기술", "예술", "문학", "역사"};
+    int categorynum ;
+    
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +45,7 @@ public class add_book extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        imageview = (ImageView)findViewById(R.id.group_thumbnail);
+        imageview = (ImageView)findViewById(R.id.addbook_thumbnail);
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
@@ -60,7 +63,52 @@ public class add_book extends AppCompatActivity {
             }
         });
 
+    }
 
+    public void DialogClick(View view) {
+        new AlertDialog.Builder(this).setTitle("선택").setSingleChoiceItems(category, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                categorynum = which;
+            }
+        }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int select) {
+                Button genre = (Button)findViewById(R.id.addbook_category);
+                switch (categorynum){
+                    case 0:
+                        genre.setText("컴퓨터과학");
+                        break;
+                    case 1:
+                        genre.setText("철학");
+                        break;
+                    case 2:
+                        genre.setText("종교");
+                        break;
+                    case 3:
+                        genre.setText("사회과학");
+                        break;
+                    case 4:
+                        genre.setText("언어");
+                        break;
+                    case 5:
+                        genre.setText("과학");
+                        break;
+                    case 6:
+                        genre.setText("기술");
+                        break;
+                    case 7:
+                        genre.setText("예술");
+                        break;
+                    case 8:
+                        genre.setText("문학");
+                        break;
+                    case 9:
+                        genre.setText("역사");
+                        break;
+                }
+            }
+        }).setNegativeButton("취소", null).show();
     }
 
     private void scanCode() {
@@ -95,7 +143,7 @@ public class add_book extends AppCompatActivity {
                         }).setNegativeButton("finish", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                ISBNInput = (EditText)findViewById(R.id.ISBNInput);
+                                ISBNInput = (EditText)findViewById(R.id.addbook_ISBN);
                                 ISBNInput.setText(result.getContents());
                                 //finish();
                             }
