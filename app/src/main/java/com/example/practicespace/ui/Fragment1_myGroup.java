@@ -60,6 +60,7 @@ public class Fragment1_myGroup extends Fragment {
                                    getGroup result2 = response.body();
                                    if(response.code() == 200){
                                        group = result2.data.group;
+                                       Log.d("test 중 입니다.",group.getName());
                                        items.add(new ListViewItem(R.drawable.profile,group.getName(), group.getDescription()
                                                ,group.getSeq(),group.getOpen(),group.getCreatedDate(), 0));  // booknum 나중에 수정
                                    }
