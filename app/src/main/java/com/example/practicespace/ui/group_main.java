@@ -49,10 +49,16 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
         toolbar_name.setText("공대 전공도서");
 
 
-        fragment0 = new Fragment2();
-        fragment1 = new Fragment1();
+        fragment0 = new Fragment2_groupbook();
+        fragment1 = new Fragment3();
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+
+        //프래그먼트에 그룹시퀀스 전달
+        Bundle bundle = new Bundle();
+        bundle.putInt("groupseq", groupseq);
+        fragment0.setArguments(bundle);
+        fragment1.setArguments(bundle);
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

@@ -11,7 +11,7 @@ public class getUserList extends setGroup{
 
     @SerializedName("data")
     @Expose
-    public getUser.Data data;
+    public Data data;
 
     public class Data {
         @SerializedName("userList")

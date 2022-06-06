@@ -101,11 +101,11 @@ public class book_info extends AppCompatActivity {
         rental = (TextView) findViewById(R.id.book_rental);
         boolean isrental = secondIntent.getBooleanExtra("대여여부",true);
         if(isrental == true){
+            rental.setText("대여중");
+            rental.setBackgroundResource(R.drawable.rental_x);
+        }else{
             rental.setText("대여가능");
             rental.setBackgroundResource(R.drawable.rental_o);
-        }else{
-            rental.setText("대여불가");
-            rental.setBackgroundResource(R.drawable.rental_x);
         }
         description =(TextView) findViewById(R.id.book_des);
         description.setText(secondIntent.getStringExtra("책설명"));

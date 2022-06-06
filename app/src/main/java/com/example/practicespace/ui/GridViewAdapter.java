@@ -70,11 +70,11 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
         viewHolder.text_author.setText("저자: "+gridViewItem.getAuthor());
         viewHolder.category.setText("카테고리: "+gridViewItem.getCategory());
         if(gridViewItem.getRental()==true){
-            viewHolder.rental.setText("대여가능");
-            viewHolder.rental.setBackgroundResource(R.drawable.rental_o);
-        }else{
             viewHolder.rental.setText("대여중");
             viewHolder.rental.setBackgroundResource(R.drawable.rental_x);
+        }else{
+            viewHolder.rental.setText("대여가능");
+            viewHolder.rental.setBackgroundResource(R.drawable.rental_o);
         }
 
 
