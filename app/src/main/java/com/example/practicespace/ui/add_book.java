@@ -21,8 +21,23 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.setBook;
+import com.example.practicespace.connection.setGroup;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 public class add_book extends AppCompatActivity {
 
@@ -30,10 +45,18 @@ public class add_book extends AppCompatActivity {
     private ImageView imageview;
     private ImageButton ISBNCamera;
     private EditText ISBNInput;
-    final String[] category = new String[] {"컴퓨터 과학", "철학", "종교", "사회과학", "언어", "과학", "기술", "예술", "문학", "역사"};
-    int categorynum ;
+    private EditText addbook_title;
+    private EditText addbook_author;
+    private EditText addbook_publisher;
+    private EditText addbook_description;
+    private Button addbook_category;
+    private String genreString;
+    private Button addbook_button;
     private Intent secondIntent;
     private int groupseq;
+
+    final String[] category = new String[] {"컴퓨터 과학", "철학", "종교", "사회과학", "언어", "과학", "기술", "예술", "문학", "역사"};
+    int categorynum ;
     
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     
@@ -48,15 +71,57 @@ public class add_book extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        secondIntent = getIntent();
-        groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
+        secondIntent=getIntent();
+        groupseq=secondIntent.getIntExtra("그룹시퀀스",0);
 
         imageview = (ImageView)findViewById(R.id.addbook_thumbnail);
+        addbook_title=(EditText)findViewById(R.id.addbook_title);
+        addbook_author=(EditText)findViewById(R.id.addbook_author);
+        addbook_publisher=(EditText)findViewById(R.id.addbook_publisher);
+        addbook_description=(EditText)findViewById(R.id.addbook_description);
+        addbook_category=(Button)findViewById(R.id.addbook_category);
+        addbook_button=(Button)findViewById(R.id.addbook_button);
+        ISBNInput = (EditText)findViewById(R.id.addbook_ISBN);
+
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
+            }
+        });
+
+        addbook_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Call<setBook> call=apiInterface.saveBook(
+                        LoginInfo.getInstance().data.token,
+                        addbook_title.getText().toString(),
+                        addbook_author.getText().toString(),
+                        addbook_publisher.getText().toString(),
+                        ISBNInput.getText().toString(),
+                        imageview.toString(),
+                        "19700101",
+                        addbook_description.getText().toString(),
+                        genreString,
+                        groupseq
+                );
+                call.enqueue(new Callback<setBook>() {
+                    @Override
+                    public void onResponse(Call<setBook> call, Response<setBook> response) {
+                        setBook result= response.body();
+                        if(response.code()==200) {
+                            Log.d("test","setgroup성공");
+                        }
+                        else {
+                            Log.d("test","setgroupt실패");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<setBook> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
             }
         });
 
@@ -84,33 +149,43 @@ public class add_book extends AppCompatActivity {
                 switch (categorynum){
                     case 0:
                         genre.setText("컴퓨터과학");
+                        genreString="컴퓨터과학";
                         break;
                     case 1:
                         genre.setText("철학");
+                        genreString="철학";
                         break;
                     case 2:
                         genre.setText("종교");
+                        genreString="종교";
                         break;
                     case 3:
                         genre.setText("사회과학");
+                        genreString="사회과학";
                         break;
                     case 4:
                         genre.setText("언어");
+                        genreString="언어";
                         break;
                     case 5:
                         genre.setText("과학");
+                        genreString="과학";
                         break;
                     case 6:
                         genre.setText("기술");
+                        genreString="기술";
                         break;
                     case 7:
                         genre.setText("예술");
+                        genreString="예술";
                         break;
                     case 8:
                         genre.setText("문학");
+                        genreString="문학";
                         break;
                     case 9:
                         genre.setText("역사");
+                        genreString="역사";
                         break;
                 }
             }
