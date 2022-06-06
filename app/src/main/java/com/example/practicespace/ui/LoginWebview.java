@@ -3,6 +3,7 @@ package com.example.practicespace.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,9 +41,12 @@ public class LoginWebview extends AppCompatActivity {
 
         webView.addJavascriptInterface(js, "Android");
 
-        webView.loadUrl("http://5gradekgucapstone.xyz:8080/oauth2/authorization/google");
+        webView.setBackgroundColor(0);
+        webView.setBackgroundResource(R.drawable.loading);
 
+        webView.loadUrl("http://5gradekgucapstone.xyz:8080/oauth2/authorization/google");
     }
+
 
 
     private class YourWebClient extends WebViewClient {
@@ -64,6 +68,7 @@ public class LoginWebview extends AppCompatActivity {
 
         @Override
         public void onPageFinished(WebView view, String url) {
+            view.loadUrl("javascript:document.body.style.setProperty(\"color\", \"#776a5f\");");
             view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('pre')[0].innerHTML);");
 
 
