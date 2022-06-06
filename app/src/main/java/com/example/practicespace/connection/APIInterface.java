@@ -53,7 +53,7 @@ public interface APIInterface {
     @GET("book/list")
     Call<bookList> getBookList(
             @Header("Authorization") String token,
-            @Query("groupSeq") int groupSeq
+            @Query("groupSeq") Integer groupSeq
              ,@Query("start") int start
 //           ,@Query("display") int display
     );
@@ -157,7 +157,7 @@ public interface APIInterface {
     @GET("group/userlist")
     Call<getUserList> getUserList(
             @Header("Authorization") String token,
-            @Path("groupSeq") int groupSeq );
+            @Query("groupSeq") int groupSeq );
 
 
     @GET("user/info")
