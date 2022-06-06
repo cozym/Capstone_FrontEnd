@@ -1,6 +1,8 @@
 package com.example.practicespace.connection;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -96,9 +98,9 @@ public interface APIInterface {
 
     @Multipart
     @POST("image/upload")
-    Call<setImage> saveImage(
+    Call<SomeResponse> saveImage(
             @Header("Authorization") String token,
-            @Part("file") RequestBody file);
+            @Part MultipartBody.Part file);
 
 
     @FormUrlEncoded

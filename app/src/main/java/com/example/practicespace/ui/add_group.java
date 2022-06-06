@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.SomeResponse;
 import com.example.practicespace.connection.setGroup;
 
 import okhttp3.MediaType;
@@ -24,6 +25,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -48,6 +50,7 @@ public class add_group extends AppCompatActivity {
     private EditText group_HashTag;
     private boolean is_open;
     private Button submit_group;
+    private String uri;
     Intent intent;
 
     public String getPath(Uri uri){
@@ -59,8 +62,6 @@ public class add_group extends AppCompatActivity {
         }
         return cursor.getString(column);
     }
-    private String uri;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,19 +92,20 @@ public class add_group extends AppCompatActivity {
             }
         });
 
-           String serveruri = "http://5gradekgucapstone.xyz:8080/" + uri;
+
+//        Log.d("image test",serveruri);
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String serveruri = "http://5gradekgucapstone.xyz:8080" + uri;
                 Call<setGroup> call = apiInterface.saveGroup(
                         LoginInfo.getInstance().data.token,
                         group_Name.getText().toString(),
                         is_open,
                         serveruri,
                         group_Description.getText().toString(),
-                        10.15,
-                        9.12
+                        127.0312,
+                        37.2970
                 );
                 call.enqueue(new Callback<setGroup>() {
                     @Override
@@ -135,26 +137,82 @@ public class add_group extends AppCompatActivity {
             Log.d("테스트",getPath(selectedImageUri));
             imageview.setImageURI(selectedImageUri);
 
-            RequestBody requestBody = new MultipartBody.Builder().
-                    setType(MultipartBody.FORM)
-                    .addFormDataPart("file", "THUMBNAIL",
-                            RequestBody.create(MediaType.parse("image/jpg"), new File(String.valueOf(selectedImageUri))))
-                    .build();
+//            MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+//            File file = new File(getPath(selectedImageUri));
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), getPath(selectedImageUri));
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file","THUMBNAIL",requestBody);
+            Log.d("image test","말좀 들어라32211");
+            Call<SomeResponse> call = apiInterface.saveImage(
+                    LoginInfo.getInstance().data.token,
+                    filePart
+            );
+            call.enqueue(new Callback<SomeResponse>() {
+                @Override
+                public void onResponse(Call<SomeResponse> call, Response<SomeResponse> response) {
+                    SomeResponse result = response.body();
+                    if(response.code() == 200){
+                        uri = result.data.URL;
+                        Log.d("image test",uri);
+                    }else{
+                        Log.d("image test","말좀 들어라33333");
+                    }
+                }
 
-            Log.d("imagetest",String.valueOf(selectedImageUri));
+                @Override
+                public void onFailure(Call<SomeResponse> call, Throwable t) {
+                    Log.d("image test","말좀 들어라3344567");
+                }
+            });
+
+            Log.d("image test","말좀 들어라1");
+//            Call<okhttp3.Response> call = apiInterface.saveImage(LoginInfo.getInstance().data.token,requestBody);
+//            call.enqueue(new Callback<okhttp3.Response>() {
+//                @Override
+//                public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response) {
+//                    okhttp3.Response result = response.body();
+//                    if (response.code() ==200 ){
+//                        uri = result.body().toString();
+//                    }else{
+//                        Log.d("image test","말좀 들어라2");
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<okhttp3.Response> call, Throwable t) {
+//                    call.cancel();
+//                }
+//            });
+//===================================================================================================================================
+//            RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
+
+//            RequestBody requestBody = new MultipartBody.Part.createFormData("file"
+//            ,getPath(selectedImageUri),requestBody);
+
+//            RequestBody requestBody = new MultipartBody.Builder().
+//                    setType(MultipartBody.FORM)
+//                    .addFormDataPart("file", "THUMBNAIL",
+//                            RequestBody.create(MediaType.parse("image/*"), new File(getPath(selectedImageUri))))
+//                    .build();
+//
+//            Request request = new Request.Builder()
+//                    .url("http://5gradekgucapstone.xyz:8080/")
+//                    .post(requestBody)
+//                    .build();
+//
+////            Call<okhttp3.Response> call = apiInterface.saveImage(LoginInfo.getInstance().data.token,requestBody);
+//            Call call = client.newCall(request);
+//            Response response = null;
+//            try{
+//                response = call.execute();
+//            }
 
 
-
-            Request request = new Request.Builder()
-                    .url("http://5gradekgucapstone.xyz:8080/")
-                    .post(requestBody)
-                    .build();
-
-            try {
-                uri = client.newCall(request).execute().body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//
+//            try {
+//                uri = client.newCall(request).execute().body().string();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
         }
     }
