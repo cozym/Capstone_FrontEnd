@@ -1,8 +1,10 @@
 package com.example.practicespace.ui;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -39,13 +41,24 @@ import java.io.IOException;
 public class add_group extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-    private final int GET_GALLERY_IMAGE = 200;
+    private final int GET_GALLERY_IMAGE=200;
     private ImageView imageview;
     private EditText group_Name;
     private EditText group_Description;
     private EditText group_HashTag;
     private boolean is_open;
     private Button submit_group;
+    Intent intent;
+
+    public String getPath(Uri uri){
+        int column=0;
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection,null,null,null);
+        if(cursor.moveToFirst()){
+            column=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+        return cursor.getString(column);
+    }
     private String uri;
 
 
@@ -68,11 +81,13 @@ public class add_group extends AppCompatActivity {
         submit_group = (Button) findViewById(R.id.submit_group);
 
 
+
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                intent = new Intent(Intent.ACTION_PICK);
+                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
+
             }
         });
 
@@ -117,6 +132,7 @@ public class add_group extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
+            Log.d("테스트",getPath(selectedImageUri));
             imageview.setImageURI(selectedImageUri);
 
             RequestBody requestBody = new MultipartBody.Builder().
@@ -148,7 +164,7 @@ public class add_group extends AppCompatActivity {
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        switch (view.getId()) {
+        switch(view.getId()) {
             case R.id.group_isOpen:
                 is_open = true;
                 break;

@@ -56,7 +56,7 @@ public class ListViewAdapter2 extends ArrayAdapter<ListViewItem2>{
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
             viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.group_des);
-            viewHolder.peonum = (TextView)convertView.findViewById(R.id.gorup_list_mem);
+            viewHolder.peonum = (TextView)convertView.findViewById(R.id.gorup_list_isopen);
             viewHolder.booknum = (TextView)convertView.findViewById(R.id.group_list_book);
             convertView.setTag(viewHolder);
         }

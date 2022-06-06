@@ -144,11 +144,11 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
                         startActivity(intent1);
                         break;
                     case R.id.menu_group:
-                        Intent intent2 = new Intent(getApplicationContext(), group_info.class);
+                        Intent intent2 = new Intent(getApplicationContext(), mygroup.class);
                         startActivity(intent2);
                         break;
                     case R.id.menu_book:
-                        Intent intent3 = new Intent(getApplicationContext(), book_info.class);
+                        Intent intent3 = new Intent(getApplicationContext(), mybook.class);
                         startActivity(intent3);
                         break;
                     case R.id.mypage:

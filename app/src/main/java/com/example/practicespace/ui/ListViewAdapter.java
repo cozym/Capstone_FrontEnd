@@ -29,7 +29,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         ImageView ICon;
         TextView text_Group_Name;
         TextView text_Hash_Tag;
-        TextView peonum;
+        TextView isopen;
         TextView booknum;
     }
 
@@ -58,7 +58,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
             viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.group_des);
-            viewHolder.peonum = (TextView)convertView.findViewById(R.id.gorup_list_mem);
+            viewHolder.isopen = (TextView)convertView.findViewById(R.id.gorup_list_isopen);
             viewHolder.booknum = (TextView)convertView.findViewById(R.id.group_list_book);
             convertView.setTag(viewHolder);
         }
@@ -70,7 +70,13 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         //위젯에 내가 만들어 놓은 부분 적용
         viewHolder.ICon.setImageResource(listViewItem.getIcon());
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
-//        viewHolder.peonum.setText("회원 수: "+listViewItem.getPeonum());
+        if(listViewItem.getIsOpen()==true){
+            viewHolder.isopen.setText("공개");
+            viewHolder.isopen.setBackgroundResource(R.drawable.public_o);
+        }else {
+            viewHolder.isopen.setText("비공개");
+            viewHolder.isopen.setBackgroundResource(R.drawable.public_x);
+        }
         viewHolder.booknum.setText("도서 수: "+listViewItem.getBooknum());
         String group_date = listViewItem.getCreatedDate().substring(0,10);
         //클릭이벤트

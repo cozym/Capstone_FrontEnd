@@ -177,8 +177,6 @@ public class main extends AppCompatActivity{
                 switch (menuItem.getItemId())
                 {
                     case R.id.menu_home:
-                        Intent intent1 = new Intent(getApplicationContext(), main.class);
-                        startActivity(intent1);
                         break;
                     case R.id.menu_group:
                         Intent intent2 = new Intent(getApplicationContext(), mygroup.class);

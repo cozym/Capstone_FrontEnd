@@ -110,11 +110,9 @@ public class mygroup extends AppCompatActivity{
                         startActivity(intent1);
                         break;
                     case R.id.menu_group:
-                        Intent intent2 = new Intent(getApplicationContext(), group_info.class);
-                        startActivity(intent2);
                         break;
                     case R.id.menu_book:
-                        Intent intent3 = new Intent(getApplicationContext(), book_info.class);
+                        Intent intent3 = new Intent(getApplicationContext(), mybook.class);
                         startActivity(intent3);
                         break;
                     case R.id.mypage:
