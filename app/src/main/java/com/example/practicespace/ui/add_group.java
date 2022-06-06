@@ -1,8 +1,10 @@
 package com.example.practicespace.ui;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -38,6 +40,17 @@ public class add_group extends AppCompatActivity {
     private EditText group_HashTag;
     private boolean is_open;
     private Button submit_group;
+    Intent intent;
+
+    public String getPath(Uri uri){
+        int column=0;
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection,null,null,null);
+        if(cursor.moveToFirst()){
+            column=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+        return cursor.getString(column);
+    }
 
 
     @Override
@@ -62,40 +75,42 @@ public class add_group extends AppCompatActivity {
 
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent = new Intent(Intent.ACTION_PICK);
                 intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
+
             }
         });
+
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<setGroup> call= apiInterface.saveGroup(
-                        LoginInfo.getInstance().data.token,
-                        group_Name.getText().toString(),
-                        is_open,
-                        imageview.toString(),
-                        group_Description.getText().toString(),
-                        10.15,
-                        9.12
-                );
-                call.enqueue(new Callback<setGroup>() {
-                    @Override
-                    public void onResponse(Call<setGroup> call, Response<setGroup> response) {
-                    setGroup result = response.body();
-                    if(response.code() == 200){
-                        Log.d("test","setgroup성공");
-                    }
-                    else {
-                        Log.d("test","setgroupt실패");
-                    }
-                    }
-
-                    @Override
-                    public void onFailure(Call<setGroup> call, Throwable t) {
-                        call.cancel();
-                    }
-                });
+//                Call<setGroup> call= apiInterface.saveGroup(
+//                        LoginInfo.getInstance().data.token,
+//                        group_Name.getText().toString(),
+//                        is_open,
+//                        imageview.toString(),
+//                        group_Description.getText().toString(),
+//                        10.15,
+//                        9.12
+//                );
+//                call.enqueue(new Callback<setGroup>() {
+//                    @Override
+//                    public void onResponse(Call<setGroup> call, Response<setGroup> response) {
+//                    setGroup result = response.body();
+//                    if(response.code() == 200){
+//                        Log.d("test","setgroup성공");
+//                    }
+//                    else {
+//                        Log.d("test","setgroupt실패");
+//                    }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<setGroup> call, Throwable t) {
+//                        call.cancel();
+//                    }
+//                });
             }
         });
 
@@ -106,6 +121,7 @@ public class add_group extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
+            Log.d("테스트",getPath(selectedImageUri));
             imageview.setImageURI(selectedImageUri);
         }
     }
