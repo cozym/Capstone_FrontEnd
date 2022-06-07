@@ -1,8 +1,6 @@
 package com.example.practicespace.connection;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -79,8 +77,9 @@ public interface APIInterface {
     @GET("book/search")
     Call<SearchBook> searchBook(
             @Header("Authorization") String token,
-            @Query("keyword") String keyword,
-            @Query("category") String category);
+            @Query("keyword") String keyword
+    //        @Query("category") String category
+    );
 
     @FormUrlEncoded
     @PUT("book/update")
