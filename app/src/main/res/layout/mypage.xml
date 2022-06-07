@@ -190,7 +190,7 @@
                             android:gravity="center|left"
                             android:padding="3dp"
                             android:paddingLeft="10dp"
-                            android:text="도서수"
+                            android:text="등록 도서"
                             android:textSize="18sp"></TextView>
                         <TextView
                             android:layout_width="match_parent"
@@ -219,7 +219,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="대여수"
+                            android:text="대여 중"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"

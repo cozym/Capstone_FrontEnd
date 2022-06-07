@@ -2,6 +2,7 @@ package com.example.practicespace.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.practicespace.R;
 
 import java.util.ArrayList;
@@ -56,6 +58,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
 //LayoutInflater inflater = LayoutInflater.from(Context context);
             convertView = inflater.inflate(R.layout.listview_crew_item,parent,false);//resourceId는 R.id.listView_crew_item이다.
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
+//            Glide.with(convertView).load(listViewItem.getIcon()).into(viewHolder.ICon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
             viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.group_des);
             viewHolder.isopen = (TextView)convertView.findViewById(R.id.gorup_list_isopen);
@@ -68,7 +71,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
 
         //아이템 내 각 위젯에 대한 데이터 반영
         //위젯에 내가 만들어 놓은 부분 적용
-        viewHolder.ICon.setImageResource(listViewItem.getIcon());
+        viewHolder.ICon.setImageResource(R.drawable.test_1);
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
         if(listViewItem.getIsOpen()==true){
             viewHolder.isopen.setText("공개");

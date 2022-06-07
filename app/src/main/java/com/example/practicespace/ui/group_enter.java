@@ -1,15 +1,19 @@
 package com.example.practicespace.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -42,6 +46,7 @@ public class group_enter extends AppCompatActivity {
     private int booknum;
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
+    Button btn_enter;
 
     class Sync{
         protected void call(){
@@ -64,6 +69,60 @@ public class group_enter extends AppCompatActivity {
                             }
                             group_admin = (TextView)findViewById(R.id.group_admin);
                             group_admin.setText(group.getAdmin().getNickname());
+                            Button button2 = findViewById(R.id.group_button2);
+                            if(false){ //소속그룹인지 확인부터
+                                btn_enter.setText("가입하기");
+                               button2.setVisibility(View.GONE);
+                                ViewGroup.LayoutParams params = btn_enter.getLayoutParams();
+                                params.width = 800;
+                               btn_enter.setLayoutParams(params);
+                                btn_enter.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
+                                        dlg.setTitle("가입하시겠습니까?").setMessage(group.getAuthenticationCode());
+                                        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Toast.makeText(group_enter.this,"탈퇴이벤트",Toast.LENGTH_SHORT).show();
+                                                onBackPressed();
+                                            }
+                                        });
+                                        dlg.setNegativeButton("아니오",null);
+                                        dlg.show();
+                                    }
+                                });
+                            } else if(Integer.valueOf(user_seq) == group.getAdmin().getSeq()){ //소속 그룹이면 어드민인지 확인 테스트중
+                                button2.setText("코드 보기");
+                                button2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
+                                        dlg.setTitle("인증코드").setMessage(group.getAuthenticationCode());
+                                        dlg.setPositiveButton("닫기", null);
+                                        dlg.show();
+                                    }
+                                });
+                            } else{
+                                //탈퇴하기
+                                button2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
+                                        dlg.setTitle("정말 탈퇴하시겠습니까").setMessage(group.getAuthenticationCode());
+                                        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Toast.makeText(group_enter.this,"탈퇴이벤트",Toast.LENGTH_SHORT).show();
+                                                onBackPressed();
+                                            }
+                                        });
+                                        dlg.setNegativeButton("아니오",null);
+                                        dlg.show();
+                                    }
+                                });
+                            }
+
                         }
                         @Override
                         public void onFailure(Call<getGroup> call, Throwable t) {
@@ -172,7 +231,7 @@ public class group_enter extends AppCompatActivity {
         thread1.start();
         thread2.start();
 
-        Button btn_enter = findViewById(R.id.enter);
+        btn_enter = findViewById(R.id.enter);
         btn_enter.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View view){

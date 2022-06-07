@@ -3,9 +3,11 @@ package com.example.practicespace.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,11 +23,15 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.SomeResponse;
 import com.example.practicespace.connection.setBook;
 import com.example.practicespace.connection.setGroup;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,12 +60,15 @@ public class add_book extends AppCompatActivity {
     private Button addbook_button;
     private Intent secondIntent;
     private int groupseq;
+    private String uri;
+    Intent intent;
+
 
     final String[] category = new String[] {"컴퓨터 과학", "철학", "종교", "사회과학", "언어", "과학", "기술", "예술", "문학", "역사"};
     int categorynum ;
-    
+
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +102,7 @@ public class add_book extends AppCompatActivity {
 
         addbook_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                String serveruri = "http://5gradekgucapstone.xyz:8080" + uri;
                 Call<setBook> call=apiInterface.saveBook(
                         LoginInfo.getInstance().data.token,
                         addbook_title.getText().toString(),
@@ -205,9 +215,37 @@ public class add_book extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
             imageview.setImageURI(selectedImageUri);
+
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), getPath(selectedImageUri));
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file","jpg",requestBody);
+            Log.d("image test","말좀 들어라32211");
+            Call<SomeResponse> call = apiInterface.saveImage(
+                    LoginInfo.getInstance().data.token,
+                    filePart
+            );
+            call.enqueue(new Callback<SomeResponse>() {
+                @Override
+                public void onResponse(Call<SomeResponse> call, Response<SomeResponse> response) {
+                    SomeResponse result = response.body();
+                    if(response.code() == 200){
+                        uri = result.data.URL;
+                        Log.d("image test",uri);
+                    }else{
+                        Log.d("image test","말좀 들어라33333");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SomeResponse> call, Throwable t) {
+                    Log.d("image test","말좀 들어라3344567");
+                }
+            });
+
+            Log.d("image test","말좀 들어라1");
         }
 
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
@@ -239,8 +277,15 @@ public class add_book extends AppCompatActivity {
         else{
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
 
-
-
+    public String getPath(Uri uri){
+        int column=0;
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection,null,null,null);
+        if(cursor.moveToFirst()){
+            column=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+        return cursor.getString(column);
     }
 }

@@ -1,13 +1,18 @@
 package com.example.practicespace.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -29,7 +34,7 @@ public class book_info extends AppCompatActivity {
     ImageView bookImage;
     private Intent secondIntent;
     class Sync{
-        protected void call(){  //seq 변수로 수정해야함
+        protected void call(){  //책주인 누구인지 알아야함
             if(LoginInfo.getInstance().data.token != null){
                 Call<getBook> book = apiInterface.getBookSeq(LoginInfo.getInstance().data.token,4);
 
@@ -37,8 +42,7 @@ public class book_info extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<getBook> call, Response<getBook> response) {
                         getBook result = response.body();
-                        final TextView title = (TextView)findViewById(R.id.book_title);
-                        title.setText(result.data.book.getTitle());
+
                     }
 
                     @Override
@@ -123,5 +127,71 @@ public class book_info extends AppCompatActivity {
         publisher.setText(secondIntent.getStringExtra("출판사"));
         publishDate =(TextView) findViewById(R.id.book_date);
         publishDate.setText(secondIntent.getStringExtra("등록일"));
+
+        Button rent_btn = findViewById(R.id.rent_button);
+        //버튼이벤트
+        if(true){ //책 주인이면
+            if(isrental==true){
+                rent_btn.setText("반납받기");
+                rent_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
+                        dlg.setTitle("반납처리 하시겠습니까?");
+                        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(book_info.this,"반납이벤트",Toast.LENGTH_SHORT).show();
+                                onBackPressed();
+                            }
+                        });
+                        dlg.setNegativeButton("아니오",null);
+                        dlg.show();
+                    }
+                });
+            } else{
+                rent_btn.setText("대여하기");
+                rent_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) { //라디오다이얼로그처리해야함(단,본인제외)
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
+                        dlg.setTitle("대여 하시겠습니까?");
+                        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(book_info.this,"반납이벤트",Toast.LENGTH_SHORT).show();
+                                onBackPressed();
+                            }
+                        });
+                        dlg.setNegativeButton("아니오",null);
+                        dlg.show();
+                    }
+                });
+            }
+        } else{
+            if(true){//소속그룹인지 확인
+                rent_btn.setVisibility(View.GONE);
+            } else{
+                rent_btn.setText("그룹 바로 가기");
+                rent_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
+                        dlg.setTitle("바로 가시겠습니까?");
+                        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                Intent intent = new Intent(getApplicationContext(), group_main.class);
+//                                intent.putExtra("그룹시퀀스",groupseq);
+//                                startActivity(intent);
+                            }
+                        });
+                        dlg.setNegativeButton("아니오",null);
+                        dlg.show();
+                    }
+                });
+            }
+        }
+
     }
 }
