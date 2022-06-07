@@ -102,7 +102,7 @@ public class add_book extends AppCompatActivity {
 
         addbook_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String serveruri = "https://image.yes24.com/goods/96706474/XL"; // 책 이미지 uri 직접추가해야함, publishDate도 같이
+                String serveruri = "https://image.yes24.com/goods/96706474/XL";  // 책 이미지 uri 직접추가해야함, publishDate도 같이
                 Call<setBook> call=apiInterface.saveBook(
                         LoginInfo.getInstance().data.token,
                         addbook_title.getText().toString(),
@@ -110,7 +110,7 @@ public class add_book extends AppCompatActivity {
                         addbook_publisher.getText().toString(),
                         ISBNInput.getText().toString(),
                         serveruri,
-                        "19700101",
+                        "2022-05-16",
                         addbook_description.getText().toString(),
                         genreString,
                         groupseq
