@@ -24,6 +24,8 @@ import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.bookList;
+import com.example.practicespace.connection.deleteBook;
+import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getGroup;
 import com.example.practicespace.vo.Admin;
 import com.example.practicespace.vo.Book;
@@ -171,8 +173,28 @@ public class group_enter extends AppCompatActivity {
                                 button2.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+//                                        Call<deleteGroup> call = apiInterface.deleteGroupSeq( LoginInfo.getInstance().data.token,groupseq);
+//                                        call.enqueue(new Callback<deleteGroup>() {
+//                                            @Override
+//                                            public void onResponse(Call<deleteGroup> call, Response<deleteGroup> response) {
+//                                                deleteGroup result = response.body();
+//                                                if(response.code()==200) {
+//                                                    Log.d("test","setgroup성공");
+//                                                }
+//                                                else {
+//                                                    Log.d("test","setgroupt실패");
+//                                                }
+//                                            }
+//
+//                                            @Override
+//                                            public void onFailure(Call<deleteGroup> call, Throwable t) {
+//                                                call.cancel();
+//                                            }
+//                                        });
+//                                        Toast.makeText(group_enter.this,"삭제됐습니다.",Toast.LENGTH_SHORT).show();
+//                                        onBackPressed();
                                         AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
-                                        dlg.setTitle("인증코드").setMessage(group.getAuthenticationCode());
+                                        dlg.setTitle("인증코드").setMessage("a3fg5s");
                                         dlg.setPositiveButton("닫기", null);
                                         dlg.show();
                                     }
@@ -252,7 +274,7 @@ public class group_enter extends AppCompatActivity {
             groupdes.setText(secondIntent.getStringExtra("그룹설명"));
 
             group_mem_num = (TextView)findViewById(R.id.group_mem_num);
-            group_mem_num.setText(String.valueOf(secondIntent.getIntExtra("회원수",0)));
+            group_mem_num.setText(String.valueOf(secondIntent.getIntExtra("회원수",2)));
             group_date = (TextView) findViewById(R.id.group_date);
             group_date.setText(secondIntent.getStringExtra("그룹생성일"));
 
@@ -312,6 +334,7 @@ public class group_enter extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), group_main.class);
                 intent.putExtra("그룹시퀀스",groupseq);
+                intent.putExtra("그룹이름",secondIntent.getStringExtra("그룹이름"));
                 startActivity(intent);
             }
         });

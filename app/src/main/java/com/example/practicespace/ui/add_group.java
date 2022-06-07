@@ -1,5 +1,6 @@
 package com.example.practicespace.ui;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.media.Image;
@@ -8,6 +9,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -36,6 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,32 +100,44 @@ public class add_group extends AppCompatActivity {
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serveruri = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile29.uf.tistory.com%2Fimage%2F23188138547486A8342D03";//여기에다가 사진 주소(10메가이하)
-                Call<setGroup> call = apiInterface.saveGroup(
-                        LoginInfo.getInstance().data.token,
-                        group_Name.getText().toString(),
-                        is_open,
-                        serveruri,
-                        group_Description.getText().toString(),
-                        127.0312,
-                        37.2970
-                );
-                call.enqueue(new Callback<setGroup>() {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(add_group.this);
+                dlg.setTitle("등록 하시겠습니까?");
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<setGroup> call, Response<setGroup> response) {
-                        setGroup result = response.body();
-                        if (response.code() == 200) {
-                            Log.d("test", "setgroup성공");
-                        } else {
-                            Log.d("test", "setgroupt실패");
-                        }
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String serveruri = "https://t1.daumcdn.net/cfile/tistory/25203F4A5764A82608";//여기에다가 사진 주소(10메가이하)
+                        Call<setGroup> call = apiInterface.saveGroup(
+                                LoginInfo.getInstance().data.token,
+                                group_Name.getText().toString(),
+                                true,
+                                serveruri,
+                                group_Description.getText().toString(),
+                                127.0312,
+                                37.2970
+                        );
+                        call.enqueue(new Callback<setGroup>() {
+                            @Override
+                            public void onResponse(Call<setGroup> call, Response<setGroup> response) {
+                                setGroup result = response.body();
+                                if (response.code() == 200) {
+                                    Log.d("test", "setgroup성공");
+                                } else {
+                                    Log.d("test", "setgroupt실패");
+                                }
+                            }
 
-                    @Override
-                    public void onFailure(Call<setGroup> call, Throwable t) {
-                        call.cancel();
+                            @Override
+                            public void onFailure(Call<setGroup> call, Throwable t) {
+                                call.cancel();
+                            }
+                        });
+                        Toast.makeText(add_group.this,"등록됐습니다.",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     }
                 });
+                dlg.setNegativeButton("아니오",null);
+                dlg.show();
+
             }
         });
 

@@ -22,6 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.deleteBook;
+import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getBook;
 
 import org.w3c.dom.Text;
@@ -39,6 +41,7 @@ public class book_info extends AppCompatActivity {
     TextView title, author, rental, description,owngroup, ownner, ISBN, category, publisher, publishDate;
     ImageView bookImage;
     String book_thumb;
+    int book_seq;
     private Intent secondIntent;
     class Sync{
         protected void call(){  //책주인 누구인지 알아야함
@@ -106,6 +109,7 @@ public class book_info extends AppCompatActivity {
         bookImage=(ImageView)findViewById(R.id.book_image);
         book_thumb = secondIntent.getStringExtra("책사진");
         sendImageRequest();
+        book_seq = secondIntent.getIntExtra("책시퀀스",0);
         title = (TextView)findViewById(R.id.book_title);
         title.setText(secondIntent.getStringExtra("책이름"));
         author =(TextView) findViewById(R.id.book_author);
@@ -200,6 +204,42 @@ public class book_info extends AppCompatActivity {
                 });
             }
         }
+        Button delete_btn = findViewById(R.id.delete_button);
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
+                dlg.setTitle("삭제하시겠습니까?");
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Call<deleteBook> call = apiInterface.deleteBookSeq( LoginInfo.getInstance().data.token,book_seq);
+                        Log.d("시퀀스", String.valueOf(book_seq));
+                        call.enqueue(new Callback<deleteBook>() {
+                            @Override
+                            public void onResponse(Call<deleteBook> call, Response<deleteBook> response) {
+                                deleteBook result = response.body();
+                                if(response.code()==200) {
+                                    Log.d("test","setgroup성공");
+                                }
+                                else {
+                                    Log.d("test","setgroupt실패");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<deleteBook> call, Throwable t) {
+                                call.cancel();
+                            }
+                        });
+                        Toast.makeText(book_info.this,"삭제됐습니다.",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                    }
+                });
+                dlg.setNegativeButton("아니오",null);
+                dlg.show();
+            }
+        });
 
     }
     public void sendImageRequest() {

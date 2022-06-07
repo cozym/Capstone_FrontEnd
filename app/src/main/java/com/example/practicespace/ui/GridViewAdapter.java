@@ -86,6 +86,7 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.book_clcik);
         Intent intent = new Intent(getContext(), book_info.class);
+        intent.putExtra("책시퀀스",gridViewItem.getBookSeq());
         intent.putExtra("책사진",gridViewItem.getThumbnail());
         intent.putExtra("책이름",gridViewItem.getTitle());
         intent.putExtra("글쓴이",gridViewItem.getAuthor());

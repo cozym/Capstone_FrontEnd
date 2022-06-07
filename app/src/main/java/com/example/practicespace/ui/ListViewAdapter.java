@@ -92,7 +92,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);
         Intent intent = new Intent(getContext(), group_enter.class);
         intent.putExtra("그룹사진",listViewItem.getIcon());
-        intent.putExtra("그룹이름",viewHolder.text_Group_Name.getText());
+        intent.putExtra("그룹이름",listViewItem.getGroupName());
         intent.putExtra("그룹설명",listViewItem.getGroupDes());
         intent.putExtra("그룹공개",listViewItem.getIsOpen());
 //        intent.putExtra("회원수",listViewItem.getPeonum());

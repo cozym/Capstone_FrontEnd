@@ -101,37 +101,49 @@ public class add_book extends AppCompatActivity {
         });
 
         addbook_button.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                String serveruri = "https://image.yes24.com/goods/96706474/XL";  // 책 이미지 uri 직접추가해야함, publishDate도 같이
-                Call<setBook> call=apiInterface.saveBook(
-                        LoginInfo.getInstance().data.token,
-                        addbook_title.getText().toString(),
-                        addbook_author.getText().toString(),
-                        addbook_publisher.getText().toString(),
-                        ISBNInput.getText().toString(),
-                        serveruri,
-                        "2022-05-16",
-                        addbook_description.getText().toString(),
-                        genreString,
-                        groupseq
-                );
-                call.enqueue(new Callback<setBook>() {
+                androidx.appcompat.app.AlertDialog.Builder dlg = new androidx.appcompat.app.AlertDialog.Builder(add_book.this);
+                dlg.setTitle("책을 등록하시겠습니까?");
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<setBook> call, Response<setBook> response) {
-                        setBook result= response.body();
-                        if(response.code()==200) {
-                            Log.d("test","setgroup성공");
-                        }
-                        else {
-                            Log.d("test","setgroupt실패");
-                        }
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String serveruri = "https://bookthumb-phinf.pstatic.net/cover/125/008/12500834.jpg?udate=20200910";  // 책 이미지 uri 직접추가해야함, publishDate도 같이
+                        Call<setBook> call=apiInterface.saveBook(
+                                LoginInfo.getInstance().data.token,
+                                addbook_title.getText().toString(),
+                                addbook_author.getText().toString(),
+                                addbook_publisher.getText().toString(),
+                                ISBNInput.getText().toString(),
+                                serveruri,
+                                "2017-08-25",
+                                addbook_description.getText().toString(),
+                                genreString,
+                                groupseq
+                        );
+                        call.enqueue(new Callback<setBook>() {
+                            @Override
+                            public void onResponse(Call<setBook> call, Response<setBook> response) {
+                                setBook result= response.body();
+                                if(response.code()==200) {
+                                    Log.d("test","setgroup성공");
+                                }
+                                else {
+                                    Log.d("test","setgroupt실패");
+                                }
+                            }
 
-                    @Override
-                    public void onFailure(Call<setBook> call, Throwable t) {
-                        call.cancel();
+                            @Override
+                            public void onFailure(Call<setBook> call, Throwable t) {
+                                call.cancel();
+                            }
+                        });
+                        Toast.makeText(add_book.this,"등록됐습니다.",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     }
                 });
+                dlg.setNegativeButton("아니오",null);
+                dlg.show();
             }
         });
 
