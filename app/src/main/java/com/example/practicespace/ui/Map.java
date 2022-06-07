@@ -62,6 +62,8 @@ public class Map extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
 
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         eText2.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v,int keyCode, KeyEvent event) {
@@ -97,6 +99,25 @@ public class Map extends AppCompatActivity {
                         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                     }
                 });
+                try {
+                    Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                    if(location != null) {
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        LatLng curPoint = new LatLng(latitude, longitude);
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 15));
+                    }
+                    //GPSListener gpsListener = new GPSListener();
+                    long minTime = 10000;
+                    float minDistance = 0;
+
+                    //manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
+                    //Toast.makeText(getApplicationContext(), "나의 위치 요청", Toast.LENGTH_SHORT).show();
+
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
                 //startLocationService();
             }
         });
@@ -106,6 +127,8 @@ public class Map extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
 
 
     }
@@ -120,7 +143,6 @@ public class Map extends AppCompatActivity {
             if(location != null) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
-
             }
             GPSListener gpsListener = new GPSListener();
             long minTime = 10000;
