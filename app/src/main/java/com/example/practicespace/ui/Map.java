@@ -122,6 +122,7 @@ public class Map extends AppCompatActivity {
                 double longitude = location.getLongitude();
 
             }
+
             GPSListener gpsListener = new GPSListener();
             long minTime = 10000;
             float minDistance = 0;

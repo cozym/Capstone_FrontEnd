@@ -66,7 +66,7 @@ public class Fragment1 extends Fragment {
                                         Log.d("연결 테스트", "책불러오기");
                                         booknum = result2.data.books.size();
                                         Log.d("책수", String.valueOf(booknum));
-                                        items.add(new ListViewItem(R.drawable.test_1,temp.getName(), temp.getDescription()
+                                        items.add(new ListViewItem(temp.getThumbnail(),temp.getName(), temp.getDescription()
                                                 ,temp.getSeq(),temp.getOpen(),temp.getCreatedDate(),booknum));
                                     }
                                     else{
