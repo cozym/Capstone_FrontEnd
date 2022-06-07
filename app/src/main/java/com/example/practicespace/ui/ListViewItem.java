@@ -2,7 +2,7 @@ package com.example.practicespace.ui;
 
 public class ListViewItem {
 
-    private int group_icon;
+    private String group_icon;
     private String group_name;
     private String description;
     private int groupSeq;
@@ -12,7 +12,7 @@ public class ListViewItem {
     private int booknum;
 
 
-    public ListViewItem(int icon, String name, String description, int seq, boolean isOepn, String createdDate, int booknum){
+    public ListViewItem(String icon, String name, String description, int seq, boolean isOepn, String createdDate, int booknum){
         this.group_icon = icon;
         this.group_name = name;
         this.description = description;
@@ -25,7 +25,7 @@ public class ListViewItem {
 
 
 
-    public int getIcon(){ return this.group_icon; }
+    public String getIcon(){ return this.group_icon; }
     public String getGroupName(){ return this.group_name; }
     public int getGroupSeq(){ return this.groupSeq; }
     public boolean getIsOpen(){return this.isOpen;}

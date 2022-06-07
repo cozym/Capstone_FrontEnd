@@ -2,6 +2,9 @@ package com.example.practicespace.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.practicespace.R;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
     //각 리스트에 들어갈 아이템들을 가지고 있는 리스트 배열
@@ -20,7 +25,8 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
     //position에 위치한 데이터를 화면에 출력하는데 사용될 view를 리턴, : 필수 구현
     //view는 넣을 곳 즉, viewgroup에 들어가 view 생성
     //viewgroup은 내가 보고 있는 화면 즉, list
-
+    GridViewItem gridViewItem;
+    ViewHolder viewHolder;
     //View lookup cache
     private static class ViewHolder{
         ImageView ICon;
@@ -38,9 +44,8 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //position에 위치시키기 위해 listViewItem 하나 생성
-        GridViewItem gridViewItem = getItem(position);
+        gridViewItem = getItem(position);
         //cache 사용
-        ViewHolder viewHolder;
 
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -53,6 +58,7 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
 //LayoutInflater inflater = LayoutInflater.from(Context context);
             convertView = inflater.inflate(R.layout.grid_crew_item,parent,false);//resourceId는 R.id.listView_crew_item이다.
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
+            sendImageRequest();
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
             viewHolder.text_author = (TextView)convertView.findViewById(R.id.list_author);
             viewHolder.category = (TextView)convertView.findViewById(R.id.list_category);
@@ -65,7 +71,6 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
 
         //아이템 내 각 위젯에 대한 데이터 반영
         //위젯에 내가 만들어 놓은 부분 적용
-        viewHolder.ICon.setImageResource(gridViewItem.getIcon());
         viewHolder.text_Group_Name.setText(gridViewItem.getTitle());
         viewHolder.text_author.setText("저자: "+gridViewItem.getAuthor());
         viewHolder.category.setText("카테고리: "+gridViewItem.getCategory());
@@ -81,7 +86,7 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.book_clcik);
         Intent intent = new Intent(getContext(), book_info.class);
-        intent.putExtra("책사진",gridViewItem.getIcon());
+        intent.putExtra("책사진",gridViewItem.getThumbnail());
         intent.putExtra("책이름",gridViewItem.getTitle());
         intent.putExtra("글쓴이",gridViewItem.getAuthor());
         intent.putExtra("대여여부",gridViewItem.getRental());
@@ -95,5 +100,66 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem>{
         cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
         return convertView;
     }
+
+    public void sendImageRequest() {
+        String url = gridViewItem.getThumbnail();
+
+        ListViewAdapter.ImageLoadTask task = new ListViewAdapter.ImageLoadTask(url,viewHolder.ICon);
+        task.execute();
+    }
+
+
+    public static class ImageLoadTask extends AsyncTask<Void,Void, Bitmap> {
+
+        private String urlStr;
+        private ImageView imageView;
+        private HashMap<String, Bitmap> bitmapHash = new HashMap<String, Bitmap>();
+
+        public ImageLoadTask(String urlStr, ImageView imageView) {
+            this.urlStr = urlStr;
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            Bitmap bitmap = null;
+            try {
+                if (bitmapHash.containsKey(urlStr)) {
+                    Bitmap oldbitmap = bitmapHash.remove(urlStr);
+                    if(oldbitmap != null) {
+                        oldbitmap.recycle();
+                        oldbitmap = null;
+                    }
+                }
+                URL url = new URL(urlStr);
+                bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                bitmapHash.put(urlStr,bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+
+            imageView.setImageBitmap(bitmap);
+            imageView.invalidate();
+        }
+    }
+
 }
 

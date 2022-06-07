@@ -97,7 +97,7 @@ public class add_group extends AppCompatActivity {
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serveruri = "http://5gradekgucapstone.xyz:8080" + uri;
+                String serveruri = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile29.uf.tistory.com%2Fimage%2F23188138547486A8342D03";//여기에다가 사진 주소(10메가이하)
                 Call<setGroup> call = apiInterface.saveGroup(
                         LoginInfo.getInstance().data.token,
                         group_Name.getText().toString(),

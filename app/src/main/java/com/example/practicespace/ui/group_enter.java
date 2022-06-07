@@ -2,7 +2,10 @@ package com.example.practicespace.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +29,9 @@ import com.example.practicespace.vo.Admin;
 import com.example.practicespace.vo.Book;
 import com.example.practicespace.vo.Group;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,8 +41,15 @@ import retrofit2.Response;
 public class group_enter extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-    private TextView grouptitle, groupdes, group_isOpen, group_admin, group_mem_num,group_book_num,group_date;
-    private int groupseq, groupicon;
+    private TextView grouptitle;
+    private TextView groupdes;
+    private TextView group_isOpen;
+    private TextView group_admin;
+    private TextView group_mem_num;
+    private TextView group_book_num;
+    private TextView group_date;
+    private String group_thumb;
+    private int groupseq;
     private Group group;
     private Admin admin;
     private Intent secondIntent;
@@ -47,6 +59,68 @@ public class group_enter extends AppCompatActivity {
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
     Button btn_enter;
+
+
+    public void sendImageRequest() {
+        String url = group_thumb;
+
+        ListViewAdapter.ImageLoadTask task = new ListViewAdapter.ImageLoadTask(url,groupimage);
+        task.execute();
+    }
+
+    public static class ImageLoadTask extends AsyncTask<Void,Void, Bitmap> {
+
+        private String urlStr;
+        private ImageView imageView;
+        private HashMap<String, Bitmap> bitmapHash = new HashMap<String, Bitmap>();
+
+        public ImageLoadTask(String urlStr, ImageView imageView) {
+            this.urlStr = urlStr;
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            Bitmap bitmap = null;
+            try {
+                if (bitmapHash.containsKey(urlStr)) {
+                    Bitmap oldbitmap = bitmapHash.remove(urlStr);
+                    if(oldbitmap != null) {
+                        oldbitmap.recycle();
+                        oldbitmap = null;
+                    }
+                }
+                URL url = new URL(urlStr);
+                bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                bitmapHash.put(urlStr,bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+
+            imageView.setImageBitmap(bitmap);
+            imageView.invalidate();
+        }
+    }
+
+
 
     class Sync{
         protected void call(){
@@ -162,7 +236,7 @@ public class group_enter extends AppCompatActivity {
         protected void init(){
             Log.d("테스트","init");
             groupimage=(ImageView) findViewById(R.id.group_image);
-            groupimage.setImageResource(secondIntent.getIntExtra("그룹사진",0));
+            sendImageRequest();
             grouptitle = (TextView)findViewById(R.id.grouptitle);
             grouptitle.setText(secondIntent.getStringExtra("그룹이름"));
             group_isOpen = (TextView) findViewById(R.id.group_isOpen);
@@ -220,7 +294,7 @@ public class group_enter extends AppCompatActivity {
         secondIntent = getIntent();
 
         groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
-
+        group_thumb = secondIntent.getStringExtra("그룹사진");
 
         //멀티스레드 처리
         Sync sync = new Sync();
@@ -243,5 +317,6 @@ public class group_enter extends AppCompatActivity {
         });
 
     }
+
 
 }
