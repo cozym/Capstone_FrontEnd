@@ -43,7 +43,6 @@ public class LoginWebview extends AppCompatActivity {
 
         webView.setBackgroundColor(0);
         webView.setBackgroundResource(R.drawable.loading);
-
         webView.loadUrl("http://5gradekgucapstone.xyz:8080/oauth2/authorization/google");
     }
 

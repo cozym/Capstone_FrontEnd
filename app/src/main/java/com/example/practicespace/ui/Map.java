@@ -144,6 +144,7 @@ public class Map extends AppCompatActivity {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
             }
+
             GPSListener gpsListener = new GPSListener();
             long minTime = 10000;
             float minDistance = 0;

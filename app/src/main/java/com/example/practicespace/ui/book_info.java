@@ -2,7 +2,10 @@ package com.example.practicespace.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +26,9 @@ import com.example.practicespace.connection.getBook;
 
 import org.w3c.dom.Text;
 
+import java.net.URL;
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +38,7 @@ public class book_info extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     TextView title, author, rental, description,owngroup, ownner, ISBN, category, publisher, publishDate;
     ImageView bookImage;
+    String book_thumb;
     private Intent secondIntent;
     class Sync{
         protected void call(){  //책주인 누구인지 알아야함
@@ -97,7 +104,8 @@ public class book_info extends AppCompatActivity {
 //        thread2.start();
         secondIntent = getIntent();
         bookImage=(ImageView)findViewById(R.id.book_image);
-        bookImage.setImageResource(secondIntent.getIntExtra("책사진", 0));
+        book_thumb = secondIntent.getStringExtra("책사진");
+        sendImageRequest();
         title = (TextView)findViewById(R.id.book_title);
         title.setText(secondIntent.getStringExtra("책이름"));
         author =(TextView) findViewById(R.id.book_author);
@@ -193,5 +201,65 @@ public class book_info extends AppCompatActivity {
             }
         }
 
+    }
+    public void sendImageRequest() {
+        String url = book_thumb;
+
+        ListViewAdapter.ImageLoadTask task = new ListViewAdapter.ImageLoadTask(url,bookImage);
+        task.execute();
+    }
+
+
+    public static class ImageLoadTask extends AsyncTask<Void,Void, Bitmap> {
+
+        private String urlStr;
+        private ImageView imageView;
+        private HashMap<String, Bitmap> bitmapHash = new HashMap<String, Bitmap>();
+
+        public ImageLoadTask(String urlStr, ImageView imageView) {
+            this.urlStr = urlStr;
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            Bitmap bitmap = null;
+            try {
+                if (bitmapHash.containsKey(urlStr)) {
+                    Bitmap oldbitmap = bitmapHash.remove(urlStr);
+                    if (oldbitmap != null) {
+                        oldbitmap.recycle();
+                        oldbitmap = null;
+                    }
+                }
+                URL url = new URL(urlStr);
+                bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                bitmapHash.put(urlStr, bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+
+            imageView.setImageBitmap(bitmap);
+            imageView.invalidate();
+        }
     }
 }

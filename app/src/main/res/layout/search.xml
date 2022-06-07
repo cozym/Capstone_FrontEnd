@@ -36,7 +36,7 @@
                 android:fontFamily="@font/nanumgothic"
                 android:padding="8dp"
                 android:hint="검색어를 입력해주세요."
-                android:textColorHint="@color/gray_thick"
+                android:textColorHint="@color/gray"
                 android:textAlignment="textStart"
                 android:textColor="@color/gray_thick"
                 android:textSize="20dp"></EditText>

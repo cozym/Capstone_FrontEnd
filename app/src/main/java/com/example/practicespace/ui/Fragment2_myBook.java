@@ -50,7 +50,7 @@ public class Fragment2_myBook extends Fragment {
                         books = result.data.books;
                         ArrayList<GridViewItem> items = new ArrayList<GridViewItem>();
                         for(int i = 0; i<books.size();i++){
-                            items.add(new GridViewItem((R.drawable.test_jsp), books.get(i).getSeq(),
+                            items.add(new GridViewItem(books.get(i).getThumbnail(), books.get(i).getSeq(),
                                     books.get(i).getTitle(),books.get(i).getAuthor(),books.get(i).getPublisher()
                                     ,books.get(i).getIsbn(),books.get(i).getPublishDate(),books.get(i).getDescription()
                                     ,books.get(i).getCategory(),books.get(i).getRental()));

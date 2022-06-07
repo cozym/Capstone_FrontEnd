@@ -2,7 +2,10 @@ package com.example.practicespace.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +19,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.practicespace.R;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
     //각 리스트에 들어갈 아이템들을 가지고 있는 리스트 배열
@@ -26,6 +32,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
     //view는 넣을 곳 즉, viewgroup에 들어가 view 생성
     //viewgroup은 내가 보고 있는 화면 즉, list
 
+    ViewHolder viewHolder;
+    ListViewItem listViewItem;
     //View lookup cache
     private static class ViewHolder{
         ImageView ICon;
@@ -43,9 +51,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //position에 위치시키기 위해 listViewItem 하나 생성
-        ListViewItem listViewItem = getItem(position);
+        listViewItem = getItem(position);
         //cache 사용
-        ViewHolder viewHolder;
 
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -60,7 +67,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
             viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
 //            Glide.with(convertView).load(listViewItem.getIcon()).into(viewHolder.ICon);
             viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
-            viewHolder.text_Hash_Tag = (TextView)convertView.findViewById(R.id.group_des);
             viewHolder.isopen = (TextView)convertView.findViewById(R.id.gorup_list_isopen);
             viewHolder.booknum = (TextView)convertView.findViewById(R.id.group_list_book);
             convertView.setTag(viewHolder);
@@ -71,7 +77,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
 
         //아이템 내 각 위젯에 대한 데이터 반영
         //위젯에 내가 만들어 놓은 부분 적용
-        viewHolder.ICon.setImageResource(R.drawable.test_1);
+        sendImageRequest();
         viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
         if(listViewItem.getIsOpen()==true){
             viewHolder.isopen.setText("공개");
@@ -97,5 +103,65 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
         cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
 
         return convertView;
+    }
+
+    public void sendImageRequest() {
+        String url = listViewItem.getIcon();
+
+        ImageLoadTask task = new ImageLoadTask(url,viewHolder.ICon);
+        task.execute();
+    }
+
+
+    public static class ImageLoadTask extends AsyncTask<Void,Void, Bitmap> {
+
+        private String urlStr;
+        private ImageView imageView;
+        private HashMap<String, Bitmap> bitmapHash = new HashMap<String, Bitmap>();
+
+        public ImageLoadTask(String urlStr, ImageView imageView) {
+            this.urlStr = urlStr;
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            Bitmap bitmap = null;
+            try {
+                if (bitmapHash.containsKey(urlStr)) {
+                    Bitmap oldbitmap = bitmapHash.remove(urlStr);
+                    if(oldbitmap != null) {
+                        oldbitmap.recycle();
+                        oldbitmap = null;
+                    }
+                }
+                URL url = new URL(urlStr);
+                bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                bitmapHash.put(urlStr,bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+
+            imageView.setImageBitmap(bitmap);
+            imageView.invalidate();
+        }
     }
 }
