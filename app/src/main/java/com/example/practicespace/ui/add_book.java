@@ -25,7 +25,6 @@ import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.SomeResponse;
 import com.example.practicespace.connection.setBook;
-import com.example.practicespace.connection.setGroup;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -35,15 +34,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 public class add_book extends AppCompatActivity {
 

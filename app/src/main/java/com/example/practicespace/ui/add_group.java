@@ -1,11 +1,17 @@
 package com.example.practicespace.ui;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,26 +25,10 @@ import com.example.practicespace.connection.setGroup;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
-
-import java.io.File;
-import java.io.IOException;
 
 public class add_group extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -97,7 +87,7 @@ public class add_group extends AppCompatActivity {
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serveruri = "http://5gradekgucapstone.xyz:8080" + uri;
+                String serveruri = "https://www.ajou.ac.kr/_res/ajou/kr/img/intro/img-symbol.png";
                 Call<setGroup> call = apiInterface.saveGroup(
                         LoginInfo.getInstance().data.token,
                         group_Name.getText().toString(),
