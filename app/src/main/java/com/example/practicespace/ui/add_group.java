@@ -1,11 +1,17 @@
 package com.example.practicespace.ui;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,26 +25,10 @@ import com.example.practicespace.connection.setGroup;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
-
-import java.io.File;
-import java.io.IOException;
 
 public class add_group extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -48,7 +38,7 @@ public class add_group extends AppCompatActivity {
     private EditText group_Name;
     private EditText group_Description;
     private EditText group_HashTag;
-    private boolean is_open;
+    private boolean is_open = true;
     private Button submit_group;
     private String uri;
     Intent intent;
@@ -97,7 +87,7 @@ public class add_group extends AppCompatActivity {
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serveruri = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile29.uf.tistory.com%2Fimage%2F23188138547486A8342D03";//여기에다가 사진 주소(10메가이하)
+                String serveruri = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEyMTBfMjQz%2FMDAxNjM5MDkzMTI0Mjk2.EEPStsR0cJekbLGH7jSqkvSU9E03cKJGnUezv-ZW6_cg.guvIYPL-NDL6vDJA5SdDkJ2mVExWM-GIrnt4xMK98Owg.PNG.designerjuni%2F%25BC%25BA%25B1%25D5%25B0%25FC%25B4%25EB%25C7%25D0%25B1%25B3%25B7%25CE%25B0%25ED.png&type=a340";//여기에다가 사진 주소(10메가이하)
                 Call<setGroup> call = apiInterface.saveGroup(
                         LoginInfo.getInstance().data.token,
                         group_Name.getText().toString(),
