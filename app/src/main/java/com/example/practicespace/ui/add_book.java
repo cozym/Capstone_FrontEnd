@@ -25,7 +25,6 @@ import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.SomeResponse;
 import com.example.practicespace.connection.setBook;
-import com.example.practicespace.connection.setGroup;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -35,15 +34,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 public class add_book extends AppCompatActivity {
 
@@ -102,15 +92,15 @@ public class add_book extends AppCompatActivity {
 
         addbook_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String serveruri = "http://5gradekgucapstone.xyz:8080" + uri;
+                String serveruri = "https://image.yes24.com/goods/96706474/XL";  // 책 이미지 uri 직접추가해야함, publishDate도 같이
                 Call<setBook> call=apiInterface.saveBook(
                         LoginInfo.getInstance().data.token,
                         addbook_title.getText().toString(),
                         addbook_author.getText().toString(),
                         addbook_publisher.getText().toString(),
                         ISBNInput.getText().toString(),
-                        imageview.toString(),
-                        "19700101",
+                        serveruri,
+                        "2022-05-16",
                         addbook_description.getText().toString(),
                         genreString,
                         groupseq

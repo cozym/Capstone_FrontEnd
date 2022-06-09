@@ -1,10 +1,14 @@
 package com.example.practicespace.ui;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,12 +89,38 @@ public class search extends AppCompatActivity{
             }
         });
 
+        EditText eText1 = (EditText) findViewById(R.id.search);
+
+        eText1.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v,int keyCode, KeyEvent event) {
+                if((event.getAction()==KeyEvent.ACTION_DOWN)&&(keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow( eText1.getWindowToken(), 0);
+                    fragment0 = new Fragment_searchgroup();
+                    fragment1 = new Fragment_searchbook();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("searchstr", eText1.getText().toString());
+                    fragment0.setArguments(bundle);
+                    fragment1.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
-        fragment0 = new Fragment1();
-        fragment1 = new Fragment2();
+//        fragment0 = new Fragment1();
+//        fragment1 = new Fragment2();
+//
+//        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("searchstr", "tmp");
+//        fragment0.setArguments(bundle);
+//        fragment1.setArguments(bundle);
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

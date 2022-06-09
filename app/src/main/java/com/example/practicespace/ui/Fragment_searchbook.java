@@ -1,7 +1,6 @@
 package com.example.practicespace.ui;
 
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
-import com.example.practicespace.connection.bookList;
+import com.example.practicespace.connection.SearchBook;
 import com.example.practicespace.vo.Book;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment2_groupbook extends Fragment {
+public class Fragment_searchbook extends Fragment {
 
     GridView gridView;
     private static GridViewAdapter adapter;
@@ -35,15 +34,15 @@ public class Fragment2_groupbook extends Fragment {
 
     class Sync{
         public void getBookList(){
-            int groupseq = getSeq();
-            Log.d("연결 테스트", "코드까지는 성공1111111");
-            Call<bookList> call = apiInterface.getBookList(
-                    LoginInfo.getInstance().data.token,groupseq,0
+            String searchStr = getSearchStr();
+            Call<SearchBook> call = apiInterface.searchBook(
+                    LoginInfo.getInstance().data.token,
+                    searchStr
             );
-            call.enqueue(new Callback<bookList>() {
+            call.enqueue(new Callback<SearchBook>() {
                 @Override
-                public void onResponse(Call<bookList> call, Response<bookList> response) {
-                    bookList result = response.body();
+                public void onResponse(Call<SearchBook> call, Response<SearchBook> response) {
+                    SearchBook result = response.body();
 
 
                     if(response.code()==200){
@@ -66,7 +65,7 @@ public class Fragment2_groupbook extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<bookList> call, Throwable t) {t.printStackTrace();
+                public void onFailure(Call<SearchBook> call, Throwable t) {t.printStackTrace();
                     /*Log.d("연결 테스트", "실패22")*/;
                 }
             });
@@ -89,10 +88,10 @@ public class Fragment2_groupbook extends Fragment {
             sync.syncRun(num);
         }
     }
-    public int getSeq(){
-        return getArguments().getInt("groupseq");
+    public String getSearchStr(){
+        return getArguments().getString("searchstr");
     }
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 

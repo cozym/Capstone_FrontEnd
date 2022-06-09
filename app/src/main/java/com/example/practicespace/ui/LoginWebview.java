@@ -33,7 +33,7 @@ public class LoginWebview extends AppCompatActivity {
 
         webView.setWebViewClient(new YourWebClient());
         webView.getSettings().setUserAgentString(USER_AGENT);
-
+        webView.loadUrl("javascript:document.body.style.setProperty(\"color\", \"#776a5f\");");
         webView.getSettings().setJavaScriptEnabled(true);   // 자바스크립트 사용
 
         webView.clearCache(true);
@@ -43,7 +43,6 @@ public class LoginWebview extends AppCompatActivity {
 
         webView.setBackgroundColor(0);
         webView.setBackgroundResource(R.drawable.loading);
-
         webView.loadUrl("http://5gradekgucapstone.xyz:8080/oauth2/authorization/google");
     }
 

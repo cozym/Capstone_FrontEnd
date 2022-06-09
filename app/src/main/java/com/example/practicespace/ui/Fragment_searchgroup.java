@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,8 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.SearchGroup;
 import com.example.practicespace.connection.bookList;
-import com.example.practicespace.connection.openGroupList;
 import com.example.practicespace.vo.Group;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment1 extends Fragment {
+public class Fragment_searchgroup extends Fragment {
 
     ListView listview;
     private static ListViewAdapter adapter;
@@ -41,12 +40,15 @@ public class Fragment1 extends Fragment {
     //멀티스레드 작성시작
     class Sync{
         public void getGroupList(){
-            Log.d("test","getgroup");
-            Call<openGroupList> call = apiInterface.getGroupList();
-            call.enqueue(new Callback<openGroupList>() {
+            String searchStr = getSearchStr();
+            Call<SearchGroup> call = apiInterface.searchGroup(
+                    LoginInfo.getInstance().data.token,
+                    searchStr
+            );
+            call.enqueue(new Callback<SearchGroup>() {
                 @Override
-                public void onResponse(Call<openGroupList> call, Response<openGroupList> response) {
-                    openGroupList result = response.body();
+                public void onResponse(Call<SearchGroup> call, Response<SearchGroup> response) {
+                    SearchGroup result = response.body();
                     Log.d("책 테스트", String.valueOf(response.body()));
                     if(response.code() == 200){
                         groups = result.data.groups;
@@ -91,7 +93,7 @@ public class Fragment1 extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<openGroupList> call, Throwable t) {
+                public void onFailure(Call<SearchGroup> call, Throwable t) {
                     call.cancel();
                 }
             });
@@ -117,6 +119,9 @@ public class Fragment1 extends Fragment {
         public void run(){
             sync.syncRun(num);
         }
+    }
+    public String getSearchStr(){
+        return getArguments().getString("searchstr");
     }
     //멀티스레드 작성끝
 
