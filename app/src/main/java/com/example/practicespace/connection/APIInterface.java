@@ -146,6 +146,12 @@ public interface APIInterface {
             @Header("Authorization") String token,
             @Query("groupSeq") int groupSeq);
 
+    @GET("group/authcode")
+    Call<getAuthCode> getAuthCode(
+        @Header("Authorization") String token,
+        @Query("groupSeq") int groupSeq
+    );
+
     @GET("group/search")
     Call<SearchGroup> searchGroup(
             @Header("Authorization") String token,

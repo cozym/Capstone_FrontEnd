@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.bookList;
 import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
+import com.example.practicespace.connection.getAuthCode;
 import com.example.practicespace.connection.getGroup;
 import com.example.practicespace.vo.Admin;
 import com.example.practicespace.vo.Book;
@@ -61,7 +63,7 @@ public class group_enter extends AppCompatActivity {
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
     Button btn_enter;
-
+    String code;
 
     public void sendImageRequest() {
         String url = group_thumb;
@@ -130,6 +132,26 @@ public class group_enter extends AppCompatActivity {
             Log.d("토큰조각유저시퀀스",user_seq);
             Log.d("테스트","call");
             //그룹정보 받아오기
+            Call<getAuthCode> call3 = apiInterface.getAuthCode(LoginInfo.getInstance().data.token,groupseq);
+            call3.enqueue(new Callback<getAuthCode>() {
+                @Override
+                public void onResponse(Call<getAuthCode> call, Response<getAuthCode> response) {
+                    getAuthCode result = response.body();
+                    if(response.code()==200) {
+                        Log.d("test","setgroup성공");
+                        code = result.data.authenticationCode;
+                    }
+                    else {
+                        Log.d("test","setgroupt실패");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<getAuthCode> call, Throwable t) {
+
+                }
+            });
+
             Call<getGroup> call = apiInterface.getGroupSeq(LoginInfo.getInstance().data.token,groupseq);
                     Log.d("토큰 시퀀스",LoginInfo.getInstance().data.token+groupseq);
                     call.enqueue(new Callback<getGroup>() {
@@ -169,33 +191,66 @@ public class group_enter extends AppCompatActivity {
                                     }
                                 });
                             } else if(Integer.valueOf(user_seq) == group.getAdmin().getSeq()){ //소속 그룹이면 어드민인지 확인 테스트중
-                                button2.setText("코드 보기");
+                                button2.setText("그룹 관리");
                                 button2.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-//                                        Call<deleteGroup> call = apiInterface.deleteGroupSeq( LoginInfo.getInstance().data.token,groupseq);
-//                                        call.enqueue(new Callback<deleteGroup>() {
-//                                            @Override
-//                                            public void onResponse(Call<deleteGroup> call, Response<deleteGroup> response) {
-//                                                deleteGroup result = response.body();
-//                                                if(response.code()==200) {
-//                                                    Log.d("test","setgroup성공");
-//                                                }
-//                                                else {
-//                                                    Log.d("test","setgroupt실패");
-//                                                }
-//                                            }
-//
-//                                            @Override
-//                                            public void onFailure(Call<deleteGroup> call, Throwable t) {
-//                                                call.cancel();
-//                                            }
-//                                        });
-//                                        Toast.makeText(group_enter.this,"삭제됐습니다.",Toast.LENGTH_SHORT).show();
-//                                        onBackPressed();
+                                        String[] menus = {"인증코드 보기", "그룹 삭제하기"};
                                         AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
-                                        dlg.setTitle("인증코드").setMessage("a3fg5s");
+                                        dlg.setTitle("그룹 관리 메뉴");
                                         dlg.setPositiveButton("닫기", null);
+                                        dlg.setItems(menus, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                switch(i){
+                                                    case 0:
+                                                        AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
+                                                        dlg.setTitle("인증코드").setMessage(code);
+                                                        dlg.setPositiveButton("닫기", null);
+                                                        dlg.show();
+                                                        break;
+                                                    case 1:
+                                                        final EditText confirm = new EditText(group_enter.this);
+                                                        AlertDialog.Builder dlg2 = new AlertDialog.Builder(group_enter.this);
+                                                        dlg2.setTitle("인증코드를 입력해주세요.");
+                                                        dlg2.setView(confirm);
+                                                        dlg2.setPositiveButton("탈퇴하기", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                if(confirm.getText().toString().equals(code)){
+                                                                    Call<deleteGroup> call = apiInterface.deleteGroupSeq(LoginInfo.getInstance().data.token, groupseq);
+                                                                    call.enqueue(new Callback<deleteGroup>() {
+                                                                        @Override
+                                                                        public void onResponse(Call<deleteGroup> call, Response<deleteGroup> response) {
+                                                                            deleteGroup result = response.body();
+                                                                            if (response.code() == 200) {
+                                                                                Log.d("test", "setgroup성공");
+                                                                            } else {
+                                                                                Log.d("test", "setgroupt실패");
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onFailure(Call<deleteGroup> call, Throwable t) {
+                                                                            call.cancel();
+                                                                        }
+                                                                    });
+                                                                    Toast.makeText(group_enter.this, "삭제됐습니다.", Toast.LENGTH_SHORT).show();
+                                                                    onBackPressed();
+                                                                }else{
+                                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
+                                                                    dlg.setTitle("코드가 틀렸습니다.");
+                                                                    dlg.setPositiveButton("닫기",null);
+                                                                    dlg.show();
+                                                                }
+                                                            }
+                                                        });
+                                                        dlg2.setNegativeButton("닫기", null);
+                                                        dlg2.show();
+                                                        break;
+                                                }
+                                            }
+                                        });
                                         dlg.show();
                                     }
                                 });
@@ -277,7 +332,6 @@ public class group_enter extends AppCompatActivity {
             group_mem_num.setText(String.valueOf(secondIntent.getIntExtra("회원수",2)));
             group_date = (TextView) findViewById(R.id.group_date);
             group_date.setText(secondIntent.getStringExtra("그룹생성일"));
-
 //
 
         }
@@ -335,6 +389,7 @@ public class group_enter extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), group_main.class);
                 intent.putExtra("그룹시퀀스",groupseq);
                 intent.putExtra("그룹이름",secondIntent.getStringExtra("그룹이름"));
+                intent.putExtra("관리자이름",group.getAdmin().getNickname());
                 startActivity(intent);
             }
         });

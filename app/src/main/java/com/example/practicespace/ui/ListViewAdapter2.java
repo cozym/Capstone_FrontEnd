@@ -70,7 +70,7 @@ public class ListViewAdapter2 extends ArrayAdapter<ListViewItem2>{
         viewHolder.peonum.setText("일반회원");
         viewHolder.peonum.setBackgroundResource(R.drawable.rental_o);
         viewHolder.booknum.setText("");
-        if(listViewItem.getNickname().equals("kyoung")){
+        if(listViewItem.getAdmin()==true){
             viewHolder.peonum.setText("관리자");
             viewHolder.peonum.setBackgroundResource(R.drawable.public_o);
         }
