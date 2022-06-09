@@ -55,6 +55,7 @@ public class Fragment3 extends Fragment {
                         ArrayList<ListViewItem2> items = new ArrayList<ListViewItem2>();
                         for(i = 0; i <Users.size(); i++){
                             boolean admin = false;
+
                             if(Users.get(i).getNickname().equals(getAdminName())){
                                 admin=true;
                             }

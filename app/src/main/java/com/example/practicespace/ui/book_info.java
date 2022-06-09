@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,10 +26,12 @@ import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getBook;
+import com.example.practicespace.connection.getUserList;
 
 import org.w3c.dom.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -141,10 +144,16 @@ public class book_info extends AppCompatActivity {
         publishDate.setText(secondIntent.getStringExtra("등록일"));
 
         Button rent_btn = findViewById(R.id.rent_button);
+        Button delete_btn = findViewById(R.id.delete_button);
         //버튼이벤트
         if(true){ //책 주인이면
-            if(isrental==true){
+            if(isrental==true){   // 테스트할때 true로 바꾸면 대여중으로 뜸 -> 반납하기 영상
+                rental.setText("대여중");
+                rental.setBackgroundResource(R.drawable.rental_x);
                 rent_btn.setText("반납받기");
+                ViewGroup.LayoutParams params = rent_btn.getLayoutParams();
+                params.width = 800;
+                rent_btn.setLayoutParams(params);
                 rent_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -153,6 +162,8 @@ public class book_info extends AppCompatActivity {
                         dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                rental.setText("대여가능");
+                                rental.setBackgroundResource(R.drawable.rental_o);
                                 Toast.makeText(book_info.this,"반납이벤트",Toast.LENGTH_SHORT).show();
                                 onBackPressed();
                             }
@@ -161,21 +172,51 @@ public class book_info extends AppCompatActivity {
                         dlg.show();
                     }
                 });
+                delete_btn.setVisibility(View.GONE);
+
             } else{
                 rent_btn.setText("대여하기");
                 rent_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) { //라디오다이얼로그처리해야함(단,본인제외)
+                        String[] userlist = new String[] {"min", "lim", "park", "lee"};
                         AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
-                        dlg.setTitle("대여 하시겠습니까?");
-                        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        dlg.setSingleChoiceItems(userlist, -1, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(book_info.this,"반납이벤트",Toast.LENGTH_SHORT).show();
-                                onBackPressed();
+
                             }
                         });
-                        dlg.setNegativeButton("아니오",null);
+                        dlg.setTitle("누구한테 대여 하시겠습니까?");
+                        dlg.setPositiveButton("대여하기", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                rental.setText("대여중");
+                                rental.setBackgroundResource(R.drawable.rental_x);
+//                                Call<getUserList> call = apiInterface.getUserList(LoginInfo.getInstance().data.token,groupseq);
+//                                call.enqueue(new Callback<getUserList>() {
+//                                    @Override
+//                                    public void onResponse(Call<getUserList> call, Response<getUserList> response) {
+//                                        getUserList result = response.body();
+//                                        Log.d("책 테스트", String.valueOf(response.body()));
+//                                        if(response.code() == 200){
+//                                            Log.d("연결 테스트","성공");
+//
+//                                        } else{
+//                                            Log.d("연결 테스트", "실패");
+//                                        }
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(Call<getUserList> call, Throwable t) {
+//                                        call.cancel();
+//                                    }
+//                                });
+
+                            }
+                        });
+                        dlg.setNegativeButton("취소",null);
                         dlg.show();
                     }
                 });
@@ -204,7 +245,7 @@ public class book_info extends AppCompatActivity {
                 });
             }
         }
-        Button delete_btn = findViewById(R.id.delete_button);
+
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

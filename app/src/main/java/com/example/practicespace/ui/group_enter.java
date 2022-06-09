@@ -422,7 +422,7 @@ public class group_enter extends AppCompatActivity {
         thread1.start();
         thread2.start();
         thread3.start();
-
+        Log.d("########## 시퀀스", String.valueOf(groupseq));
         btn_enter = findViewById(R.id.enter);
         btn_enter.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -431,6 +431,7 @@ public class group_enter extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), group_main.class);
                 intent.putExtra("그룹시퀀스",groupseq);
                 intent.putExtra("그룹이름",secondIntent.getStringExtra("그룹이름"));
+                intent.putExtra("관리자이름", group.getAdmin().getNickname());
                 startActivity(intent);
             }
         });

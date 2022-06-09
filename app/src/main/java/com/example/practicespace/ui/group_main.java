@@ -60,6 +60,7 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
         //프래그먼트에 그룹시퀀스 전달
         Bundle bundle = new Bundle();
         bundle.putInt("groupseq", groupseq);
+        Log.d("####어드민 이름",adminName);
         bundle.putString("adminName", adminName);
         fragment0.setArguments(bundle);
         fragment1.setArguments(bundle);
