@@ -54,7 +54,6 @@ public class Fragment3 extends Fragment {
                         Log.d("test","getgroup전");
                         ArrayList<ListViewItem2> items = new ArrayList<ListViewItem2>();
                         for(i = 0; i <Users.size(); i++){
-                            Log.d("이메일 테스",Users.get(i).getEmails().get(0));
                             items.add(new ListViewItem2(Users.get(i).getEmails(), Users.get(i).getNickname()));
                         }
                         adapter = new ListViewAdapter2(items, view.getContext());
