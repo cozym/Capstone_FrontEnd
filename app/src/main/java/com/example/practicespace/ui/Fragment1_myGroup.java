@@ -99,6 +99,8 @@ public class Fragment1_myGroup extends Fragment {
                                     else{
                                         Log.d("연결 테스트", "실패");
                                     }
+                                    //어차피 계속 반복하므로 마지막으로 남은 adapter
+                                    // 즉, items가 전부 추가된 adapter만 남게된다.
                                     adapter = new ListViewAdapter(items, view.getContext());
                                     listview.setAdapter(adapter);
                                 }
@@ -109,8 +111,6 @@ public class Fragment1_myGroup extends Fragment {
                             });
                             ///도서수 계산
                         }
-                        adapter = new ListViewAdapter(items, view.getContext());
-                        listview.setAdapter(adapter);
                     } else{
                         Log.d("연결 테스트", "실패");
                     }
