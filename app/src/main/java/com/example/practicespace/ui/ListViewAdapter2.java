@@ -65,16 +65,20 @@ public class ListViewAdapter2 extends ArrayAdapter<ListViewItem2>{
 
         //아이템 내 각 위젯에 대한 데이터 반영
         //위젯에 내가 만들어 놓은 부분 적용
-//        viewHolder.ICon.setImageResource(listViewItem.getIcon());
+        viewHolder.ICon.setImageResource(R.drawable.profile);
         viewHolder.text_Group_Name.setText(listViewItem.getNickname());
-        viewHolder.peonum.setText("일반 회원");
+        viewHolder.peonum.setText("일반회원");
+        viewHolder.peonum.setBackgroundResource(R.drawable.rental_o);
         viewHolder.booknum.setText("");
+        if(listViewItem.getNickname().equals("kyoung")){
+            viewHolder.peonum.setText("관리자");
+            viewHolder.peonum.setBackgroundResource(R.drawable.public_o);
+        }
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);
         Intent intent = new Intent(getContext(), user_info.class);
 //        intent.putExtra("그룹사진",listViewItem.getIcon());
         intent.putExtra("닉네임",listViewItem.getNickname());
-        intent.putExtra("이메일",listViewItem.getEmail().get(0));
 //        intent.putExtra("회원수",listViewItem.getPeonum());
 //        intent.putExtra("도서수",listViewItem.getBooknum());
 //        intent.putExtra("관리자", listViewItem.getAdmin().getNickname());

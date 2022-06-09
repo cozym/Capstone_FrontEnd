@@ -65,7 +65,7 @@ public class search extends AppCompatActivity{
         });
 
         //콤보박스2
-        final String[] sort = {"이름순", "날짜순", "좋아요순"};
+        final String[] sort = {"이름순", "날짜순"};
         Spinner spiner2 = (Spinner) findViewById(R.id.spinner_sort);
         ArrayAdapter adapter2 = new ArrayAdapter(this, R.layout.spinner_item, sort);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -75,7 +75,6 @@ public class search extends AppCompatActivity{
         List<String> sorts = new ArrayList<String>();
         categories.add("이름순");
         categories.add("날짜순");
-        categories.add("좋아요순");
 
         spiner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -103,8 +102,8 @@ public class search extends AppCompatActivity{
                     bundle.putString("searchstr", eText1.getText().toString());
                     fragment0.setArguments(bundle);
                     fragment1.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
                     getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
                     return true;
                 }
                 return false;

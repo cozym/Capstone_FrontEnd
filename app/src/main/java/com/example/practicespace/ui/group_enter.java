@@ -131,7 +131,7 @@ public class group_enter extends AppCompatActivity {
             Log.d("테스트","call");
             //그룹정보 받아오기
             Call<getGroup> call = apiInterface.getGroupSeq(LoginInfo.getInstance().data.token,groupseq);
-                    Log.d("토큰 시퀀스",LoginInfo.getInstance().data.token+", "+groupseq);
+                    Log.d("토큰 시퀀스",LoginInfo.getInstance().data.token+groupseq);
                     call.enqueue(new Callback<getGroup>() {
                         @Override
                         public void onResponse(Call<getGroup> call, Response<getGroup> response) {
