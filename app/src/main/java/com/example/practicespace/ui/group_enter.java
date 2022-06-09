@@ -24,11 +24,13 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.CheckUserIsSigned;
 import com.example.practicespace.connection.bookList;
 import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getAuthCode;
 import com.example.practicespace.connection.getGroup;
+import com.example.practicespace.connection.joinGroup;
 import com.example.practicespace.vo.Admin;
 import com.example.practicespace.vo.Book;
 import com.example.practicespace.vo.Group;
@@ -63,6 +65,8 @@ public class group_enter extends AppCompatActivity {
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
     Button btn_enter;
+    boolean UserInGroup;
+
     String code;
 
     public void sendImageRequest() {
@@ -127,6 +131,25 @@ public class group_enter extends AppCompatActivity {
 
 
     class Sync{
+        protected void getCheck(){
+        Call<CheckUserIsSigned> call0 = apiInterface.signedGroup(LoginInfo.getInstance().data.token,groupseq);
+        call0.enqueue(new Callback<CheckUserIsSigned>() {
+            @Override
+            public void onResponse(Call<CheckUserIsSigned> call, Response<CheckUserIsSigned> response) {
+                CheckUserIsSigned result0 = response.body();
+                if(response.code() == 200){
+                    Log.d("test","소속인지 확인 했다.");
+                    UserInGroup = result0.data.result;
+                }else{Log.d("연결 테스트", "실패");}
+            }
+
+            @Override
+            public void onFailure(Call<CheckUserIsSigned> call, Throwable t) {
+                call.cancel();
+            }
+        });
+        }
+
         protected void call(){
             Log.d("토큰조각",new String(android.util.Base64.decode(TokenPart, 0)));
             Log.d("토큰조각유저시퀀스",user_seq);
@@ -168,7 +191,7 @@ public class group_enter extends AppCompatActivity {
                             group_admin = (TextView)findViewById(R.id.group_admin);
                             group_admin.setText(group.getAdmin().getNickname());
                             Button button2 = findViewById(R.id.group_button2);
-                            if(false){ //소속그룹인지 확인부터
+                            if(!UserInGroup){ //소속그룹인지 확인부터
                                 btn_enter.setText("가입하기");
                                button2.setVisibility(View.GONE);
                                 ViewGroup.LayoutParams params = btn_enter.getLayoutParams();
@@ -177,12 +200,28 @@ public class group_enter extends AppCompatActivity {
                                 btn_enter.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        Log.d("tewtss1","가입 하자");
+                                        final EditText authenticCode = new EditText(group_enter.this);
                                         AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
                                         dlg.setTitle("가입하시겠습니까?").setMessage(group.getAuthenticationCode());
+                                        dlg.setView(authenticCode);
                                         dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Toast.makeText(group_enter.this,"탈퇴이벤트",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(group_enter.this,"가입이벤트",Toast.LENGTH_SHORT).show();
+                                                Call<joinGroup> call5 = apiInterface.join(LoginInfo.getInstance().data.token,
+                                                        groupseq,authenticCode.getText().toString());
+                                                call5.enqueue(new Callback<joinGroup>() {
+                                                    @Override
+                                                    public void onResponse(Call<joinGroup> call, Response<joinGroup> response) {
+                                                        joinGroup result = response.body();
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<joinGroup> call, Throwable t) {
+
+                                                    }
+                                                });
                                                 onBackPressed();
                                             }
                                         });
@@ -191,7 +230,7 @@ public class group_enter extends AppCompatActivity {
                                     }
                                 });
                             } else if(Integer.valueOf(user_seq) == group.getAdmin().getSeq()){ //소속 그룹이면 어드민인지 확인 테스트중
-                                button2.setText("그룹 관리");
+                                button2.setText("코드 보기");
                                 button2.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -332,15 +371,16 @@ public class group_enter extends AppCompatActivity {
             group_mem_num.setText(String.valueOf(secondIntent.getIntExtra("회원수",2)));
             group_date = (TextView) findViewById(R.id.group_date);
             group_date.setText(secondIntent.getStringExtra("그룹생성일"));
+
 //
 
         }
         public synchronized void syncRun(int num){
-            if(num==1){
+            if(num==2){
                 call();
-            }else if(num==2){
+            }else if(num==3){
                 init();
-            }
+            }else if(num==1){getCheck();}
         }
     }
 
@@ -377,9 +417,11 @@ public class group_enter extends AppCompatActivity {
 
         MyThread thread1 = new MyThread(sync,1);
         MyThread thread2 = new MyThread(sync,2);
+        MyThread thread3 = new MyThread(sync,3);
 
         thread1.start();
         thread2.start();
+        thread3.start();
 
         btn_enter = findViewById(R.id.enter);
         btn_enter.setOnClickListener(new View.OnClickListener(){
@@ -389,7 +431,6 @@ public class group_enter extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), group_main.class);
                 intent.putExtra("그룹시퀀스",groupseq);
                 intent.putExtra("그룹이름",secondIntent.getStringExtra("그룹이름"));
-                intent.putExtra("관리자이름",group.getAdmin().getNickname());
                 startActivity(intent);
             }
         });

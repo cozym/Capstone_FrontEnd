@@ -166,6 +166,11 @@ public interface APIInterface {
             @Query("latitude") double latitude,
             @Query("distance") int distance);
 
+    @GET("group/signed")
+    Call<CheckUserIsSigned> signedGroup(
+            @Header("Authorization") String token,
+            @Query("groupSeq") int groupSeq );
+
     @GET("group/userlist")
     Call<getUserList> getUserList(
             @Header("Authorization") String token,
