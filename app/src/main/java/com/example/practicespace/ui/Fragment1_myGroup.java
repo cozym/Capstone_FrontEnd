@@ -53,6 +53,7 @@ public class Fragment1_myGroup extends Fragment {
                     } else {
                         Log.d("User 중 입니다.", "User실패");
                     }
+
                 }
                 @Override
                 public void onFailure(Call<getUser> call, Throwable t) {
