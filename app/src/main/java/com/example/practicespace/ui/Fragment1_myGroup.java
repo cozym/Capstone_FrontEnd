@@ -79,7 +79,9 @@ public class Fragment1_myGroup extends Fragment {
                             Group group = groups.get(i);
                             if (group.getAdmin().getNickname().equals(User_nickname)) {
                                             Log.d("test 중 입니다.", "실패인듯 한데 성공");
-                                            items.add(new ListViewItem(R.drawable.test_1, group.getName(), group.getDescription()
+                                String serveruri = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEyMTBfMjQz%2FMDAxNjM5MDkzMTI0Mjk2.EEPStsR0cJekbLGH7jSqkvSU9E03cKJGnUezv-ZW6_cg.guvIYPL-NDL6vDJA5SdDkJ2mVExWM-GIrnt4xMK98Owg.PNG.designerjuni%2F%25BC%25BA%25B1%25D5%25B0%25FC%25B4%25EB%25C7%25D0%25B1%25B3%25B7%25CE%25B0%25ED.png&type=a340";//여기에다가 사진 주소(10메가이하)
+
+                                items.add(new ListViewItem(serveruri, group.getName(), group.getDescription()
                                                     , group.getSeq(), group.getOpen(), group.getCreatedDate(), 0));  // bo oknum 나중에 수정
                                             System.out.println(items);
 
