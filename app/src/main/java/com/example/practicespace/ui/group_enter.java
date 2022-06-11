@@ -31,6 +31,7 @@ import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getAuthCode;
 import com.example.practicespace.connection.getGroup;
 import com.example.practicespace.connection.joinGroup;
+import com.example.practicespace.connection.resignGroup;
 import com.example.practicespace.vo.Admin;
 import com.example.practicespace.vo.Book;
 import com.example.practicespace.vo.Group;
@@ -317,7 +318,23 @@ public class group_enter extends AppCompatActivity {
                                         dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Toast.makeText(group_enter.this,"탈퇴이벤트",Toast.LENGTH_SHORT).show();
+//                                                Toast.makeText(group_enter.this,"탈퇴이벤트",Toast.LENGTH_SHORT).show();
+                                                Call<resignGroup> call4 = apiInterface.Resign(
+                                                        LoginInfo.getInstance().data.token,
+                                                        groupseq);
+                                                call4.enqueue(new Callback<resignGroup>() {
+                                                    @Override
+                                                    public void onResponse(Call<resignGroup> call, Response<resignGroup> response) {
+                                                        if(response.code() == 200){
+                                                            Log.d("test","탈퇴 성공");
+                                                        }else{Log.d("test","탈퇴 아직 안 성공");}
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<resignGroup> call, Throwable t) {
+                                                        t.printStackTrace();
+                                                    }
+                                                });
                                                 onBackPressed();
                                             }
                                         });

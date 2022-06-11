@@ -36,6 +36,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.io.File;
@@ -48,6 +49,7 @@ public class add_group extends AppCompatActivity {
     private ImageView imageview;
     private EditText group_Name;
     private EditText group_Description;
+//    private RadioGroup RadioGroup_isOpen;
     private EditText group_HashTag;
     private boolean is_open;
     private Button submit_group;
@@ -88,6 +90,7 @@ public class add_group extends AppCompatActivity {
         group_Description = (EditText) findViewById(R.id.group_Description);
 //        group_HashTag = (EditText) findViewById(R.id.group_HashTag);
         submit_group = (Button) findViewById(R.id.submit_group);
+//        RadioGroup_isOpen = (RadioGroup)findViewById(R.id.RadioGroup_isOpen);
 
         verifyStoragePermissions(add_group.this);
         imageview.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +101,7 @@ public class add_group extends AppCompatActivity {
 
             }
         });
+
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,16 +189,19 @@ public class add_group extends AppCompatActivity {
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
+        boolean checked = ((RadioButton)view).isChecked();
 
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.group_isOpen:
+                if (checked)
                 is_open = true;
+                    Log.d("test","true");
                 break;
             case R.id.group_isClose:
                 if (checked)
                     is_open = false;
+                    Log.d("test","false");
                 break;
         }
     }
