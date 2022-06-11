@@ -111,7 +111,7 @@ public class add_group extends AppCompatActivity {
                         Call<setGroup> call = apiInterface.saveGroup(
                                 LoginInfo.getInstance().data.token,
                                 group_Name.getText().toString(),
-                                true,
+                                is_open,
                                 serveruri,
                                 group_Description.getText().toString(),
                                 127.0312,

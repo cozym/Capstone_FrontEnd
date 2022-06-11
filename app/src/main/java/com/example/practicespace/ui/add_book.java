@@ -51,6 +51,7 @@ public class add_book extends AppCompatActivity {
     private EditText addbook_title;
     private EditText addbook_author;
     private EditText addbook_publisher;
+    private EditText addbook_publishDate;
     private EditText addbook_description;
     private Button addbook_category;
     private String genreString;
@@ -102,6 +103,7 @@ public class add_book extends AppCompatActivity {
         addbook_author=(EditText)findViewById(R.id.addbook_author);
         addbook_publisher=(EditText)findViewById(R.id.addbook_publisher);
         addbook_description=(EditText)findViewById(R.id.addbook_description);
+        addbook_publishDate=(EditText)findViewById(R.id.addbook_publishDate);
         addbook_category=(Button)findViewById(R.id.addbook_category);
         addbook_button=(Button)findViewById(R.id.addbook_button);
         ISBNInput = (EditText)findViewById(R.id.addbook_ISBN);
@@ -130,7 +132,7 @@ public class add_book extends AppCompatActivity {
                                 addbook_publisher.getText().toString(),
                                 ISBNInput.getText().toString(),
                                 serveruri,
-                                "2017-08-25",
+                                addbook_publishDate.getText().toString(),
                                 addbook_description.getText().toString(),
                                 genreString,
                                 groupseq
