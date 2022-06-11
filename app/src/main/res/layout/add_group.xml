@@ -93,6 +93,7 @@
                 android:textColor="@color/black"
                 />
             <RadioGroup
+                android:id="@+id/RadioGroup_isOpen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -110,6 +111,7 @@
                     android:textSize="15sp"
                     android:button="@null"
                     android:textAlignment="center"
+                    android:onClick="onRadioButtonClicked"
                     ></RadioButton>
                 <RadioButton
                     android:id="@+id/group_isClose"
@@ -122,6 +124,7 @@
                     android:textSize="15sp"
                     android:button="@null"
                     android:textAlignment="center"
+                    android:onClick="onRadioButtonClicked"
                     ></RadioButton>
 
             </RadioGroup>
