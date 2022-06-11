@@ -187,4 +187,11 @@ public interface APIInterface {
             @Header("Authorization") String token,
             @Field("nickname") String nickname);
 
+    @FormUrlEncoded
+    @POST("bookLog")
+    Call<setBookLog> addBookLog(
+            @Header("Authorization") String token,
+            @Field("bookLogStatus") String bookLogStatus,
+            @Field("bookSeq") int bookSeq,
+            @Field("groupSeq") int groupSeq);
 }

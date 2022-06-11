@@ -24,7 +24,7 @@ import java.util.List;
 public class search extends AppCompatActivity{
 
     Fragment fragment0, fragment1;
-
+    int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,14 +96,27 @@ public class search extends AppCompatActivity{
                 if((event.getAction()==KeyEvent.ACTION_DOWN)&&(keyCode == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow( eText1.getWindowToken(), 0);
+                    getSupportFragmentManager().beginTransaction().detach(fragment0).commit();
+                    getSupportFragmentManager().beginTransaction().detach(fragment1).commit();
+                    fragment0 = new Fragment_searchgroup();
+                    fragment1 = new Fragment_searchbook();
                     fragment0 = new Fragment_searchgroup();
                     fragment1 = new Fragment_searchbook();
                     Bundle bundle = new Bundle();
                     bundle.putString("searchstr", eText1.getText().toString());
+
                     fragment0.setArguments(bundle);
                     fragment1.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
-                    getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+                    if(position==0){
+                        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+                    }else if(position==1){
+                        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+                    }
+
+
+
+
+
                     return true;
                 }
                 return false;
@@ -111,10 +124,10 @@ public class search extends AppCompatActivity{
         });
 
 
-//        fragment0 = new Fragment1();
-//        fragment1 = new Fragment2();
-//
-//        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+        fragment0 = new Fragment1();
+        fragment1 = new Fragment2();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
 
 //        Bundle bundle = new Bundle();
 //        bundle.putString("searchstr", "tmp");
@@ -126,7 +139,7 @@ public class search extends AppCompatActivity{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                int position = tab.getPosition();
+                position = tab.getPosition();
 
                 Fragment selected = null;
                 if(position == 0){

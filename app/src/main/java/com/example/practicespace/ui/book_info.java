@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,16 +25,20 @@ import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.CheckUserIsSigned;
+import com.example.practicespace.connection.borrowBook;
 import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getBook;
 import com.example.practicespace.connection.getUserList;
+import com.example.practicespace.connection.setBookLog;
+import com.example.practicespace.vo.User;
 
 import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +52,9 @@ public class book_info extends AppCompatActivity {
     String book_thumb;
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
+    List<User> Users = new ArrayList<User>();
+    String[] userlist = new String[] {};
+    int which;
     int book_seq;
     private Intent secondIntent;
     class Sync{
@@ -233,47 +241,81 @@ public class book_info extends AppCompatActivity {
                             rent_btn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) { //라디오다이얼로그처리해야함(단,본인제외)
-                                    String[] userlist = new String[] {"min", "lim", "park", "lee"};
-                                    AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
-                                    dlg.setSingleChoiceItems(userlist, -1, new DialogInterface.OnClickListener() {
+                                    Call<getUserList> call = apiInterface.getUserList(LoginInfo.getInstance().data.token,result.data.book.getGroup().getSeq());
+                                    call.enqueue(new Callback<getUserList>() {
                                         @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                        public void onResponse(Call<getUserList> call, Response<getUserList> response) {
+                                            getUserList result2 = response.body();
+                                            Log.d("책 테스트", String.valueOf(response.body()));
+                                            if(response.code() == 200){
+                                                Users = result2.data.userList;
+                                                List<String> names = new ArrayList<String>();
+                                                for(int i=0; i<Users.size();i++){
+                                                    //책주인은 안뜨게
+                                                    names.add(Users.get(i).getNickname());
+                                                }
+                                                String[] radiolist = names.toArray(new String[0]);
+                                                AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
+                                                dlg.setSingleChoiceItems(radiolist, -1, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        which=i;
+                                                    }
+                                                });
+                                                dlg.setTitle("누구한테 대여 하시겠습니까?");
+                                                dlg.setPositiveButton("대여하기", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Toast.makeText(book_info.this,Users.get(which).getNickname(),Toast.LENGTH_SHORT).show();
+                                                        Call<borrowBook> call = apiInterface.borrow(LoginInfo.getInstance().data.token, Users.get(i).getUserSeq(),result.data.book.getSeq());
+                                                        call.enqueue(new Callback<borrowBook>() {
+                                                            @Override
+                                                            public void onResponse(Call<borrowBook> call, Response<borrowBook> response) {
+                                                                borrowBook result3 = response.body();
+                                                                if(response.code()==200){
+                                                                    Log.d("버로우이벤트","성공");
+                                                                    Call<setBookLog> call2 = apiInterface.addBookLog(LoginInfo.getInstance().data.token,"BORROW",result.data.book.getSeq(),Users.get(which).getUserSeq());
+                                                                    call2.enqueue(new Callback<setBookLog>() {
+                                                                        @Override
+                                                                        public void onResponse(Call<setBookLog> call, Response<setBookLog> response) {
+                                                                            setBookLog result4 = response.body();
+                                                                            if(response.code()==200){
+                                                                                Log.d("로그이벤트","성공");
+                                                                            }else{
+                                                                                Log.d("로그이벤트","실패");
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onFailure(Call<setBookLog> call, Throwable t) {
+
+                                                                        }
+                                                                    });
+                                                                }else{
+                                                                    Log.d("버로우 이벤트", "실패");
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<borrowBook> call, Throwable t) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                                dlg.setNegativeButton("취소",null);
+                                                dlg.show();
+                                            } else{
+                                                Log.d("연결 테스트", "실패");
+                                            }
 
                                         }
-                                    });
-                                    dlg.setTitle("누구한테 대여 하시겠습니까?");
-                                    dlg.setPositiveButton("대여하기", new DialogInterface.OnClickListener() {
+
                                         @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            rental.setText("대여중");
-                                            rental.setBackgroundResource(R.drawable.rental_x);
-//                                Call<getUserList> call = apiInterface.getUserList(LoginInfo.getInstance().data.token,groupseq);
-//                                call.enqueue(new Callback<getUserList>() {
-//                                    @Override
-//                                    public void onResponse(Call<getUserList> call, Response<getUserList> response) {
-//                                        getUserList result = response.body();
-//                                        Log.d("책 테스트", String.valueOf(response.body()));
-//                                        if(response.code() == 200){
-//                                            Log.d("연결 테스트","성공");
-//
-//                                        } else{
-//                                            Log.d("연결 테스트", "실패");
-//                                        }
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onFailure(Call<getUserList> call, Throwable t) {
-//                                        call.cancel();
-//                                    }
-//                                });
-                                            Intent intent = getIntent();
-                                            finish();
-                                            startActivity(intent);
+                                        public void onFailure(Call<getUserList> call, Throwable t) {
+                                            call.cancel();
                                         }
                                     });
-                                    dlg.setNegativeButton("취소",null);
-                                    dlg.show();
                                 }
                             });
                         }
