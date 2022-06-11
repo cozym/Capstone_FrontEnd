@@ -48,7 +48,7 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="공유 도서" />
+                android:text="등록 도서" />
         </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout

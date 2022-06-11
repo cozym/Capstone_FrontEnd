@@ -105,7 +105,7 @@ public class add_group extends AppCompatActivity {
                 dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String serveruri = "https://t1.daumcdn.net/cfile/tistory/25203F4A5764A82608";//여기에다가 사진 주소(10메가이하)
+                        String serveruri = "http://www.kharn.kr/data/photos/20200519/art_15889145816491_75bd2a.png";//여기에다가 사진 주소(10메가이하)
                         Call<setGroup> call = apiInterface.saveGroup(
                                 LoginInfo.getInstance().data.token,
                                 group_Name.getText().toString(),

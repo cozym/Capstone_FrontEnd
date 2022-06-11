@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class User {
+    @SerializedName("seq")
+    private int seq;
+
     @SerializedName("emails")
     private List<String> emails;
 
@@ -14,6 +17,7 @@ public class User {
 
     public List<String> getEmails(){return emails;}
     public String getNickname() {return nickname;}
+    public int getUserSeq(){return seq;}
 
 }
 
