@@ -34,6 +34,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
 
     ViewHolder viewHolder;
     ListViewItem listViewItem;
+    String group_date;
     //View lookup cache
     private static class ViewHolder{
         ImageView ICon;
@@ -64,30 +65,37 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem>{
 //LayoutInflater inflater = Activity.getLayoutInflater();
 //LayoutInflater inflater = LayoutInflater.from(Context context);
             convertView = inflater.inflate(R.layout.listview_crew_item,parent,false);//resourceId는 R.id.listView_crew_item이다.
-            viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
-//            Glide.with(convertView).load(listViewItem.getIcon()).into(viewHolder.ICon);
-            viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
-            viewHolder.isopen = (TextView)convertView.findViewById(R.id.gorup_list_isopen);
-            viewHolder.booknum = (TextView)convertView.findViewById(R.id.group_list_book);
+
             convertView.setTag(viewHolder);
         }
         else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        //아이템 내 각 위젯에 대한 데이터 반영
-        //위젯에 내가 만들어 놓은 부분 적용
-        sendImageRequest();
-        viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
-        if(listViewItem.getIsOpen()==true){
-            viewHolder.isopen.setText("공개");
-            viewHolder.isopen.setBackgroundResource(R.drawable.public_o);
-        }else {
-            viewHolder.isopen.setText("비공개");
-            viewHolder.isopen.setBackgroundResource(R.drawable.public_x);
+        if(position < listViewItemList.size()){
+            viewHolder.ICon = (ImageView) convertView.findViewById(R.id.group_icon);
+//            Glide.with(convertView).load(listViewItem.getIcon()).into(viewHolder.ICon);
+            viewHolder.text_Group_Name = (TextView)convertView.findViewById(R.id.group_name);
+            viewHolder.isopen = (TextView)convertView.findViewById(R.id.gorup_list_isopen);
+            viewHolder.booknum = (TextView)convertView.findViewById(R.id.group_list_book);
+
+            //아이템 내 각 위젯에 대한 데이터 반영
+            //위젯에 내가 만들어 놓은 부분 적용
+            sendImageRequest();
+            Log.d("####리스트뷰 테스트", listViewItem.getGroupName()+", "+listViewItem.getIcon());
+            viewHolder.text_Group_Name.setText(listViewItem.getGroupName());
+            if(listViewItem.getIsOpen()==true){
+                viewHolder.isopen.setText("공개");
+                viewHolder.isopen.setBackgroundResource(R.drawable.public_o);
+            }else {
+                viewHolder.isopen.setText("비공개");
+                viewHolder.isopen.setBackgroundResource(R.drawable.public_x);
+            }
+            viewHolder.booknum.setText("도서 수: "+listViewItem.getBooknum());
+            group_date = listViewItem.getCreatedDate().substring(0,10);
         }
-        viewHolder.booknum.setText("도서 수: "+listViewItem.getBooknum());
-        String group_date = listViewItem.getCreatedDate().substring(0,10);
+
+
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);
         Intent intent = new Intent(getContext(), group_enter.class);

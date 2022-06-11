@@ -321,7 +321,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="등록일"
+                            android:text="출판날짜"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"

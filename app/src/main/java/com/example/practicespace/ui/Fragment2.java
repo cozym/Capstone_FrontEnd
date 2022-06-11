@@ -54,6 +54,7 @@ public class Fragment2 extends Fragment {
                                     books.get(i).getTitle(),books.get(i).getAuthor(),books.get(i).getPublisher()
                                     ,books.get(i).getIsbn(),books.get(i).getPublishDate(),books.get(i).getDescription()
                                     ,books.get(i).getCategory(),books.get(i).getRental()));
+                            Log.d("북 리스트 읽어오기", books.get(i).getTitle()+", "+books.get(i).getThumbnail());
                         }
                         adapter = new GridViewAdapter(items, view.getContext());
                         gridView.setAdapter(adapter);
@@ -107,34 +108,8 @@ public class Fragment2 extends Fragment {
         }catch(Exception e){
             e.printStackTrace();
         }
-//        try{
-//            thread2.start();
-//            thread2.join();
-//            Log.d("스레드테스트", "3");
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
 
-        //adapter에 넣을 리스트뷰를 받는 배열
-//        ArrayList<GridViewItem> items = new ArrayList<GridViewItem>();
-//          items.add(new GridViewItem(R.drawable.test_jsp, 4,"쉽게 배우는 JSP 웹 프로그래밍", "송미영",
-//                  "한빛아카데미", "979-11-5664-338-8","2022-04-08","JSP입문자를 위한 도서",
-//                  "컴퓨터과학",true));
-//        items.add(new GridViewItem(R.drawable.test_net, 5,"네트워크 해킹과 보안 개정3판", "양대일",
-//                "한빛아카데미", "979-11-5664-870-3","2022-05-28","네트워크 공부를 위한 도서",
-//                "컴퓨터과학",false));
-//        items.add(new GridViewItem(R.drawable.test_data, 6,"C언어로 쉽게 풀어쓴 자료구조", "천인국",
-//                "생능출판", "978-89-7050-971-6","2022.04.22","자료구조 공부를 위한 도서",
-//                "컴퓨터과학",true));
-//        items.add(new GridViewItem(R.drawable.test_com, 7,"컴퓨터구조론", "송미영",
-//                "생능출판", "978-89-7050-969-3","2022.05.22","컴퓨터구조 공부를 위한 도서",
-//                "컴퓨터과학",false));
-//        items.add(new GridViewItem(R.drawable.test_clang, 8,"누구나 쉽게 즐기는 C언어 콘서트", "천인국",
-//                "생능출판", " 978-89-7050-493-3","2022-05-23","C언어 쉽게 배워보자",
-//                "컴퓨터과학",true));
 
-//        adapter = new GridViewAdapter(items, view.getContext());
-//        gridView.setAdapter(adapter);
         Log.d("연결 테스트", "코드까지는 성공");
         return view;
     }

@@ -36,8 +36,11 @@ public class Book {
     @SerializedName("rental")
     private boolean rental;
 
-//    @SerializedName("groupSeq")
-//    private boolean groupSeq;
+    @SerializedName("user")
+    private User user;
+
+    @SerializedName("group")
+    private Group group;
 
     public Book() {}
 
@@ -63,5 +66,7 @@ public class Book {
 
     public boolean getRental() {return rental;}
 
-//    public Integer getGroupSeq() {return groupSeq;}
+    public User getUser(){return user;}
+
+    public Group getGroup(){return group;}
 }
