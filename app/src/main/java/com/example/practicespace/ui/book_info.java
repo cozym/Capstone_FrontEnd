@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.CheckUserIsSigned;
 import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getBook;
@@ -277,29 +278,55 @@ public class book_info extends AppCompatActivity {
                             });
                         }
                     } else{
-                        if(true){//소속그룹인지 확인
-                            rent_btn.setVisibility(View.GONE);
-                            delete_btn.setVisibility(View.GONE);
-                        } else{
-                            rent_btn.setText("그룹 바로 가기");
-                            rent_btn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
-                                    dlg.setTitle("바로 가시겠습니까?");
-                                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-//                                Intent intent = new Intent(getApplicationContext(), group_main.class);
-//                                intent.putExtra("그룹시퀀스",groupseq);
-//                                startActivity(intent);
-                                        }
-                                    });
-                                    dlg.setNegativeButton("아니오",null);
-                                    dlg.show();
-                                }
-                            });
-                        }
+                        delete_btn.setVisibility(View.GONE);
+
+                        Call<CheckUserIsSigned> call0 = apiInterface.signedGroup(LoginInfo.getInstance().data.token,result.data.book.getGroup().getSeq());
+                        call0.enqueue(new Callback<CheckUserIsSigned>() {
+                            @Override
+                            public void onResponse(Call<CheckUserIsSigned> call, Response<CheckUserIsSigned> response) {
+                                CheckUserIsSigned result0 = response.body();
+                                if(response.code() == 200){
+                                    boolean UserInGroup = result0.data.result;
+                                    if(UserInGroup){//소속그룹인지 확인
+                                        ViewGroup.LayoutParams params = rent_btn.getLayoutParams();
+                                        params.width = 800;
+                                        rent_btn.setLayoutParams(params);
+                                        rent_btn.setText("소속 그룹입니다.");
+                                    } else{
+                                        rent_btn.setText("그룹 바로 가기");
+                                        rent_btn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                AlertDialog.Builder dlg = new AlertDialog.Builder(book_info.this);
+                                                dlg.setTitle("바로 가시겠습니까?");
+                                                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Intent intent = new Intent(getApplicationContext(), group_enter.class);
+                                                        intent.putExtra("그룹시퀀스",result.data.book.getGroup().getSeq());
+                                                        intent.putExtra("그룹사진",result.data.book.getGroup().getThumbnail());
+                                                        intent.putExtra("그룹이름",result.data.book.getGroup().getName());
+                                                        intent.putExtra("그룹설명",result.data.book.getGroup().getDescription());
+                                                        intent.putExtra("그룹공개",result.data.book.getGroup().getOpen());
+                                                        intent.putExtra("그룹생성일" ,result.data.book.getGroup().getCreatedDate());
+                                                        startActivity(intent);
+                                                    }
+                                                });
+                                                dlg.setNegativeButton("아니오",null);
+                                                dlg.show();
+                                            }
+                                        });
+                                    }
+
+                                }else{Log.d("연결 테스트", "실패");}
+                            }
+
+                            @Override
+                            public void onFailure(Call<CheckUserIsSigned> call, Throwable t) {
+                                call.cancel();
+                            }
+                        });
+
                     }
 
                 } else {

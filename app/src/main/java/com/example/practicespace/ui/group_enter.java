@@ -265,7 +265,7 @@ public class group_enter extends AppCompatActivity {
                                                         AlertDialog.Builder dlg2 = new AlertDialog.Builder(group_enter.this);
                                                         dlg2.setTitle("인증코드를 입력해주세요.");
                                                         dlg2.setView(confirm);
-                                                        dlg2.setPositiveButton("탈퇴하기", new DialogInterface.OnClickListener() {
+                                                        dlg2.setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                                 if(confirm.getText().toString().equals(code)){
