@@ -1,9 +1,11 @@
 package com.example.practicespace.ui;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -12,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
@@ -21,27 +24,22 @@ import com.example.practicespace.connection.setGroup;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
+
 
 public class add_group extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -55,6 +53,13 @@ public class add_group extends AppCompatActivity {
     private Button submit_group;
     private String uri;
     Intent intent;
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     public String getPath(Uri uri){
         int column=0;
@@ -84,8 +89,7 @@ public class add_group extends AppCompatActivity {
 //        group_HashTag = (EditText) findViewById(R.id.group_HashTag);
         submit_group = (Button) findViewById(R.id.submit_group);
 
-
-
+        verifyStoragePermissions(add_group.this);
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 intent = new Intent(Intent.ACTION_PICK);
@@ -94,9 +98,6 @@ public class add_group extends AppCompatActivity {
 
             }
         });
-
-
-//        Log.d("image test",serveruri);
         submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,7 +106,8 @@ public class add_group extends AppCompatActivity {
                 dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String serveruri = "https://t1.daumcdn.net/cfile/tistory/25203F4A5764A82608";//여기에다가 사진 주소(10메가이하)
+                        String serveruri = "http://5gradekgucapstone.xyz:8080".concat(uri);
+//                                "https://t1.daumcdn.net/cfile/tistory/25203F4A5764A82608";//여기에다가 사진 주소(10메가이하)
                         Call<setGroup> call = apiInterface.saveGroup(
                                 LoginInfo.getInstance().data.token,
                                 group_Name.getText().toString(),
@@ -149,24 +151,23 @@ public class add_group extends AppCompatActivity {
 
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
-
             imageview.setImageURI(selectedImageUri);
-
-//            MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-//            File file = new File(getPath(selectedImageUri));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), getPath(selectedImageUri));
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file","jpg",requestBody);
+            File file = new File(getPath(selectedImageUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse(/*"image/*"*/
+                    getContentResolver().getType(selectedImageUri) /*"multipart/form-data"*/), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file",file.getName(),requestFile);
             Log.d("image test","말좀 들어라32211");
+            Log.d("image test",requestFile.toString());
             Call<SomeResponse> call = apiInterface.saveImage(
                     LoginInfo.getInstance().data.token,
-                    filePart
+                    body
             );
             call.enqueue(new Callback<SomeResponse>() {
                 @Override
                 public void onResponse(Call<SomeResponse> call, Response<SomeResponse> response) {
                     SomeResponse result = response.body();
                     if(response.code() == 200){
-                        uri = result.data.URL;
+                        uri = result.data.url;
                         Log.d("image test",uri);
                     }else{
                         Log.d("image test","말좀 들어라33333");
@@ -176,59 +177,9 @@ public class add_group extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<SomeResponse> call, Throwable t) {
                     Log.d("image test","말좀 들어라3344567");
+                    t.printStackTrace();
                 }
             });
-
-            Log.d("image test","말좀 들어라1");
-//            Call<okhttp3.Response> call = apiInterface.saveImage(LoginInfo.getInstance().data.token,requestBody);
-//            call.enqueue(new Callback<okhttp3.Response>() {
-//                @Override
-//                public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response) {
-//                    okhttp3.Response result = response.body();
-//                    if (response.code() ==200 ){
-//                        uri = result.body().toString();
-//                    }else{
-//                        Log.d("image test","말좀 들어라2");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<okhttp3.Response> call, Throwable t) {
-//                    call.cancel();
-//                }
-//            });
-//===================================================================================================================================
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
-
-//            RequestBody requestBody = new MultipartBody.Part.createFormData("file"
-//            ,getPath(selectedImageUri),requestBody);
-
-//            RequestBody requestBody = new MultipartBody.Builder().
-//                    setType(MultipartBody.FORM)
-//                    .addFormDataPart("file", "THUMBNAIL",
-//                            RequestBody.create(MediaType.parse("image/*"), new File(getPath(selectedImageUri))))
-//                    .build();
-//
-//            Request request = new Request.Builder()
-//                    .url("http://5gradekgucapstone.xyz:8080/")
-//                    .post(requestBody)
-//                    .build();
-//
-////            Call<okhttp3.Response> call = apiInterface.saveImage(LoginInfo.getInstance().data.token,requestBody);
-//            Call call = client.newCall(request);
-//            Response response = null;
-//            try{
-//                response = call.execute();
-//            }
-
-
-//
-//            try {
-//                uri = client.newCall(request).execute().body().string();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
         }
     }
 
@@ -248,13 +199,27 @@ public class add_group extends AppCompatActivity {
         }
     }
 
-//    public static Boolean uploadFile(/*String serverURL*/, File file,ImageView imageview) {
-//        try {
-//
-//
-//        }
-//        catch (Exception ex) {
-//            // Handle the error
-//        }
-//    }
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission1 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        int permission2 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission2 != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+
+        if (permission1 != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
 }

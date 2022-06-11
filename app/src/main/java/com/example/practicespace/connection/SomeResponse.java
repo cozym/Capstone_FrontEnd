@@ -16,6 +16,6 @@ public class SomeResponse extends setGroup{
     public class Data {
         @SerializedName("url")
         @Expose
-        public String URL;
+        public String url;
     }
 }
