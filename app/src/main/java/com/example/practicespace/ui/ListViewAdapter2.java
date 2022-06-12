@@ -81,6 +81,7 @@ public class ListViewAdapter2 extends ArrayAdapter<ListViewItem2>{
         intent.putExtra("닉네임",listViewItem.getNickname());
         intent.putExtra("유저시퀀스",listViewItem.getUserSeq());
         intent.putExtra("유저등급",listViewItem.getAdmin());
+        intent.putExtra("그룹시퀀스",listViewItem.getGroupSeq());
 //        intent.putExtra("회원수",listViewItem.getPeonum());
 //        intent.putExtra("도서수",listViewItem.getBooknum());
 //        intent.putExtra("관리자", listViewItem.getAdmin().getNickname());

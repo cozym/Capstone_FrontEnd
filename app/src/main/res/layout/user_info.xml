@@ -679,7 +679,7 @@
             android:orientation="horizontal"
             android:layout_gravity="center">
             <Button
-                android:id="@+id/button"
+                android:id="@+id/admin_button"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
@@ -698,7 +698,7 @@
                 android:layout_gravity="center"></View>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/resign_button"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
