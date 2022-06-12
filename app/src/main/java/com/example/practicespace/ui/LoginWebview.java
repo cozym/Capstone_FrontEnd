@@ -3,7 +3,6 @@ package com.example.practicespace.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.webkit.WebViewClient;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.practicespace.LocationActivity;
 import com.example.practicespace.R;
 import com.example.practicespace.WebViewActivity;
 
@@ -60,7 +58,7 @@ public class LoginWebview extends AppCompatActivity {
                 e.printStackTrace();
             }
             if(url.contains("google?state=")) {
-                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginBridge.class);
                 startActivity(intent);
             }
         }

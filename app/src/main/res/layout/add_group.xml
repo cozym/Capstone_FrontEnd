@@ -68,6 +68,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicextrabold"
+                android:text="그룹 위치"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:layout_marginBottom="20dp">
+                <EditText
+                    android:id="@+id/group_location"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button4"
+                    android:padding="8dp"
+                    android:hint="그룹의 위치를 입력해주세요."
+                    android:fontFamily="@font/nanumgothic"
+                    ></EditText>
+                <ImageButton
+                    android:id="@+id/address"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button4"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_black"></ImageButton>
+                <ImageButton
+                    android:id="@+id/setMyLocation"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button4"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/camera"></ImageButton>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
                 android:text="그룹 설명"
                 android:textSize="20sp"
                 android:paddingTop="10dp"

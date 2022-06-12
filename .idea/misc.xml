@@ -33,9 +33,12 @@
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/activity_http.xml" value="0.23958333333333334" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/activity_location.xml" value="0.19882246376811594" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/activity_login2.xml" value="0.22780797101449277" />
+        <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/activity_login_bridge.xml" value="0.266304347826087" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/activity_map.xml" value="0.23958333333333334" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/activity_web_view.xml" value="0.23125" />
+        <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/add_book.xml" value="0.2296875" />
+        <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/add_group.xml" value="0.25" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/drawer_navigation_header.xml" value="0.22327898550724637" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/gps_search.xml" value="0.23867753623188406" />
         <entry key="..\:/android-sdk/AndroidStudioProjects/PracticeSpace/app/src/main/res/layout/main1.xml" value="0.22327898550724637" />

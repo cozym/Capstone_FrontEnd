@@ -2,15 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.practicespace">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.User"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.LoginBridge"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -36,8 +40,7 @@
         </activity>
         <activity
             android:name=".ui.LoginWebview"
-            android:exported="true" >
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.Map"
             android:exported="true" />
@@ -46,67 +49,67 @@
             android:exported="true" />
         <activity
             android:name=".WebViewActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".ui.user_info"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.book_info"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.group_info"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.mypage"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.mainList_activity"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.add_group"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.add_book"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.main"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.search"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.mygroup"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.mybook"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.group_main"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
         <activity
             android:name=".ui.group_enter"
-            android:parentActivityName=".ui.mainList_activity"
-            android:exported="true" />
-        <activity android:name=".ui.CaptureAct"
+            android:exported="true"
+            android:parentActivityName=".ui.mainList_activity" />
+        <activity
+            android:name=".ui.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>
