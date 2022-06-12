@@ -29,7 +29,9 @@ import com.example.practicespace.connection.borrowBook;
 import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getBook;
+import com.example.practicespace.connection.getBookLogList;
 import com.example.practicespace.connection.getUserList;
+import com.example.practicespace.connection.returnBook;
 import com.example.practicespace.connection.setBookLog;
 import com.example.practicespace.vo.User;
 
@@ -222,12 +224,43 @@ public class book_info extends AppCompatActivity {
                                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            rental.setText("대여가능");
-                                            rental.setBackgroundResource(R.drawable.rental_o);
-                                            Toast.makeText(book_info.this,"반납이벤트",Toast.LENGTH_SHORT).show();
-                                            Intent intent = getIntent();
-                                            finish();
-                                            startActivity(intent);
+                                            Call<getBookLogList> call = apiInterface.getBookLogList(LoginInfo.getInstance().data.token,result.data.book.getSeq());
+                                            call.enqueue(new Callback<getBookLogList>() {
+                                                @Override
+                                                public void onResponse(Call<getBookLogList> call, Response<getBookLogList> response) {
+                                                    getBookLogList result_log = response.body();
+                                                    if(response.code()==200){
+                                                        Log.d("로그리스트","성공");
+                                                        Log.d("출력", result_log.data.bookLogList.get(result_log.data.bookLogList.size()-1).getUser().getNickname());
+                                                        Call<returnBook> call_return = apiInterface.bookReturn(LoginInfo.getInstance().data.token, result_log.data.bookLogList.get(result_log.data.bookLogList.size()-1).getUser().getUserSeq(), result.data.book.getSeq());
+                                                        call_return.enqueue(new Callback<returnBook>() {
+                                                            @Override
+                                                            public void onResponse(Call<returnBook> call, Response<returnBook> response) {
+                                                                returnBook result_return = response.body();
+                                                                if(response.code()==200){
+                                                                    Log.d("반납처리","성공");
+                                                                }else
+                                                                    Log.d("반납처리","실패 :"+response.code());
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<returnBook> call, Throwable t) {
+
+                                                            }
+                                                        });
+                                                    }else{
+                                                        Log.d("로그리스트","실패 :"+response.code());
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<getBookLogList> call, Throwable t) {
+
+                                                }
+                                            });
+//                                            Intent intent = getIntent();
+//                                            finish();
+//                                            startActivity(intent);
                                         }
                                     });
                                     dlg.setNegativeButton("아니오",null);
