@@ -28,6 +28,12 @@ public class Group {
     @SerializedName("createdDate")
     private String createdDate;
 
+    @SerializedName("latitude")
+    private double latitude;
+
+    @SerializedName("longitude")
+    private double longitude;
+
     public Group() {}
 
     public int getSeq() {return seq;}
@@ -44,4 +50,8 @@ public class Group {
     public String getDescription(){return description;}
 
     public String getCreatedDate(){return createdDate;}
+
+    public double getLatitude(){return latitude;}
+
+    public double getLongitude(){return longitude;}
 }
