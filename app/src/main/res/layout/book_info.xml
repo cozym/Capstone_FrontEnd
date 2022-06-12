@@ -321,7 +321,7 @@
                             android:textSize="18sp"
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
-                            android:text="등록일"
+                            android:text="출판날짜"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/nanumgothic"
                             android:background="#F1F1F1"
@@ -369,7 +369,7 @@
 
             <Button
                 android:id="@+id/rent_button"
-                android:layout_width="350dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
                 android:text="대여하기"
@@ -379,7 +379,18 @@
                 android:layout_marginRight="10dp"
                 android:fontFamily="@font/nanumgothic"
                 android:layout_gravity="center"/>
-
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button2"
+                android:text="삭제하기"
+                android:textSize="20sp"
+                android:textColor="#E12727"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/nanumgothic"
+                android:layout_gravity="center"/>
 
 
         </LinearLayout>

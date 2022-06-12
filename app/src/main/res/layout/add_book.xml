@@ -104,6 +104,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicextrabold"
+                android:text="출판날짜"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/addbook_publishDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button4"
+                android:padding="8dp"
+                android:hint="출판사를 입력해주세요."
+                android:fontFamily="@font/nanumgothic"
+                ></EditText>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicextrabold"
                 android:text="설명"
                 android:textSize="20sp"
                 android:paddingTop="10dp"

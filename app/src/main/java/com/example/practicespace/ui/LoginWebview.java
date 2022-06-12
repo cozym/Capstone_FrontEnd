@@ -28,10 +28,9 @@ public class LoginWebview extends AppCompatActivity {
         setContentView(R.layout.activity_web_view);
 
         webView = (WebView) findViewById(R.id.webview);
-
+        webView.loadUrl("javascript:document.body.style.setProperty(\"color\", \"#776a5f\");");
         webView.setWebViewClient(new YourWebClient());
         webView.getSettings().setUserAgentString(USER_AGENT);
-        webView.loadUrl("javascript:document.body.style.setProperty(\"color\", \"#776a5f\");");
         webView.getSettings().setJavaScriptEnabled(true);   // 자바스크립트 사용
 
         webView.clearCache(true);

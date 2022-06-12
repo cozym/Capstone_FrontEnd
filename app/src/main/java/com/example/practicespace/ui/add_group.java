@@ -1,8 +1,11 @@
 package com.example.practicespace.ui;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Address;
@@ -25,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
@@ -33,6 +37,7 @@ import com.example.practicespace.connection.SomeResponse;
 import com.example.practicespace.connection.setGroup;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -54,12 +59,19 @@ public class add_group extends AppCompatActivity {
     private ImageButton myLocation;
     private EditText group_Description;
     private EditText group_HashTag;
-    private boolean is_open = true;
+    private boolean is_open;
     private Button submit_group;
     private String uri;
     List<Address> list = null;
     LatLng position = null;
     Intent intent;
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     public String getPath(Uri uri){
         int column=0;
@@ -92,8 +104,9 @@ public class add_group extends AppCompatActivity {
         group_Description = (EditText) findViewById(R.id.group_Description);
 //        group_HashTag = (EditText) findViewById(R.id.group_HashTag);
         submit_group = (Button) findViewById(R.id.submit_group);
+//        RadioGroup_isOpen = (RadioGroup)findViewById(R.id.RadioGroup_isOpen);
 
-
+        verifyStoragePermissions(add_group.this);
         imageview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 intent = new Intent(Intent.ACTION_PICK);
@@ -178,35 +191,51 @@ public class add_group extends AppCompatActivity {
 
 
 //        Log.d("image test",serveruri);
-        submit_group.setOnClickListener(new View.OnClickListener() {
+            submit_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serveruri = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEyMTBfMjQz%2FMDAxNjM5MDkzMTI0Mjk2.EEPStsR0cJekbLGH7jSqkvSU9E03cKJGnUezv-ZW6_cg.guvIYPL-NDL6vDJA5SdDkJ2mVExWM-GIrnt4xMK98Owg.PNG.designerjuni%2F%25BC%25BA%25B1%25D5%25B0%25FC%25B4%25EB%25C7%25D0%25B1%25B3%25B7%25CE%25B0%25ED.png&type=a340";//여기에다가 사진 주소(10메가이하)
-                Call<setGroup> call = apiInterface.saveGroup(
-                        LoginInfo.getInstance().data.token,
-                        group_Name.getText().toString(),
-                        is_open,
-                        serveruri,
-                        group_Description.getText().toString(),
-                        position.longitude,
-                        position.latitude
-                );
-                call.enqueue(new Callback<setGroup>() {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(add_group.this);
+                dlg.setTitle("등록 하시겠습니까?");
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<setGroup> call, Response<setGroup> response) {
-                        setGroup result = response.body();
-                        if (response.code() == 200) {
-                            Log.d("test", "setgroup성공");
-                        } else {
-                            Log.d("test", "setgroupt실패");
-                        }
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String serveruri = "http://5gradekgucapstone.xyz:8080".concat(uri);
+//                                "https://t1.daumcdn.net/cfile/tistory/25203F4A5764A82608";//여기에다가 사진 주소(10메가이하)
+                        Call<setGroup> call = apiInterface.saveGroup(
+                                LoginInfo.getInstance().data.token,
+                                group_Name.getText().toString(),
+                                is_open,
+                                serveruri,
+                                group_Description.getText().toString(),
+                                position.longitude,
+                                position.latitude
+                        );
+                        call.enqueue(new Callback<setGroup>() {
+                            @Override
+                            public void onResponse(Call<setGroup> call, Response<setGroup> response) {
+                                setGroup result = response.body();
+                                if (response.code() == 200) {
+                                    Log.d("test", "setgroup성공");
+                                } else {
+                                    Log.d("test", "setgroupt실패");
+                                    Log.d("test",String.valueOf(response.code()));
 
-                    @Override
-                    public void onFailure(Call<setGroup> call, Throwable t) {
-                        call.cancel();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<setGroup> call, Throwable t) {
+                                call.cancel();
+                                t.printStackTrace();
+                            }
+                        });
+                        Toast.makeText(add_group.this,"등록됐습니다.",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     }
                 });
+                dlg.setNegativeButton("아니오",null);
+                dlg.show();
+
             }
         });
 
@@ -218,24 +247,23 @@ public class add_group extends AppCompatActivity {
 
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
-
             imageview.setImageURI(selectedImageUri);
-
-//            MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-//            File file = new File(getPath(selectedImageUri));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), getPath(selectedImageUri));
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file","jpg",requestBody);
+            File file = new File(getPath(selectedImageUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse(/*"image/*"*/
+                    getContentResolver().getType(selectedImageUri) /*"multipart/form-data"*/), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file",file.getName(),requestFile);
             Log.d("image test","말좀 들어라32211");
+            Log.d("image test",requestFile.toString());
             Call<SomeResponse> call = apiInterface.saveImage(
                     LoginInfo.getInstance().data.token,
-                    filePart
+                    body
             );
             call.enqueue(new Callback<SomeResponse>() {
                 @Override
                 public void onResponse(Call<SomeResponse> call, Response<SomeResponse> response) {
                     SomeResponse result = response.body();
                     if(response.code() == 200){
-                        uri = result.data.URL;
+                        uri = result.data.url;
                         Log.d("image test",uri);
                     }else{
                         Log.d("image test","말좀 들어라33333");
@@ -245,85 +273,52 @@ public class add_group extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<SomeResponse> call, Throwable t) {
                     Log.d("image test","말좀 들어라3344567");
+                    t.printStackTrace();
                 }
             });
-
-            Log.d("image test","말좀 들어라1");
-//            Call<okhttp3.Response> call = apiInterface.saveImage(LoginInfo.getInstance().data.token,requestBody);
-//            call.enqueue(new Callback<okhttp3.Response>() {
-//                @Override
-//                public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response) {
-//                    okhttp3.Response result = response.body();
-//                    if (response.code() ==200 ){
-//                        uri = result.body().toString();
-//                    }else{
-//                        Log.d("image test","말좀 들어라2");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<okhttp3.Response> call, Throwable t) {
-//                    call.cancel();
-//                }
-//            });
-//===================================================================================================================================
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
-
-//            RequestBody requestBody = new MultipartBody.Part.createFormData("file"
-//            ,getPath(selectedImageUri),requestBody);
-
-//            RequestBody requestBody = new MultipartBody.Builder().
-//                    setType(MultipartBody.FORM)
-//                    .addFormDataPart("file", "THUMBNAIL",
-//                            RequestBody.create(MediaType.parse("image/*"), new File(getPath(selectedImageUri))))
-//                    .build();
-//
-//            Request request = new Request.Builder()
-//                    .url("http://5gradekgucapstone.xyz:8080/")
-//                    .post(requestBody)
-//                    .build();
-//
-////            Call<okhttp3.Response> call = apiInterface.saveImage(LoginInfo.getInstance().data.token,requestBody);
-//            Call call = client.newCall(request);
-//            Response response = null;
-//            try{
-//                response = call.execute();
-//            }
-
-
-//
-//            try {
-//                uri = client.newCall(request).execute().body().string();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
         }
     }
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
+        boolean checked = ((RadioButton)view).isChecked();
 
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.group_isOpen:
-                is_open = true;
+                if (checked)
+                    is_open = true;
+                Log.d("test","true");
                 break;
             case R.id.group_isClose:
                 if (checked)
                     is_open = false;
+                Log.d("test","false");
                 break;
         }
     }
 
-//    public static Boolean uploadFile(/*String serverURL*/, File file,ImageView imageview) {
-//        try {
-//
-//
-//        }
-//        catch (Exception ex) {
-//            // Handle the error
-//        }
-//    }
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission1 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        int permission2 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission2 != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+
+        if (permission1 != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
 }

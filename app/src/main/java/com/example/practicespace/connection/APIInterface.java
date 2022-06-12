@@ -146,6 +146,12 @@ public interface APIInterface {
             @Header("Authorization") String token,
             @Query("groupSeq") int groupSeq);
 
+    @GET("group/authcode")
+    Call<getAuthCode> getAuthCode(
+        @Header("Authorization") String token,
+        @Query("groupSeq") int groupSeq
+    );
+
     @GET("group/search")
     Call<SearchGroup> searchGroup(
             @Header("Authorization") String token,
@@ -160,6 +166,11 @@ public interface APIInterface {
             @Query("latitude") double latitude,
             @Query("distance") int distance
     );
+
+    @GET("group/signed")
+    Call<CheckUserIsSigned> signedGroup(
+            @Header("Authorization") String token,
+            @Query("groupSeq") int groupSeq );
 
     @GET("group/userlist")
     Call<getUserList> getUserList(
@@ -177,4 +188,11 @@ public interface APIInterface {
             @Header("Authorization") String token,
             @Field("nickname") String nickname);
 
+    @FormUrlEncoded
+    @POST("bookLog")
+    Call<setBookLog> addBookLog(
+            @Header("Authorization") String token,
+            @Field("bookLogStatus") String bookLogStatus,
+            @Field("bookSeq") int bookSeq,
+            @Field("groupSeq") int groupSeq);
 }

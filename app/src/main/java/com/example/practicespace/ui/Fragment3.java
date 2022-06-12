@@ -54,7 +54,12 @@ public class Fragment3 extends Fragment {
                         Log.d("test","getgroup전");
                         ArrayList<ListViewItem2> items = new ArrayList<ListViewItem2>();
                         for(i = 0; i <Users.size(); i++){
-                            items.add(new ListViewItem2(Users.get(i).getEmails(), Users.get(i).getNickname()));
+                            boolean admin = false;
+
+                            if(Users.get(i).getNickname().equals(getAdminName())){
+                                admin=true;
+                            }
+                            items.add(new ListViewItem2(Users.get(i).getEmails(), Users.get(i).getNickname(),admin));
                         }
                         adapter = new ListViewAdapter2(items, view.getContext());
                         listview.setAdapter(adapter);
@@ -95,6 +100,9 @@ public class Fragment3 extends Fragment {
     //멀티스레드 작성끝
     public int getSeq(){
         return getArguments().getInt("groupseq");
+    }
+    public String getAdminName(){
+        return getArguments().getString("adminName");
     }
 
 

@@ -2,6 +2,7 @@ package com.example.practicespace.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,6 +32,8 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
     private FloatingActionButton fab, fab1;
     private Intent secondIntent;
     private int groupseq;
+    private String groupname;
+    private String adminName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,11 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
 
         secondIntent = getIntent();
         groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
-
-
+        groupname = secondIntent.getStringExtra("그룹이름");
+        adminName = secondIntent.getStringExtra("관리자이름");
 
         TextView toolbar_name = (TextView)findViewById(R.id.group_toolbar_name);
-        toolbar_name.setText("공대 전공도서");
+        toolbar_name.setText(groupname);
 
 
         fragment0 = new Fragment2_groupbook();
@@ -57,6 +60,8 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
         //프래그먼트에 그룹시퀀스 전달
         Bundle bundle = new Bundle();
         bundle.putInt("groupseq", groupseq);
+        Log.d("####어드민 이름",adminName);
+        bundle.putString("adminName", adminName);
         fragment0.setArguments(bundle);
         fragment1.setArguments(bundle);
 
