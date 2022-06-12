@@ -110,7 +110,7 @@ public interface APIInterface {
             @Field("isOpen") boolean isOpen,
             @Field("thumbnail") String thumbnail,
             @Field("description") String description,
-            @Field("longtitude") double longtitude,
+            @Field("longitude") double longitude,
             @Field("latitude") double latitude);
 
     @GET("group/{seq}")
@@ -162,7 +162,7 @@ public interface APIInterface {
     Call<SearchGroupByLocation> searchGroupByKeywordAndLocation(
             @Header("Authorization") String token,
             @Query("keyword") String keyword,
-            @Query("longtitude") double longtitude,
+            @Query("longitude") double longitude,
             @Query("latitude") double latitude,
             @Query("distance") int distance);
 

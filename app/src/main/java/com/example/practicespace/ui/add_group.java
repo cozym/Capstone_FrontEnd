@@ -129,12 +129,15 @@ public class add_group extends AppCompatActivity {
                                     Log.d("test", "setgroup성공");
                                 } else {
                                     Log.d("test", "setgroupt실패");
+                                    Log.d("test",String.valueOf(response.code()));
+
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<setGroup> call, Throwable t) {
                                 call.cancel();
+                                t.printStackTrace();
                             }
                         });
                         Toast.makeText(add_group.this,"등록됐습니다.",Toast.LENGTH_SHORT).show();
