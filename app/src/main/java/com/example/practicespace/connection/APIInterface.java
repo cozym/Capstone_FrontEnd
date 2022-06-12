@@ -110,7 +110,7 @@ public interface APIInterface {
             @Field("isOpen") boolean isOpen,
             @Field("thumbnail") String thumbnail,
             @Field("description") String description,
-            @Field("longtitude") double longtitude,
+            @Field("longitude") double longitude,
             @Field("latitude") double latitude);
 
     @GET("group/{seq}")
@@ -135,7 +135,7 @@ public interface APIInterface {
     @POST("group/join")
     Call<joinGroup> join(
             @Header("Authorization") String token,
-            @Field("groupSeq") int groupSeq,
+            @Field("groupSeq") Integer groupSeq,
             @Field("authenticationCode") String authenticationCode);
 
     @GET("group/list")
@@ -162,7 +162,7 @@ public interface APIInterface {
     Call<SearchGroupByLocation> searchGroupByKeywordAndLocation(
             @Header("Authorization") String token,
             @Query("keyword") String keyword,
-            @Query("longtitude") double longtitude,
+            @Query("longitude") double longitude,
             @Query("latitude") double latitude,
             @Query("distance") int distance);
 

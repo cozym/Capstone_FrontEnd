@@ -63,7 +63,6 @@ public class mypage extends AppCompatActivity {
             });
         }else
             Log.d("연결 테스트","실패");
-
         rewrite.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

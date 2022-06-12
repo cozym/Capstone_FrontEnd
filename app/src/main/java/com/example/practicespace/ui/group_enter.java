@@ -30,6 +30,7 @@ import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getAuthCode;
 import com.example.practicespace.connection.getGroup;
+import com.example.practicespace.connection.getUserList;
 import com.example.practicespace.connection.joinGroup;
 import com.example.practicespace.connection.resignGroup;
 import com.example.practicespace.vo.Admin;
@@ -63,7 +64,9 @@ public class group_enter extends AppCompatActivity {
     private Intent secondIntent;
     private ImageView groupimage;
     List<Book> books = new ArrayList<Book>();
+    List<User> users = new ArrayList<User>();
     private int booknum;
+    boolean isopen;
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
     Button btn_enter;
@@ -174,7 +177,8 @@ public class group_enter extends AppCompatActivity {
                         code = result.data.authenticationCode;
                     }
                     else {
-                        Log.d("test","setgroupt실패");
+                        Log.d("test","인증코드 실패");
+                        Log.d("에러코드", String.valueOf(response.code()));
                     }
                 }
 
@@ -213,28 +217,63 @@ public class group_enter extends AppCompatActivity {
                                         Log.d("tewtss1","가입 하자");
                                         final EditText authenticCode = new EditText(group_enter.this);
                                         AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
-                                        dlg.setTitle("가입하시겠습니까?").setMessage(group.getAuthenticationCode());
-                                        dlg.setView(authenticCode);
+                                        dlg.setTitle("가입하시겠습니까?");
                                         dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Toast.makeText(group_enter.this,"가입이벤트",Toast.LENGTH_SHORT).show();
-                                                Call<joinGroup> call5 = apiInterface.join(LoginInfo.getInstance().data.token,
-                                                        groupseq,authenticCode.getText().toString());
-                                                call5.enqueue(new Callback<joinGroup>() {
-                                                    @Override
-                                                    public void onResponse(Call<joinGroup> call, Response<joinGroup> response) {
-                                                        joinGroup result = response.body();
-                                                    }
+                                                if(isopen==true){
+                                                    Call<joinGroup> call5 = apiInterface.join(LoginInfo.getInstance().data.token,
+                                                            groupseq,null);
+                                                    call5.enqueue(new Callback<joinGroup>() {
+                                                        @Override
+                                                        public void onResponse(Call<joinGroup> call, Response<joinGroup> response) {
+                                                            joinGroup result = response.body();
+                                                        }
 
-                                                    @Override
-                                                    public void onFailure(Call<joinGroup> call, Throwable t) {
+                                                        @Override
+                                                        public void onFailure(Call<joinGroup> call, Throwable t) {
 
-                                                    }
-                                                });
-                                                Intent intent = getIntent();
-                                                finish();
-                                                startActivity(intent);
+                                                        }
+                                                    });
+                                                    Intent intent = getIntent();
+                                                    finish();
+                                                    startActivity(intent);
+                                                } else {
+                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(group_enter.this);
+                                                    dlg.setTitle("인증코드를 입력해주세요.");
+                                                    dlg.setView(authenticCode);
+                                                    dlg.setPositiveButton("입력", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                                Call<joinGroup> call5 = apiInterface.join(LoginInfo.getInstance().data.token,
+                                                                        null, authenticCode.getText().toString());
+                                                                Log.d("코드 테스트", authenticCode.getText().toString());
+                                                                call5.enqueue(new Callback<joinGroup>() {
+                                                                    @Override
+                                                                    public void onResponse(Call<joinGroup> call, Response<joinGroup> response) {
+                                                                        joinGroup result = response.body();
+                                                                        Log.d("로그 테스트", String.valueOf(response.code()));
+                                                                        if(response.code()==200){
+                                                                            Intent intent = getIntent();
+                                                                            finish();
+                                                                            startActivity(intent);
+                                                                        }else{
+                                                                        }
+                                                                        Intent intent = getIntent();
+                                                                        finish();
+                                                                        startActivity(intent);
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onFailure(Call<joinGroup> call, Throwable t) {
+
+                                                                    }
+                                                                });
+                                                        }
+                                                    });
+                                                    dlg.setNegativeButton("취소",null);
+                                                    dlg.show();
+                                                }
                                             }
                                         });
                                         dlg.setNegativeButton("아니오",null);
@@ -378,6 +417,28 @@ public class group_enter extends AppCompatActivity {
                     Log.d("연결 테스트", "실패22");
                 }
             });
+            Call<getUserList> call_userlist = apiInterface.getUserList(LoginInfo.getInstance().data.token,groupseq);
+            call_userlist.enqueue(new Callback<getUserList>() {
+                @Override
+                public void onResponse(Call<getUserList> call, Response<getUserList> response) {
+                    getUserList result = response.body();
+                    if(response.code()==200){
+                        Log.d("연결 테스트", "코드까지는 성공");
+                        users = result.data.userList;
+                        group_mem_num = (TextView)findViewById(R.id.group_mem_num);
+                        group_mem_num.setText(String.valueOf(users.size()));
+                        //유저수추가
+                    }
+                    else{
+                        Log.d("연결 테스트", "실패 :"+response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<getUserList> call, Throwable t) {
+
+                }
+            });
 
         }
         protected void init(){
@@ -442,7 +503,7 @@ public class group_enter extends AppCompatActivity {
 
         groupseq = secondIntent.getIntExtra("그룹시퀀스",0);
         group_thumb = secondIntent.getStringExtra("그룹사진");
-
+        isopen = secondIntent.getBooleanExtra("그룹공개",true);
         //멀티스레드 처리
         Sync sync = new Sync();
 

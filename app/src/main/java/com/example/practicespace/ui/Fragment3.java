@@ -59,7 +59,7 @@ public class Fragment3 extends Fragment {
                             if(Users.get(i).getNickname().equals(getAdminName())){
                                 admin=true;
                             }
-                            items.add(new ListViewItem2(Users.get(i).getEmails(), Users.get(i).getNickname(),admin));
+                            items.add(new ListViewItem2(Users.get(i).getEmails(), Users.get(i).getNickname(),admin,Users.get(i).getUserSeq()));
                         }
                         adapter = new ListViewAdapter2(items, view.getContext());
                         listview.setAdapter(adapter);

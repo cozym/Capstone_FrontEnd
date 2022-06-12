@@ -260,6 +260,7 @@ public class book_info extends AppCompatActivity {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         which=i;
+                                                        Log.d("####", String.valueOf(which));
                                                     }
                                                 });
                                                 dlg.setTitle("누구한테 대여 하시겠습니까?");
@@ -267,32 +268,15 @@ public class book_info extends AppCompatActivity {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         Toast.makeText(book_info.this,Users.get(which).getNickname(),Toast.LENGTH_SHORT).show();
-                                                        Call<borrowBook> call = apiInterface.borrow(LoginInfo.getInstance().data.token, Users.get(i).getUserSeq(),result.data.book.getSeq());
+                                                        Call<borrowBook> call = apiInterface.borrow(LoginInfo.getInstance().data.token, Users.get(which).getUserSeq(),result.data.book.getSeq());
                                                         call.enqueue(new Callback<borrowBook>() {
                                                             @Override
                                                             public void onResponse(Call<borrowBook> call, Response<borrowBook> response) {
                                                                 borrowBook result3 = response.body();
-                                                                if(response.code()==200){
-                                                                    Log.d("버로우이벤트","성공");
-                                                                    Call<setBookLog> call2 = apiInterface.addBookLog(LoginInfo.getInstance().data.token,"BORROW",result.data.book.getSeq(),Users.get(which).getUserSeq());
-                                                                    call2.enqueue(new Callback<setBookLog>() {
-                                                                        @Override
-                                                                        public void onResponse(Call<setBookLog> call, Response<setBookLog> response) {
-                                                                            setBookLog result4 = response.body();
-                                                                            if(response.code()==200){
-                                                                                Log.d("로그이벤트","성공");
-                                                                            }else{
-                                                                                Log.d("로그이벤트","실패");
-                                                                            }
-                                                                        }
-
-                                                                        @Override
-                                                                        public void onFailure(Call<setBookLog> call, Throwable t) {
-
-                                                                        }
-                                                                    });
+                                                                if(response.code()==200) {
+                                                                    Log.d("버로우이벤트", "성공");
                                                                 }else{
-                                                                    Log.d("버로우 이벤트", "실패");
+                                                                    Log.d("버로우이벤트", "실패");
                                                                 }
                                                             }
 
