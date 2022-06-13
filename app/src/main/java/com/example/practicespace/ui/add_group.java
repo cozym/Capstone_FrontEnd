@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -54,7 +55,7 @@ public class add_group extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE=200;
     private ImageView imageview;
     private EditText group_Name;
-    private EditText group_Location;
+    private TextView group_Location;
     private ImageButton address;
     private ImageButton myLocation;
     private EditText group_Description;
@@ -98,9 +99,8 @@ public class add_group extends AppCompatActivity {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         imageview = (ImageView) findViewById(R.id.group_thumbnail);
         group_Name = (EditText) findViewById(R.id.group_Name);
-        group_Location = (EditText) findViewById(R.id.group_location);
+        group_Location = (TextView) findViewById(R.id.group_location);
         address = (ImageButton) findViewById(R.id.address);
-        myLocation = (ImageButton) findViewById(R.id.setMyLocation);
         group_Description = (EditText) findViewById(R.id.group_Description);
 //        group_HashTag = (EditText) findViewById(R.id.group_HashTag);
         submit_group = (Button) findViewById(R.id.submit_group);
@@ -159,35 +159,6 @@ public class add_group extends AppCompatActivity {
         });
 
 
-        // 내 위치를 통한 그룹 위도경도 설정
-        myLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                    if(location != null) {
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-                        LatLng curPoint = new LatLng(latitude, longitude);
-                        System.out.println(latitude);
-                        System.out.println(longitude);
-                    }
-                    else
-                        Toast.makeText(getApplicationContext(), "내 위치 불러오기 실패", Toast.LENGTH_SHORT).show();
-
-                    //GPSListener gpsListener = new GPSListener();
-                    long minTime = 10000;
-                    float minDistance = 0;
-
-                    //manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
-                    //Toast.makeText(getApplicationContext(), "나의 위치 요청", Toast.LENGTH_SHORT).show();
-
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
 
 //        Log.d("image test",serveruri);

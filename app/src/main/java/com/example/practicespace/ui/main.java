@@ -28,7 +28,7 @@ import retrofit2.Response;
 
 public class main extends AppCompatActivity{
 
-    private Button btn_toSearch, btn_toMainList, btn_toMyGroup, btn_toMyBook, btn_toGPS;
+    private Button btn_toSearch, btn_toMainList, btn_toMyGroup, btn_toMyBook, btn_toGPS, btn_toMypage;
     private long backKeyPressedTime = 0;
     private Toast toast;
 
@@ -108,6 +108,15 @@ public class main extends AppCompatActivity{
             public  void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(), Map.class);
                 startActivity(intent);
+            }
+        });
+
+        btn_toMypage=findViewById(R.id.to_mypage);
+        btn_toMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent4 = new Intent(getApplicationContext(), mypage.class);
+                startActivity(intent4);
             }
         });
 
