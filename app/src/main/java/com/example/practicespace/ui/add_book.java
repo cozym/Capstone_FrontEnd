@@ -55,6 +55,7 @@ public class add_book extends AppCompatActivity {
     private EditText addbook_description;
     private Button addbook_category;
     private String genreString;
+    private String genrenum;
     private Button addbook_button;
     private Intent secondIntent;
     private int groupseq;
@@ -134,7 +135,7 @@ public class add_book extends AppCompatActivity {
                                 serveruri,
                                 addbook_publishDate.getText().toString(),
                                 addbook_description.getText().toString(),
-                                genreString,
+                                genrenum,
                                 groupseq
                         );
                         call.enqueue(new Callback<setBook>() {
@@ -188,42 +189,52 @@ public class add_book extends AppCompatActivity {
                     case 0:
                         genre.setText("컴퓨터과학");
                         genreString="컴퓨터과학";
+                        genrenum="0";
                         break;
                     case 1:
                         genre.setText("철학");
                         genreString="철학";
+                        genrenum="1";
                         break;
                     case 2:
                         genre.setText("종교");
                         genreString="종교";
+                        genrenum="2";
                         break;
                     case 3:
                         genre.setText("사회과학");
                         genreString="사회과학";
+                        genrenum="3";
                         break;
                     case 4:
                         genre.setText("언어");
                         genreString="언어";
+                        genrenum="4";
                         break;
                     case 5:
                         genre.setText("과학");
                         genreString="과학";
+                        genrenum="5";
                         break;
                     case 6:
                         genre.setText("기술");
                         genreString="기술";
+                        genrenum="6";
                         break;
                     case 7:
                         genre.setText("예술");
                         genreString="예술";
+                        genrenum="7";
                         break;
                     case 8:
                         genre.setText("문학");
                         genreString="문학";
+                        genrenum="8";
                         break;
                     case 9:
                         genre.setText("역사");
                         genreString="역사";
+                        genrenum="9";
                         break;
                 }
             }

@@ -51,6 +51,7 @@ public class book_info extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     TextView title, author, rental, description,owngroup, ownner, ISBN, category, publisher, publishDate;
     ImageView bookImage;
+    String categorynum;
     String book_thumb;
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
@@ -149,7 +150,39 @@ public class book_info extends AppCompatActivity {
         ISBN =(TextView) findViewById(R.id.book_ISBN);
         ISBN.setText(secondIntent.getStringExtra("ISBN"));
         category =(TextView) findViewById(R.id.book_category);
-        category.setText(secondIntent.getStringExtra("카테고리"));
+        categorynum =secondIntent.getStringExtra("카테고리");
+        switch (categorynum){
+            case("GEN"):
+                category.setText("컴퓨터과학");
+                break;
+            case("PNP"):
+                category.setText("철학");
+                break;
+            case("REL"):
+                category.setText("종교");
+                break;
+            case("SOS"):
+                category.setText("사회과학");
+                break;
+            case("LAN"):
+                category.setText("언어");
+                break;
+            case("SCI"):
+                category.setText("과학");
+                break;
+            case("TEC"):
+                category.setText("기술");
+                break;
+            case("ANR"):
+                category.setText("예술");
+                break;
+            case("LIT"):
+                category.setText("문학");
+                break;
+            case("HNG"):
+                category.setText("역사");
+                break;
+        }
         publisher =(TextView) findViewById(R.id.book_publisher);
         publisher.setText(secondIntent.getStringExtra("출판사"));
         publishDate =(TextView) findViewById(R.id.book_date);
