@@ -163,8 +163,7 @@ public interface APIInterface {
             @Header("Authorization") String token,
             @Query("keyword") String keyword,
             @Query("longitude") double longitude,
-            @Query("latitude") double latitude,
-            @Query("distance") int distance
+            @Query("latitude") double latitude
     );
 
     @GET("group/signed")

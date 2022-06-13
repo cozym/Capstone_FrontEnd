@@ -71,7 +71,7 @@
         android:layout_height="200dp">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/searchedGroupName"
             android:layout_width="100dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -98,7 +98,7 @@
 
 
         <TextView
-            android:id="@+id/tv_slideOffset"
+            android:id="@+id/searchedGroupDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

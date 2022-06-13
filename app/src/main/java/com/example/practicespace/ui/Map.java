@@ -2,6 +2,7 @@ package com.example.practicespace.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -11,7 +12,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +51,11 @@ public class Map extends AppCompatActivity {
     private UiSettings uiSettings;
     SlidingUpPanelLayout slidingUpPanelLayout;
     LatLng myPosition = null;
-    List<Group> groups = new ArrayList<Group>();
+    List<Group> groups = null;
+    private TextView searchedGroupName;
+    private TextView searchedGroupDescription;
+    private Button toGroupInfo;
+    int groupPointer=0;
 
 
     @Override
@@ -61,6 +68,9 @@ public class Map extends AppCompatActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        searchedGroupName = (TextView) findViewById(R.id.searchedGroupName);
+        searchedGroupDescription = (TextView) findViewById(R.id.searchedGroupDescription);
+        toGroupInfo = (Button) findViewById(R.id.to_groupinfo);
 
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.main_frame);
         EditText eText2 = (EditText) findViewById(R.id.MapSearch);
@@ -71,11 +81,14 @@ public class Map extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    groups = null;
+                    groups = new ArrayList<Group>();
                     String keyword = eText2.getText().toString();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(eText2.getWindowToken(), 0);
                     Log.d("검색키워드",eText2.getText().toString());
-                    getGroupWithBook(keyword);
+                    if(!keyword.equals(""))
+                        getGroupWithBook(keyword);
                     startLocationService();
                     return true;
                 }
@@ -115,12 +128,6 @@ public class Map extends AppCompatActivity {
                         Log.d("2222","2222");
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 15));
                     }
-                    //GPSListener gpsListener = new GPSListener();
-                    long minTime = 10000;
-                    float minDistance = 0;
-
-                    //manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
-                    //Toast.makeText(getApplicationContext(), "나의 위치 요청", Toast.LENGTH_SHORT).show();
 
                 } catch (SecurityException e) {
                     e.printStackTrace();
@@ -135,12 +142,27 @@ public class Map extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //그룹 바로가기
+        toGroupInfo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public  void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), group_enter.class);
+                intent.putExtra("그룹시퀀스",groups.get(groupPointer).getSeq());
+                intent.putExtra("그룹사진",groups.get(groupPointer).getThumbnail());
+                intent.putExtra("그룹이름",groups.get(groupPointer).getName());
+                intent.putExtra("그룹공개",groups.get(groupPointer).getOpen());
+                intent.putExtra("그룹설명",groups.get(groupPointer).getDescription());
+                //intent.putExtra("회원수",groups.get(i).);
+                intent.putExtra("그룹생성일",groups.get(groupPointer).getCreatedDate().substring(0,10));
+                startActivity(intent);
+            }
+        });
 
     }
 
     // 검색한 책을 보유한 그룹들 가져오기
     public void getGroupWithBook(String keyword) {
-        int distance = 300;
+        //int distance = 500;
         Log.d("3333","3333");
         Log.d("위도경도",String.valueOf(myPosition.longitude)+String.valueOf(myPosition.latitude)+keyword);
         // 위치기반 책 검색 api
@@ -148,8 +170,7 @@ public class Map extends AppCompatActivity {
                 LoginInfo.getInstance().data.token,
                 keyword,
                 myPosition.longitude,
-                myPosition.latitude,
-                distance
+                myPosition.latitude
         );
         Log.d("4444","4444");
         call.enqueue(new Callback<SearchGroup>() {
@@ -215,24 +236,30 @@ public class Map extends AppCompatActivity {
         private void showCurrentLocation(Double latitude, Double longitude) {
             LatLng curPoint = new LatLng(latitude, longitude);
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 15));
-
+            List<Marker> markers = null;
             // 검색한 그룹들 마커로 표시
-            for(int i = 0; i <groups.size(); i++) {
-                //showMyLocationMarker(groups.get(i).getDescription());
+            if(groups.size() != 0) {
+                for (int i = 0; i < groups.size(); i++) {
+                    Log.d("sssss", groups.get(i).getName());
+                    showMyLocationMarker(new LatLng(groups.get(i).getLatitude(), groups.get(i).getLongitude()));
+                }
             }
-            showMyLocationMarker(new LatLng(37.2970, 127.0312));
-            showMyLocationMarker(new LatLng(37.3012, 127.0388));
-            showMyLocationMarker(new LatLng(37.3033, 127.0346));
+//            showMyLocationMarker(new LatLng(37.2970, 127.0312));
+//            showMyLocationMarker(new LatLng(37.3012, 127.0388));
+//            showMyLocationMarker(new LatLng(37.3033, 127.0346));
         }
 
         //마커 설정
         private void showMyLocationMarker(LatLng curPoint) {
             //if (myLocationMarker == null) {
+            List<Marker> markers = null;
             myLocationMarker = new MarkerOptions();
             myLocationMarker.position(curPoint);
             myLocationMarker.title("Seleted");
+            Marker marker = map.addMarker(myLocationMarker);
             //myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
-            map.addMarker(myLocationMarker);
+//            map.addMarker(myLocationMarker);
+//            markers.add(marker);
             map.setOnMarkerClickListener(markerClickListener);
             //} else {
             //    myLocationMarker.position(curPoint);
@@ -254,8 +281,18 @@ public class Map extends AppCompatActivity {
     GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
-            String markerId = marker.getId();
+            List<Marker> markers = null;
             LatLng location = marker.getPosition();
+            //int i = Character.getNumericValue(markerId.charAt(1));
+            Log.d("마커 위치", String.valueOf(marker.getPosition()));
+
+            for(int j = 0; j < groups.size(); j++) {
+                if(groups.get(j).getLatitude()==location.latitude && groups.get(j).getLongitude()==location.longitude) {
+                    searchedGroupName.setText(groups.get(j).getName());
+                    searchedGroupDescription.setText(groups.get(j).getDescription());
+                    groupPointer = j;
+                }
+            }
 
             slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             slidingUpPanelLayout.setTouchEnabled(false);
