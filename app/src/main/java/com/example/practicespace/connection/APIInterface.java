@@ -201,4 +201,15 @@ public interface APIInterface {
             @Field("bookLogStatus") String bookLogStatus,
             @Field("bookSeq") int bookSeq,
             @Field("groupSeq") int groupSeq);
+
+    @GET("bookLog/bookLog/{bookSeq}")
+    Call<getBookLogList> getBookLogList(
+            @Header("Authorization") String token,
+            @Path("bookSeq") int bookSeq
+    );
+
+    @GET("bookLog/myBookLog")
+    Call<getMyBookLogList> getMyBookLogList(
+            @Header("Authorization") String token
+    );
 }

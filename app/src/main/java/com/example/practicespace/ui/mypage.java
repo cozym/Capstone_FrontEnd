@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +22,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.getMyBookLogList;
 import com.example.practicespace.connection.getUser;
 import com.example.practicespace.connection.modNickname;
+import com.example.practicespace.vo.Book;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,5 +103,49 @@ public class mypage extends AppCompatActivity {
             }
         });
 
+        Call<getMyBookLogList> call = apiInterface.getMyBookLogList(LoginInfo.getInstance().data.token);
+        call.enqueue(new Callback<getMyBookLogList>() {
+            @Override
+            public void onResponse(Call<getMyBookLogList> call, Response<getMyBookLogList> response) {
+                getMyBookLogList result = response.body();
+                if(response.code()==200){
+                    TableLayout tableLayout = (TableLayout) findViewById(R.id.mypage_log);
+                    Log.d("로그 불러오기", "성공");
+                    for(int i=0; i<result.data.bookLogList.size();i++){
+                        TableRow tableRow = new TableRow(mypage.this);
+                        tableRow.setLayoutParams(new TableRow.LayoutParams(
+                                TableRow.LayoutParams.MATCH_PARENT,
+                                TableRow.LayoutParams.MATCH_PARENT));
+                        TextView book_name = new TextView(mypage.this);
+                        book_name.setText(result.data.bookLogList.get(i).getBook().getTitle());
+                        book_name.setBackgroundColor(Color.parseColor("#F1F1F1"));
+                        book_name.setTextSize(18);
+                        book_name.setHeight(90);
+                        book_name.setGravity(Gravity.CENTER);
+                        tableRow.addView(book_name);
+                        TextView createdTime = new TextView(mypage.this);
+                        createdTime.setText(result.data.bookLogList.get(i).getCreatedTime().substring(0,10));
+                        createdTime.setBackgroundColor(Color.parseColor("#ffffff"));
+                        createdTime.setTextSize(18);
+                        tableRow.addView(createdTime);
+                        TextView lastModifiedTime = new TextView(mypage.this);
+                        if(result.data.bookLogList.get(i).getBookLogStatus().equals("RETURN"))
+                            lastModifiedTime.setText(result.data.bookLogList.get(i).getLastModifiedTime().substring(0,10));
+                        lastModifiedTime.setBackgroundColor(Color.parseColor("#ffffff"));
+                        lastModifiedTime.setTextSize(18);
+                        tableRow.addView(lastModifiedTime);
+
+                        tableLayout.addView(tableRow);
+                    }
+                }else{
+                    Log.d("로그 불러오기", "실패 : "+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getMyBookLogList> call, Throwable t) {
+
+            }
+        });
     }
 }
