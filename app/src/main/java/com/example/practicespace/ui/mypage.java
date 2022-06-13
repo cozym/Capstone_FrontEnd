@@ -27,9 +27,12 @@ import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.getMyBookLogList;
 import com.example.practicespace.connection.getUser;
 import com.example.practicespace.connection.modNickname;
+import com.example.practicespace.connection.myBookList;
 import com.example.practicespace.vo.Book;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +54,8 @@ public class mypage extends AppCompatActivity {
         TextView nickname = (TextView)findViewById(R.id.nickname);
         final TextView email = (TextView)findViewById(R.id.email);
         TextView name = (TextView)findViewById(R.id.name);
+        TextView signed_book = (TextView)findViewById(R.id.signed_book);
+        TextView borrowed_book = (TextView)findViewById(R.id.borrowed_book);
 
         Button rewrite = findViewById(R.id.nick_rewrite);
 
@@ -70,6 +75,53 @@ public class mypage extends AppCompatActivity {
 
                 }
             });
+            Call<myBookList> MY_BOOK = apiInterface.getMyBookList(
+                    LoginInfo.getInstance().data.token,null,null);
+            MY_BOOK.enqueue(new Callback<myBookList>() {
+                @Override
+                public void onResponse(Call<myBookList> call, Response<myBookList> response) {
+                    myBookList mb = response.body();
+                    if(response.code() == 200){
+                        Log.d("연결 테스트","성공");
+                        signed_book.setText(String.valueOf(mb.data.books.size()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<myBookList> call, Throwable t) {
+                    t.printStackTrace();
+                    Log.d("연결 테스트","실패");
+                }
+            });
+
+            Call<getMyBookLogList> BORROW_BOOK = apiInterface.getMyBookLogList(LoginInfo.getInstance().data.token);
+            BORROW_BOOK.enqueue(new Callback<getMyBookLogList>() {
+                @Override
+                public void onResponse(Call<getMyBookLogList> call, Response<getMyBookLogList> response) {
+                    getMyBookLogList result = response.body();
+                    if(response.code()==200){
+                        Log.d("내도서로그"," 성공");
+                        int count = 0;
+                        for(int i=0; i<result.data.bookLogList.size();i++){
+                            if(result.data.bookLogList.get(i).getBookLogStatus().equals("BORROW")){
+                                count++;
+                            }
+                        }
+                        Log.d("내도서로그"," 성공?? :"+response.code());
+                        Log.d("내도서로그",String.valueOf(count));
+                        borrowed_book.setText(String.valueOf(count));
+                    }else{
+                        Log.d("내도서로그"," 실패 :"+response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<getMyBookLogList> call, Throwable t) {
+                t.printStackTrace();
+                }
+            });
+
+
         }else
             Log.d("연결 테스트","실패");
         rewrite.setOnClickListener(new View.OnClickListener(){
@@ -115,6 +167,7 @@ public class mypage extends AppCompatActivity {
                 if(response.code()==200){
                     TableLayout tableLayout = (TableLayout) findViewById(R.id.mypage_log);
                     Log.d("로그 불러오기", "성공");
+                    Log.d("로그 불러오기", String.valueOf(result.data.bookLogList.size()));
                     for(int i=0; i<result.data.bookLogList.size();i++){
                         TableRow tableRow = new TableRow(mypage.this);
                         tableRow.setLayoutParams(new TableRow.LayoutParams(

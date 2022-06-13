@@ -64,8 +64,8 @@ public interface APIInterface {
     @GET("book/mybook")
     Call<myBookList> getMyBookList(
             @Header("Authorization") String token,
-            @Query("start") int start,
-            @Query("display") int display);
+            @Query("start") Integer start,
+            @Query("display") Integer display);
 
     @FormUrlEncoded
     @PATCH("book/return")
