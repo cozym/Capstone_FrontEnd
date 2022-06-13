@@ -16,6 +16,7 @@ import com.example.practicespace.R;
 import com.example.practicespace.connection.APIClient;
 import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.authorizeAdmin;
+import com.example.practicespace.connection.blockUser;
 import com.example.practicespace.connection.resignGroup;
 
 import retrofit2.Call;
@@ -70,6 +71,7 @@ public class user_info extends AppCompatActivity {
             admin_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(),"관리자로 임명되었습니다.",Toast.LENGTH_LONG).show();
                     Call<authorizeAdmin > call = apiInterface.groupAuthorize(
                             LoginInfo.getInstance().data.token,
                             groupSeq,userSeq
@@ -85,6 +87,32 @@ public class user_info extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<authorizeAdmin> call, Throwable t) {
+                            Log.d("test","패치 실패");
+                            t.printStackTrace();
+                        }
+                    });
+                }
+            });
+
+            resign_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(),"강퇴 합니다.",Toast.LENGTH_LONG).show();
+                    Call<blockUser> call2 = apiInterface.blockGroupUser(
+                            LoginInfo.getInstance().data.token,
+                            groupSeq,userSeq
+                    );
+                    call2.enqueue(new Callback<blockUser>() {
+                        @Override
+                        public void onResponse(Call<blockUser> call, Response<blockUser> response) {
+                            blockUser result = response.body();
+                            if(response.code() == 200){
+                                Log.d("test","패치 성공");
+                            }else{Log.d("test","패치 실패" + response.code());}
+                        }
+
+                        @Override
+                        public void onFailure(Call<blockUser> call, Throwable t) {
                             Log.d("test","패치 실패");
                             t.printStackTrace();
                         }
