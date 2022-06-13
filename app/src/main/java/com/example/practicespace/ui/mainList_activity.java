@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -32,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class mainList_activity extends AppCompatActivity implements View.OnClickListener{
-
+    int position;
     Fragment fragment0, fragment1;
     private Button btn_toSearch;
     private Button btn_crew;
@@ -92,7 +93,7 @@ public class mainList_activity extends AppCompatActivity implements View.OnClick
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                int position = tab.getPosition();
+                position = tab.getPosition();
 
                 Fragment selected = null;
                 if(position == 0){
@@ -134,6 +135,20 @@ public class mainList_activity extends AppCompatActivity implements View.OnClick
 
     }
 
+    public void onResume() {
+        super.onResume();
+        getSupportFragmentManager().beginTransaction().detach(fragment0).commit();
+        getSupportFragmentManager().beginTransaction().detach(fragment1).commit();
+
+        fragment0 = new Fragment1();
+        fragment1 = new Fragment2();
+
+        if(position==0){
+            getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+        }else if(position==1){
+            getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+        }
+    }
 
     ////우측 상단 검색 메뉴 추가
     public boolean onCreateOptionsMenu(Menu menu) {   

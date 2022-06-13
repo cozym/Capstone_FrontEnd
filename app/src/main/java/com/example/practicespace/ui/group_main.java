@@ -26,7 +26,7 @@ import com.example.practicespace.R;
 public class group_main extends AppCompatActivity implements View.OnClickListener{
 
     Fragment fragment0,fragment1;
-
+    int position;
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1;
@@ -70,7 +70,7 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                int position = tab.getPosition();
+                position = tab.getPosition();
 
                 Fragment selected = null;
                 if(position == 0){
@@ -108,6 +108,28 @@ public class group_main extends AppCompatActivity implements View.OnClickListene
 
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        getSupportFragmentManager().beginTransaction().detach(fragment0).commit();
+        getSupportFragmentManager().beginTransaction().detach(fragment1).commit();
+
+        fragment0 = new Fragment2_groupbook();
+        fragment1 = new Fragment3();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("groupseq", groupseq);
+        Log.d("####어드민 이름",adminName);
+        bundle.putString("adminName", adminName);
+        fragment0.setArguments(bundle);
+        fragment1.setArguments(bundle);
+
+        if (position == 0) {
+            getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+        } else if (position == 1) {
+            getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+        }
     }
 
 

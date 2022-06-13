@@ -183,6 +183,10 @@ public interface APIInterface {
             @Header("Authorization") String token,
             @Query("groupSeq") int groupSeq );
 
+    @GET("group/myGroup")
+    Call<myGroupList> getMyGroupList(
+            @Header("Authorization") String token
+    );
 
     @GET("user/info")
     Call<getUser> getUserInfo(
