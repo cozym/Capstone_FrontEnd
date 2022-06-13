@@ -129,6 +129,16 @@ public class mygroup extends AppCompatActivity{
 
 
     }
+
+    public void onResume() {
+        super.onResume();
+        getSupportFragmentManager().beginTransaction().detach(fragment0).commit();
+
+        fragment0 = new Fragment1_myGroup();
+
+            getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+    }
+
      //뒤로가기 누르면 메뉴 다시 사라짐
     @Override
     public void onBackPressed() {
