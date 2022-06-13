@@ -52,10 +52,11 @@ public class Map extends AppCompatActivity {
     SlidingUpPanelLayout slidingUpPanelLayout;
     LatLng myPosition = null;
     List<Group> groups = null;
+    List<Marker> markers = new ArrayList<Marker>();
     private TextView searchedGroupName;
     private TextView searchedGroupDescription;
     private Button toGroupInfo;
-    int groupPointer=0;
+    int groupPointer;
 
 
     @Override
@@ -87,6 +88,10 @@ public class Map extends AppCompatActivity {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(eText2.getWindowToken(), 0);
                     Log.d("검색키워드",eText2.getText().toString());
+                    for(int m = 0; m < markers.size(); m++) {
+                        markers.get(m).remove();
+                    }
+                    markers.clear();
                     if(!keyword.equals(""))
                         getGroupWithBook(keyword);
                     startLocationService();
@@ -252,14 +257,11 @@ public class Map extends AppCompatActivity {
         //마커 설정
         private void showMyLocationMarker(LatLng curPoint) {
             //if (myLocationMarker == null) {
-            List<Marker> markers = null;
             myLocationMarker = new MarkerOptions();
             myLocationMarker.position(curPoint);
             myLocationMarker.title("Seleted");
             Marker marker = map.addMarker(myLocationMarker);
-            //myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
-//            map.addMarker(myLocationMarker);
-//            markers.add(marker);
+            markers.add(marker);
             map.setOnMarkerClickListener(markerClickListener);
             //} else {
             //    myLocationMarker.position(curPoint);
