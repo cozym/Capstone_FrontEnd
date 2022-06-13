@@ -64,8 +64,8 @@ public interface APIInterface {
     @GET("book/mybook")
     Call<myBookList> getMyBookList(
             @Header("Authorization") String token,
-            @Query("start") int start,
-            @Query("display") int display);
+            @Query("start") Integer start,
+            @Query("display") Integer display);
 
     @FormUrlEncoded
     @PATCH("book/return")
@@ -131,11 +131,17 @@ public interface APIInterface {
             @Field("groupSeq") int groupSeq,
             @Field("userSeq") int userSeq);
 
+    @DELETE("group/block")
+    Call<blockUser> blockGroupUser(
+            @Header("Authorization") String token,
+            @Query("groupSeq") int groupSeq,
+            @Query("blockUserSeq") int blockUserSeq);
+
     @FormUrlEncoded
     @POST("group/join")
     Call<joinGroup> join(
             @Header("Authorization") String token,
-            @Field("groupSeq") int groupSeq,
+            @Field("groupSeq") Integer groupSeq,
             @Field("authenticationCode") String authenticationCode);
 
     @GET("group/list")
@@ -176,6 +182,10 @@ public interface APIInterface {
             @Header("Authorization") String token,
             @Query("groupSeq") int groupSeq );
 
+    @GET("group/myGroup")
+    Call<myGroupList> getMyGroupList(
+            @Header("Authorization") String token
+    );
 
     @GET("user/info")
     Call<getUser> getUserInfo(
@@ -194,4 +204,15 @@ public interface APIInterface {
             @Field("bookLogStatus") String bookLogStatus,
             @Field("bookSeq") int bookSeq,
             @Field("groupSeq") int groupSeq);
+
+    @GET("bookLog/bookLog/{bookSeq}")
+    Call<getBookLogList> getBookLogList(
+            @Header("Authorization") String token,
+            @Path("bookSeq") int bookSeq
+    );
+
+    @GET("bookLog/myBookLog")
+    Call<getMyBookLogList> getMyBookLogList(
+            @Header("Authorization") String token
+    );
 }

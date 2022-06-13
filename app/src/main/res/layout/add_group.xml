@@ -78,16 +78,16 @@
                 android:layout_height="wrap_content"
                 android:weightSum="1"
                 android:layout_marginBottom="20dp">
-                <EditText
+                <TextView
                     android:id="@+id/group_location"
                     android:layout_width="0dp"
-                    android:layout_weight="0.8"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:layout_height="35dp"
                     android:background="@drawable/button4"
                     android:padding="8dp"
                     android:hint="그룹의 위치를 입력해주세요."
                     android:fontFamily="@font/nanumgothic"
-                    ></EditText>
+                    ></TextView>
                 <ImageButton
                     android:id="@+id/address"
                     android:layout_width="0dp"
@@ -97,15 +97,6 @@
                     android:padding="5dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/search_black"></ImageButton>
-                <ImageButton
-                    android:id="@+id/setMyLocation"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button4"
-                    android:padding="5dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/camera"></ImageButton>
 
             </LinearLayout>
             <TextView

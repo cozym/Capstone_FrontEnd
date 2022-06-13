@@ -11,8 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.practicespace.R;
+import com.example.practicespace.connection.APIClient;
+import com.example.practicespace.connection.APIInterface;
+import com.example.practicespace.connection.getGroup;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListViewAdapter2 extends ArrayAdapter<ListViewItem2>{
     //각 리스트에 들어갈 아이템들을 가지고 있는 리스트 배열
@@ -21,7 +28,9 @@ public class ListViewAdapter2 extends ArrayAdapter<ListViewItem2>{
     //position에 위치한 데이터를 화면에 출력하는데 사용될 view를 리턴, : 필수 구현
     //view는 넣을 곳 즉, viewgroup에 들어가 view 생성
     //viewgroup은 내가 보고 있는 화면 즉, list
-
+    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+    String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
+    String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
     //View lookup cache
     private static class ViewHolder{
         ImageView ICon;
@@ -76,14 +85,34 @@ public class ListViewAdapter2 extends ArrayAdapter<ListViewItem2>{
         }
         //클릭이벤트
         LinearLayout cmdArea = (LinearLayout)convertView.findViewById(R.id.group_click);
-        Intent intent = new Intent(getContext(), user_info.class);
+        Call<getGroup> call = apiInterface.getGroupSeq(LoginInfo.getInstance().data.token, listViewItem.getGroupSeq());
+        call.enqueue(new Callback<getGroup>() {
+            @Override
+            public void onResponse(Call<getGroup> call, Response<getGroup> response) {
+                getGroup result = response.body();
+                if(response.code()==200){
+                    if(user_seq.equals(String.valueOf(result.data.group.getAdmin().getSeq()))) {
+                        Intent intent = new Intent(getContext(), user_info.class);
 //        intent.putExtra("그룹사진",listViewItem.getIcon());
-        intent.putExtra("닉네임",listViewItem.getNickname());
+                        intent.putExtra("닉네임", listViewItem.getNickname());
+                        intent.putExtra("유저시퀀스", listViewItem.getUserSeq());
+                        intent.putExtra("유저등급", listViewItem.getAdmin());
+                        intent.putExtra("그룹시퀀스", listViewItem.getGroupSeq());
 //        intent.putExtra("회원수",listViewItem.getPeonum());
 //        intent.putExtra("도서수",listViewItem.getBooknum());
 //        intent.putExtra("관리자", listViewItem.getAdmin().getNickname());
-        cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
+                        cmdArea.setOnClickListener(v -> getContext().startActivity(intent));
+                    }
+                }else{
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getGroup> call, Throwable t) {
+
+            }
+        });
         return convertView;
     }
 }

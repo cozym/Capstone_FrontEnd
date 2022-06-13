@@ -29,7 +29,9 @@ import com.example.practicespace.connection.borrowBook;
 import com.example.practicespace.connection.deleteBook;
 import com.example.practicespace.connection.deleteGroup;
 import com.example.practicespace.connection.getBook;
+import com.example.practicespace.connection.getBookLogList;
 import com.example.practicespace.connection.getUserList;
+import com.example.practicespace.connection.returnBook;
 import com.example.practicespace.connection.setBookLog;
 import com.example.practicespace.vo.User;
 
@@ -49,6 +51,7 @@ public class book_info extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     TextView title, author, rental, description,owngroup, ownner, ISBN, category, publisher, publishDate;
     ImageView bookImage;
+    String categorynum;
     String book_thumb;
     String TokenPart = LoginInfo.getInstance().data.token.split("\\.")[1];
     String user_seq = new String(android.util.Base64.decode(TokenPart, 0)).split("\"")[7];
@@ -147,7 +150,39 @@ public class book_info extends AppCompatActivity {
         ISBN =(TextView) findViewById(R.id.book_ISBN);
         ISBN.setText(secondIntent.getStringExtra("ISBN"));
         category =(TextView) findViewById(R.id.book_category);
-        category.setText(secondIntent.getStringExtra("카테고리"));
+        categorynum =secondIntent.getStringExtra("카테고리");
+        switch (categorynum){
+            case("GEN"):
+                category.setText("컴퓨터과학");
+                break;
+            case("PNP"):
+                category.setText("철학");
+                break;
+            case("REL"):
+                category.setText("종교");
+                break;
+            case("SOS"):
+                category.setText("사회과학");
+                break;
+            case("LAN"):
+                category.setText("언어");
+                break;
+            case("SCI"):
+                category.setText("과학");
+                break;
+            case("TEC"):
+                category.setText("기술");
+                break;
+            case("ANR"):
+                category.setText("예술");
+                break;
+            case("LIT"):
+                category.setText("문학");
+                break;
+            case("HNG"):
+                category.setText("역사");
+                break;
+        }
         publisher =(TextView) findViewById(R.id.book_publisher);
         publisher.setText(secondIntent.getStringExtra("출판사"));
         publishDate =(TextView) findViewById(R.id.book_date);
@@ -222,12 +257,43 @@ public class book_info extends AppCompatActivity {
                                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            rental.setText("대여가능");
-                                            rental.setBackgroundResource(R.drawable.rental_o);
-                                            Toast.makeText(book_info.this,"반납이벤트",Toast.LENGTH_SHORT).show();
-                                            Intent intent = getIntent();
-                                            finish();
-                                            startActivity(intent);
+                                            Call<getBookLogList> call = apiInterface.getBookLogList(LoginInfo.getInstance().data.token,result.data.book.getSeq());
+                                            call.enqueue(new Callback<getBookLogList>() {
+                                                @Override
+                                                public void onResponse(Call<getBookLogList> call, Response<getBookLogList> response) {
+                                                    getBookLogList result_log = response.body();
+                                                    if(response.code()==200){
+                                                        Log.d("로그리스트","성공");
+                                                        Log.d("출력", result_log.data.bookLogList.get(result_log.data.bookLogList.size()-1).getUser().getNickname());
+                                                        Call<returnBook> call_return = apiInterface.bookReturn(LoginInfo.getInstance().data.token, result_log.data.bookLogList.get(result_log.data.bookLogList.size()-1).getUser().getUserSeq(), result.data.book.getSeq());
+                                                        call_return.enqueue(new Callback<returnBook>() {
+                                                            @Override
+                                                            public void onResponse(Call<returnBook> call, Response<returnBook> response) {
+                                                                returnBook result_return = response.body();
+                                                                if(response.code()==200){
+                                                                    Log.d("반납처리","성공");
+                                                                }else
+                                                                    Log.d("반납처리","실패 :"+response.code());
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<returnBook> call, Throwable t) {
+
+                                                            }
+                                                        });
+                                                    }else{
+                                                        Log.d("로그리스트","실패 :"+response.code());
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<getBookLogList> call, Throwable t) {
+
+                                                }
+                                            });
+//                                            Intent intent = getIntent();
+//                                            finish();
+//                                            startActivity(intent);
                                         }
                                     });
                                     dlg.setNegativeButton("아니오",null);
@@ -260,6 +326,7 @@ public class book_info extends AppCompatActivity {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         which=i;
+                                                        Log.d("####", String.valueOf(which));
                                                     }
                                                 });
                                                 dlg.setTitle("누구한테 대여 하시겠습니까?");
@@ -267,32 +334,15 @@ public class book_info extends AppCompatActivity {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         Toast.makeText(book_info.this,Users.get(which).getNickname(),Toast.LENGTH_SHORT).show();
-                                                        Call<borrowBook> call = apiInterface.borrow(LoginInfo.getInstance().data.token, Users.get(i).getUserSeq(),result.data.book.getSeq());
+                                                        Call<borrowBook> call = apiInterface.borrow(LoginInfo.getInstance().data.token, Users.get(which).getUserSeq(),result.data.book.getSeq());
                                                         call.enqueue(new Callback<borrowBook>() {
                                                             @Override
                                                             public void onResponse(Call<borrowBook> call, Response<borrowBook> response) {
                                                                 borrowBook result3 = response.body();
-                                                                if(response.code()==200){
-                                                                    Log.d("버로우이벤트","성공");
-                                                                    Call<setBookLog> call2 = apiInterface.addBookLog(LoginInfo.getInstance().data.token,"BORROW",result.data.book.getSeq(),Users.get(which).getUserSeq());
-                                                                    call2.enqueue(new Callback<setBookLog>() {
-                                                                        @Override
-                                                                        public void onResponse(Call<setBookLog> call, Response<setBookLog> response) {
-                                                                            setBookLog result4 = response.body();
-                                                                            if(response.code()==200){
-                                                                                Log.d("로그이벤트","성공");
-                                                                            }else{
-                                                                                Log.d("로그이벤트","실패");
-                                                                            }
-                                                                        }
-
-                                                                        @Override
-                                                                        public void onFailure(Call<setBookLog> call, Throwable t) {
-
-                                                                        }
-                                                                    });
+                                                                if(response.code()==200) {
+                                                                    Log.d("버로우이벤트", "성공");
                                                                 }else{
-                                                                    Log.d("버로우 이벤트", "실패");
+                                                                    Log.d("버로우이벤트", "실패");
                                                                 }
                                                             }
 

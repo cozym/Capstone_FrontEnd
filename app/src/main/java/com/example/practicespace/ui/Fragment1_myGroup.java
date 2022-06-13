@@ -18,6 +18,7 @@ import com.example.practicespace.connection.APIInterface;
 import com.example.practicespace.connection.bookList;
 import com.example.practicespace.connection.getGroup;
 import com.example.practicespace.connection.getUser;
+import com.example.practicespace.connection.myGroupList;
 import com.example.practicespace.connection.openGroupList;
 import com.example.practicespace.vo.Group;
 
@@ -66,11 +67,11 @@ public class Fragment1_myGroup extends Fragment {
 
         public void getGroupList(){
             Log.d("test","getgroup");
-            Call<openGroupList> call = apiInterface.getGroupList();
-            call.enqueue(new Callback<openGroupList>() {
+            Call<myGroupList> call = apiInterface.getMyGroupList(LoginInfo.getInstance().data.token);
+            call.enqueue(new Callback<myGroupList>() {
                 @Override
-                public void onResponse(Call<openGroupList> call, Response<openGroupList> response) {
-                    openGroupList result = response.body();
+                public void onResponse(Call<myGroupList> call, Response<myGroupList> response) {
+                    myGroupList result = response.body();
                     Log.d("책 테스트", String.valueOf(response.body()));
                     if(response.code() == 200){
                         groups = result.data.groups;
@@ -81,7 +82,6 @@ public class Fragment1_myGroup extends Fragment {
                                     LoginInfo.getInstance().data.token,groups.get(i).getSeq(), 0
                             );
                             Group temp =groups.get(i);
-                            String nick = temp.getAdmin().getNickname();
                             call2.enqueue(new Callback<bookList>() {
                                 @Override
                                 public void onResponse(Call<bookList> call, Response<bookList> response) {
@@ -91,10 +91,8 @@ public class Fragment1_myGroup extends Fragment {
                                         Log.d("연결 테스트", "책불러오기");
                                         booknum = result2.data.books.size();
                                         Log.d("책수", String.valueOf(booknum));
-                                        if(nick.equals(User_nickname)) {
                                             items.add(new ListViewItem(temp.getThumbnail(), temp.getName(), temp.getDescription()
                                                     , temp.getSeq(), temp.getOpen(), temp.getCreatedDate(), booknum));
-                                        }
                                     }
                                     else{
                                         Log.d("연결 테스트", "실패");
@@ -112,13 +110,13 @@ public class Fragment1_myGroup extends Fragment {
                             ///도서수 계산
                         }
                     } else{
-                        Log.d("연결 테스트", "실패");
+                        Log.d("연결 테스트", "실패"+response.code());
                     }
 
                 }
 
                 @Override
-                public void onFailure(Call<openGroupList> call, Throwable t) {
+                public void onFailure(Call<myGroupList> call, Throwable t) {
                     call.cancel();
                 }
             });

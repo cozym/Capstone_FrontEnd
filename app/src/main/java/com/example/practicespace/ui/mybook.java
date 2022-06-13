@@ -30,7 +30,7 @@ public class mybook extends AppCompatActivity{
 
     Fragment fragment0,fragment1;
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-
+    int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,7 @@ public class mybook extends AppCompatActivity{
 
 
 //        fragment0 = new Fragment2_myBook();
-       fragment0 = new Fragment2();
+       fragment0 = new Fragment2_rentalBook();
         fragment1 = new Fragment2_myBook();
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
@@ -76,7 +76,7 @@ public class mybook extends AppCompatActivity{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                int position = tab.getPosition();
+                position = tab.getPosition();
 
                 Fragment selected = null;
                 if(position == 0){
@@ -104,6 +104,23 @@ public class mybook extends AppCompatActivity{
 
         });
     }
+
+    public void onResume() {
+        super.onResume();
+        getSupportFragmentManager().beginTransaction().detach(fragment0).commit();
+        getSupportFragmentManager().beginTransaction().detach(fragment1).commit();
+
+        fragment0 = new Fragment2_rentalBook();
+        fragment1 = new Fragment2_myBook();
+
+
+        if (position == 0) {
+            getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment0).commit();
+        } else if (position == 1) {
+            getSupportFragmentManager().beginTransaction().add(R.id.frame, fragment1).commit();
+        }
+    }
+
 
 
     //슬라이드 메뉴
