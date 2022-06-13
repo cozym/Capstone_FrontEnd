@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +28,8 @@ import com.example.practicespace.connection.getMyBookLogList;
 import com.example.practicespace.connection.getUser;
 import com.example.practicespace.connection.modNickname;
 import com.example.practicespace.vo.Book;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,22 +124,54 @@ public class mypage extends AppCompatActivity {
                         book_name.setText(result.data.bookLogList.get(i).getBook().getTitle());
                         book_name.setBackgroundColor(Color.parseColor("#F1F1F1"));
                         book_name.setTextSize(18);
-                        book_name.setHeight(90);
+                        book_name.setWidth(changeDP(180));
                         book_name.setGravity(Gravity.CENTER);
+                        book_name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                        book_name.setSelected(true);
+                        book_name.setSingleLine(true);
+                        book_name.setHeight(changeDP(30));
                         tableRow.addView(book_name);
+
+                        TextView temp1 = new TextView(mypage.this);
+                        temp1.setHeight(changeDP(1));
+                        temp1.setWidth(changeDP(1));
+                        tableRow.addView(temp1);
+
                         TextView createdTime = new TextView(mypage.this);
                         createdTime.setText(result.data.bookLogList.get(i).getCreatedTime().substring(0,10));
                         createdTime.setBackgroundColor(Color.parseColor("#ffffff"));
                         createdTime.setTextSize(18);
+                        createdTime.setWidth(changeDP(24));
+                        createdTime.setHeight(changeDP(30));
+                        createdTime.setGravity(Gravity.CENTER);
                         tableRow.addView(createdTime);
+
+                        TextView temp2 = new TextView(mypage.this);
+                        temp2.setHeight(changeDP(1));
+                        temp2.setWidth(changeDP(1));
+                        tableRow.addView(temp2);
+
+
                         TextView lastModifiedTime = new TextView(mypage.this);
                         if(result.data.bookLogList.get(i).getBookLogStatus().equals("RETURN"))
                             lastModifiedTime.setText(result.data.bookLogList.get(i).getLastModifiedTime().substring(0,10));
                         lastModifiedTime.setBackgroundColor(Color.parseColor("#ffffff"));
                         lastModifiedTime.setTextSize(18);
+                        lastModifiedTime.setWidth(changeDP(25));
+                        lastModifiedTime.setHeight(changeDP(30));
+                        lastModifiedTime.setGravity(Gravity.CENTER);
                         tableRow.addView(lastModifiedTime);
-
                         tableLayout.addView(tableRow);
+
+
+                        TableRow tableRow2 = new TableRow(mypage.this);
+                        tableRow2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                                TableRow.LayoutParams.MATCH_PARENT));
+                        TextView space = new TextView(mypage.this);
+                        space.setHeight(changeDP(1));
+                        space.setWidth(changeDP(0));
+                        tableRow2.addView(space);
+                        tableLayout.addView(tableRow2);
                     }
                 }else{
                     Log.d("로그 불러오기", "실패 : "+response.code());
@@ -147,5 +183,11 @@ public class mypage extends AppCompatActivity {
 
             }
         });
+    }
+
+    private int changeDP(int i){
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int dp = Math.round(i * displayMetrics.density);
+        return dp;
     }
 }
