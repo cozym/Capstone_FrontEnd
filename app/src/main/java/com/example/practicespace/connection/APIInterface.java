@@ -131,6 +131,12 @@ public interface APIInterface {
             @Field("groupSeq") int groupSeq,
             @Field("userSeq") int userSeq);
 
+    @DELETE("group/block")
+    Call<blockUser> blockGroupUser(
+            @Header("Authorization") String token,
+            @Query("groupSeq") int groupSeq,
+            @Query("blockUserSeq") int blockUserSeq);
+
     @FormUrlEncoded
     @POST("group/join")
     Call<joinGroup> join(
